@@ -35,8 +35,9 @@
 
         data: () => ({
             types: [
-                {id: 'W', label: 'week', shortcut: 'W', type: Units.WEEK,  size: 1,  focus: 0.4999, repeat: true,  listTimes: true,  updateRows: true,  schedule: false },
-                {id: 'D', label: 'day', shortcut: 'D', type: Units.DAY,   size: 1,  focus: 0.4999, repeat: true,  listTimes: true,  updateRows: true,  schedule: false },
+                {id: 'M', label: 'Edit past days', shortcut: 'M', type: Units.MONTH, size: 1,  focus: 0.4999, repeat: true,  listTimes: false, updateRows: true,  schedule: false },
+                // {id: 'W', label: 'Week', shortcut: 'W', type: Units.WEEK,  size: 1,  focus: 0.4999, repeat: true,  listTimes: true,  updateRows: true,  schedule: false },
+                {id: 'D', label: 'Full Day', shortcut: 'D', type: Units.DAY,   size: 1,  focus: 0.4999, repeat: true,  listTimes: true,  updateRows: true,  schedule: false },
             ]
         }),
 
@@ -53,7 +54,7 @@
         background: green;
         height: calc(100% - 56px);
         margin-bottom: 56px;
-        width: 50vw;
+        width: 70vw;
     }
     /* .v-application--wrap {
         min-height: 100vh;

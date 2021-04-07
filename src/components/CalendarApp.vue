@@ -1,6 +1,6 @@
 <template>
   <div class="ds-expand ds-calendar-app">
-
+    
     <v-app-bar
       flat
       class="ds-app-calendar-toolbar"
@@ -406,6 +406,7 @@ export default {
     },
 
     rebuild(aroundDay, force, forceType) {
+
       let type = forceType || this.currentType || this.types[2];
 
       if (this.isType(type, aroundDay) && !force) {
@@ -442,7 +443,7 @@ export default {
     },
 
     setToday() {
-      this.rebuild(this.$dayspan.today);
+      this.rebuild(this.$dayspan.today, true, this.types[1]);
     },
 
     viewDay(day) {
@@ -466,7 +467,10 @@ export default {
     },
 
     add(day) {
-      console.log("Hello DARYN");
+      if( this.currentType == this.types[0] ){
+        this.rebuild(day, true, this.types[1]);
+        return;
+      }
       if (!this.canAddDay) {
         return;
       }

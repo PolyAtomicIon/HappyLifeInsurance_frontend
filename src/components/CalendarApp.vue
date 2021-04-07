@@ -122,6 +122,7 @@
                 @view-day="viewDay"
                 @added="handleAdd"
                 @moved="handleMove"
+                @change="saveState"
               ></ds-calendar>
             </slot>
           </div>
@@ -204,8 +205,9 @@
 </template>
 
 <script>
-// eslint-disable-next-line no-unused-vars
+  // eslint-disable-next-line no-unused-vars
   import { Constants, Sorts, Calendar, Day, Units, Weekday, Month, DaySpan, PatternMap, Time, Op } from "dayspan";
+  import Vue from 'vue';
 
 export default {
   name: "dsCalendarApp",
@@ -285,10 +287,187 @@ export default {
   data: vm => ({
     drawer: false,
     optionsVisible: false,
+    storeKey: 'dayspanState',
     options: [],
     promptVisible: false,
     promptQuestion: "",
-    promptCallback: null
+    promptCallback: null,
+    defaultEvents: [
+      {
+        data: {
+          title: 'Weekly Meeting',
+          color: '#3F51B5'
+        },
+        schedule: {
+          dayOfWeek: [Weekday.MONDAY],
+          times: [9],
+          duration: 30,
+          durationUnit: 'minutes'
+        }
+      },
+      {
+        data: {
+          title: 'First Weekend',
+          color: '#4CAF50'
+        },
+        schedule: {
+          weekspanOfMonth: [0],
+          dayOfWeek: [Weekday.FRIDAY],
+          duration: 3,
+          durationUnit: 'days'
+        }
+      },
+      {
+        data: {
+          title: 'End of Month',
+          color: '#000000'
+        },
+        schedule: {
+          lastDayOfMonth: [1],
+          duration: 1,
+          durationUnit: 'hours'
+        }
+      },
+      {
+        data: {
+          title: 'Mother\'s Day',
+          color: '#2196F3',
+          calendar: 'US Holidays'
+        },
+        schedule: {
+          month: [Month.MAY],
+          dayOfWeek: [Weekday.SUNDAY],
+          weekspanOfMonth: [1]
+        }
+      },
+      {
+        data: {
+          title: 'New Year\'s Day',
+          color: '#2196F3',
+          calendar: 'US Holidays'
+        },
+        schedule: {
+          month: [Month.JANUARY],
+          dayOfMonth: [1]
+        }
+      },
+      {
+        data: {
+          title: 'Inauguration Day',
+          color: '#2196F3',
+          calendar: 'US Holidays'
+        },
+        schedule: {
+          month: [Month.JANUARY],
+          dayOfMonth: [20]
+        }
+      },
+      {
+        data: {
+          title: 'Martin Luther King, Jr. Day',
+          color: '#2196F3',
+          calendar: 'US Holidays'
+        },
+        schedule: {
+          month: [Month.JANUARY],
+          dayOfWeek: [Weekday.MONDAY],
+          weekspanOfMonth: [2]
+        }
+      },
+      {
+        data: {
+          title: 'George Washington\'s Birthday',
+          color: '#2196F3',
+          calendar: 'US Holidays'
+        },
+        schedule: {
+          month: [Month.FEBRUARY],
+          dayOfWeek: [Weekday.MONDAY],
+          weekspanOfMonth: [2]
+        }
+      },
+      {
+        data: {
+          title: 'Memorial Day',
+          color: '#2196F3',
+          calendar: 'US Holidays'
+        },
+        schedule: {
+          month: [Month.MAY],
+          dayOfWeek: [Weekday.MONDAY],
+          lastWeekspanOfMonth: [0]
+        }
+      },
+      {
+        data: {
+          title: 'Independence Day',
+          color: '#2196F3',
+          calendar: 'US Holidays'
+        },
+        schedule: {
+          month: [Month.JULY],
+          dayOfMonth: [4]
+        }
+      },
+      {
+        data: {
+          title: 'Labor Day',
+          color: '#2196F3',
+          calendar: 'US Holidays'
+        },
+        schedule: {
+          month: [Month.SEPTEMBER],
+          dayOfWeek: [Weekday.MONDAY],
+          lastWeekspanOfMonth: [0]
+        }
+      },
+      {
+        data: {
+          title: 'Columbus Day',
+          color: '#2196F3',
+          calendar: 'US Holidays'
+        },
+        schedule: {
+          month: [Month.OCTOBER],
+          dayOfWeek: [Weekday.MONDAY],
+          weekspanOfMonth: [1]
+        }
+      },
+      {
+        data: {
+          title: 'Veterans Day',
+          color: '#2196F3',
+          calendar: 'US Holidays'
+        },
+        schedule: {
+          month: [Month.NOVEMBER],
+          dayOfMonth: [11]
+        }
+      },
+      {
+        data: {
+          title: 'Thanksgiving Day',
+          color: '#2196F3',
+          calendar: 'US Holidays'
+        },
+        schedule: {
+          month: [Month.NOVEMBER],
+          dayOfWeek: [Weekday.THURSDAY],
+          weekspanOfMonth: [3]
+        }
+      },
+      {
+        data: {
+          title: 'Christmas Day',
+          color: '#2196F3',
+          calendar: 'US Holidays'
+        },
+        schedule: {
+          month: [Month.DECEMBER],
+          dayOfMonth: [25]
+        }
+      }
+    ],
   }),
 
   watch: {
@@ -375,6 +554,8 @@ export default {
         this.promptVisible = true;
       };
     }
+
+    this.loadState();
   },
 
   methods: {
@@ -669,10 +850,54 @@ export default {
     },
 
     triggerChange() {
+      this.saveState();
       this.$emit("change", {
         calendar: this.calendar
       });
     },
+
+    saveState()
+    {
+      let state = this.calendar.toInput(true);
+      let json = JSON.stringify(state);
+
+      localStorage.setItem(this.storeKey, json);
+    },
+
+    loadState()
+    {
+      let state = {};
+
+      try
+      {
+        let savedState = JSON.parse(localStorage.getItem(this.storeKey));
+
+        if (savedState)
+        {
+          state = savedState;
+          state.preferToday = false;
+        }
+      }
+      catch (e)
+      {
+        // eslint-disable-next-line
+        console.log( e );
+      }
+
+      if (!state.events || !state.events.length)
+      {
+        state.events = this.defaultEvents;
+      }
+
+      state.events.forEach(ev =>
+      {
+        let defaults = this.$dayspan.getDefaultEventDetails();
+
+        ev.data = Vue.util.extend( defaults, ev.data );
+      });
+
+      this.setState( state );
+    }
   }
 };
 </script>

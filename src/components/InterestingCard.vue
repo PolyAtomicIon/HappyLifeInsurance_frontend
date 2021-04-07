@@ -3,6 +3,7 @@
         :loading="loading"
         class="mx-auto my-12"
         max-width="374"
+        min-height="1000px"
     >
         <template slot="progress">
         <v-progress-linear

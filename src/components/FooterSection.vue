@@ -33,7 +33,6 @@
       links: [
         'Home',
         'About Us',
-        'Team',
         'GitHub',
       ],
     }),

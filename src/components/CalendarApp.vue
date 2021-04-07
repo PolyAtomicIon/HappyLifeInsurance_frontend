@@ -85,7 +85,7 @@
         </v-menu>
       </slot>
     </v-app-bar>
-    <v-main class="ds-expand">
+    <v-main class="ds-expand my-0 py-0">
       <v-container fluid fill-height class="ds-calendar-container">
         <ds-gestures @swipeleft="next" @swiperight="prev">
           <div v-if="currentType.schedule" class="ds-expand">
@@ -466,6 +466,7 @@ export default {
     },
 
     add(day) {
+      console.log("Hello DARYN");
       if (!this.canAddDay) {
         return;
       }
@@ -667,7 +668,7 @@ export default {
       this.$emit("change", {
         calendar: this.calendar
       });
-    }
+    },
   }
 };
 </script>
@@ -682,6 +683,10 @@ export default {
 .ds-skinny-button {
   margin-left: 2px !important;
   margin-right: 2px !important;
+}
+
+.v-main{
+  padding-top: 0px;
 }
 
 .ds-expand {

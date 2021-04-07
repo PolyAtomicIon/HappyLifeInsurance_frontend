@@ -1,6 +1,6 @@
 <template>
         
-    <!-- <v-container> -->
+    <!-- <v-container>  -->
 
         <!-- <v-row>
             <v-col 
@@ -9,13 +9,13 @@
             >
                 <interesting-card></interesting-card>
             </v-col>
-        </v-row> -->
-        <!-- <v-row>
+        </v-row>
+        <v-row>
             <v-col 
                 cols="12"
                 lg="12"
             > -->
-            <div class="calendar-container">
+            <div class="calendar-container ">
                 <calendar-app 
                     :types="types"
                 />
@@ -35,8 +35,8 @@
 
         data: () => ({
             types: [
-                {id: 'D', label: 'day', shortcut: 'D', type: Units.DAY,   size: 1,  focus: 0.4999, repeat: true,  listTimes: true,  updateRows: true,  schedule: false },
                 {id: 'W', label: 'week', shortcut: 'W', type: Units.WEEK,  size: 1,  focus: 0.4999, repeat: true,  listTimes: true,  updateRows: true,  schedule: false },
+                {id: 'D', label: 'day', shortcut: 'D', type: Units.DAY,   size: 1,  focus: 0.4999, repeat: true,  listTimes: true,  updateRows: true,  schedule: false },
             ]
         }),
 
@@ -51,10 +51,11 @@
 <style scoped>
     .calendar-container {
         background: green;
-        height: 100%;
+        height: calc(100% - 56px);
+        margin-bottom: 56px;
         width: 50vw;
     }
-    .v-application--wrap {
-        min-height: 50vh;
-  }
+    /* .v-application--wrap {
+        min-height: 100vh;
+    } */
 </style>

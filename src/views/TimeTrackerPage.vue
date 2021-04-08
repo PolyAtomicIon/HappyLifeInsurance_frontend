@@ -1,62 +1,99 @@
-<template>
-        
-    <!-- <v-container>  -->
 
-        <!-- <v-row>
-            <v-col 
-                cols="12"
-                lg="4"
-            >
-                <interesting-card></interesting-card>
-            </v-col>
-        </v-row>
-        <v-row>
-            <v-col 
-                cols="12"
-                lg="12"
-            > -->
-            <div class="calendar-container ">
-                <calendar-app 
-                    :types="types"
-                />
-            </div>
-            <!-- </v-col>
-        </v-row>
-    </v-container> -->
-    
+<template>
+  <v-container>
+    <v-row>
+      <v-col cols="3">
+        <v-sheet rounded="lg">
+          <v-list color="transparent">
+            <v-list-item v-for="(key, value) in ProfileData" :key="key">
+              <v-list-item-content>
+                <v-list-item-title>
+                  <b>{{ key }}:</b> {{ Profile[value] }}
+                </v-list-item-title>
+              </v-list-item-content>
+            </v-list-item>
+
+            <v-divider class="my-2"></v-divider>
+          </v-list>
+        </v-sheet>
+      </v-col>
+
+      <v-col>
+        <v-sheet height="70vh" rounded="lg" class="mb-10">
+          <!-- <router-view class="child-view"></router-view> -->
+
+          <div class="calendar-container">
+            <calendar-app :types="types" />
+          </div>
+        </v-sheet>
+      </v-col>
+    </v-row>
+  </v-container>
 </template>
 
+
 <script>
-    // import InterestingCard from '../components/InterestingCard.vue'
-    import CalendarApp from '../components/CalendarApp.vue';
-    import { Units } from 'dayspan'
+// import InterestingCard from '../components/InterestingCard.vue'
+import CalendarApp from "../components/CalendarApp.vue";
+import { Units } from "dayspan";
+import { mapGetters } from "vuex";
 
-    export default {
+export default {
+  data: () => ({
+    types: [
+      {
+        id: "M",
+        label: "Edit past days",
+        shortcut: "M",
+        type: Units.MONTH,
+        size: 1,
+        focus: 0.4999,
+        repeat: true,
+        listTimes: false,
+        updateRows: true,
+        schedule: false,
+      },
+      // {id: 'W', label: 'Week', shortcut: 'W', type: Units.WEEK,  size: 1,  focus: 0.4999, repeat: true,  listTimes: true,  updateRows: true,  schedule: false },
+      {
+        id: "D",
+        label: "Full Day",
+        shortcut: "D",
+        type: Units.DAY,
+        size: 1,
+        focus: 0.4999,
+        repeat: true,
+        listTimes: true,
+        updateRows: true,
+        schedule: false,
+      },
+    ],
 
-        data: () => ({
-            types: [
-                {id: 'M', label: 'Edit past days', shortcut: 'M', type: Units.MONTH, size: 1,  focus: 0.4999, repeat: true,  listTimes: false, updateRows: true,  schedule: false },
-                // {id: 'W', label: 'Week', shortcut: 'W', type: Units.WEEK,  size: 1,  focus: 0.4999, repeat: true,  listTimes: true,  updateRows: true,  schedule: false },
-                {id: 'D', label: 'Full Day', shortcut: 'D', type: Units.DAY,   size: 1,  focus: 0.4999, repeat: true,  listTimes: true,  updateRows: true,  schedule: false },
-            ]
-        }),
+    ProfileData: {
+      title: "Username",
+      city: "City",
+      phone: "Phone",
+      email: "Email",
+      numberOfCars: "Cars in wishlist #",
+    },
+  }),
 
-        components: {
-            CalendarApp,
-            // InterestingCard
-        },
-
-    }
+  computed: {
+    ...mapGetters(["Profile"]),
+  },
+  components: {
+    CalendarApp,
+    // InterestingCard
+  },
+};
 </script>
 
 <style scoped>
-    .calendar-container {
-        background: green;
-        height: calc(100% - 56px);
-        margin-bottom: 56px;
-        width: 70vw;
-    }
-    /* .v-application--wrap {
-        min-height: 100vh;
-    } */
+.calendar-container {
+  /* height: calc(83% + 56px); */
+  padding: 5px 0px;
+  height: 88%;
+  margin: auto;
+  /* width: 50vw; */
+}
+
 </style>

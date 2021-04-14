@@ -1,0 +1,6 @@
+1. Profile• registration• login• / profile: general info: Name, Surname, Job position, email• / editors: users who can edit his entries• / shared_with_me: users that can be edited by the current user• / add_editor: add a user to edit your entries, limit 2 users• / delete_editor: ...• / flex - status: flex - status
+for current_week, how many hours he worked by each day, Monday, Tuesday etc.how many hours of debt / or reserves hours have• / flex - status ? day = 12.04 .2020 : flex - status
+for days week: should be discussed...
+
+2. Time - tracker
+Entries will be added by post request, with tokens• / add_entry ? user_id ? type, ? color ? reason ? date ? start and end time• Entry types : recorded automatically, entered by the user, entered by another user with access.• / update_entry• / delete_entry• / sent_calendar ? month = 1 should be discussed...

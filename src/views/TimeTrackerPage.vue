@@ -2,8 +2,8 @@
 <template>
   <v-container>
     <v-row>
-      <v-col cols="3">
-        <v-sheet rounded="lg">
+      <v-col cols="12" sm="12" md="3">
+        <v-sheet rounded="lg" class="calendar-control-buttons">
           <v-list color="transparent">
             <v-list-item v-for="(key, value) in ProfileData" :key="key">
               <v-list-item-content>
@@ -14,6 +14,17 @@
             </v-list-item>
 
             <v-divider class="my-2"></v-divider>
+
+            <v-list-item>
+              <v-list-item-content>
+                <v-list-item-title>
+                  <v-text class="error--text">
+                    Working
+                  </v-text>
+                </v-list-item-title>
+              </v-list-item-content>
+            </v-list-item>
+
           </v-list>
         </v-sheet>
       </v-col>
@@ -95,5 +106,7 @@ export default {
   margin: auto;
   /* width: 50vw; */
 }
-
+.calendar-control-buttons{
+  /* width: 100%; */
+}
 </style>

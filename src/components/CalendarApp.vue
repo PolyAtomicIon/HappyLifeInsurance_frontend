@@ -181,23 +181,6 @@
           </v-dialog>
         </slot>
 
-        <slot name="calendarAppAdd" v-bind="{allowsAddToday, addToday}">
-          <v-fab-transition v-if="!readOnly">
-            <v-btn
-              class="ds-add-event-today"
-              color="primary"
-              fixed
-              bottom
-              right
-              fab
-              v-model="allowsAddToday"
-              @click="addToday"
-            >
-              <v-icon>add</v-icon>
-            </v-btn>
-          </v-fab-transition>
-        </slot>
-
         <slot name="containerInside" v-bind="{events, calendar}"></slot>
       </v-container>
     </v-main>
@@ -209,697 +192,704 @@
   import { Constants, Sorts, Calendar, Day, Units, Weekday, Month, DaySpan, PatternMap, Time, Op } from "dayspan";
   import Vue from 'vue';
 
-export default {
-  name: "dsCalendarApp",
+  export default {
+    name: "dsCalendarApp",
 
-  props: {
-    events: {
-      type: Array
-    },
-    navDrawer: {
-      type: Boolean,
-      default: false
-    },
-    calendar: {
-      type: Calendar,
-      default() {
-        return Calendar.months();
-      }
-    },
-    readOnly: {
-      type: Boolean,
-      default: false
-    },
-    types: {
-      type: Array,
-      default() {
-        return this.$dsDefaults().types;
-      }
-    },
-    allowsAddToday: {
-      type: Boolean,
-      default() {
-        return this.$dsDefaults().allowsAddToday;
-      }
-    },
-    formats: {
-      validate(x) {
-        return this.$dsValidate(x, "formats");
+    props: {
+      events: {
+        type: Array
       },
-      default() {
-        return this.$dsDefaults().formats;
-      }
-    },
-    labels: {
-      validate(x) {
-        return this.$dsValidate(x, "labels");
+      navDrawer: {
+        type: Boolean,
+        default: false
       },
-      default() {
-        return this.$dsDefaults().labels;
-      }
-    },
-    styles: {
-      validate(x) {
-        return this.$dsValidate(x, "styles");
-      },
-      default() {
-        return this.$dsDefaults().styles;
-      }
-    },
-    optionsDialog: {
-      validate(x) {
-        return this.$dsValidate(x, "optionsDialog");
-      },
-      default() {
-        return this.$dsDefaults().optionsDialog;
-      }
-    },
-    promptDialog: {
-      validate(x) {
-        return this.$dsValidate(x, "promptDialog");
-      },
-      default() {
-        return this.$dsDefaults().promptDialog;
-      }
-    }
-  },
-// eslint-disable-next-line no-unused-vars
-  data: vm => ({
-    drawer: false,
-    optionsVisible: false,
-    storeKey: 'dayspanState',
-    options: [],
-    promptVisible: false,
-    promptQuestion: "",
-    promptCallback: null,
-    defaultEvents: [
-      {
-        data: {
-          title: 'Weekly Meeting',
-          color: '#3F51B5'
-        },
-        schedule: {
-          dayOfWeek: [Weekday.MONDAY],
-          times: [9],
-          duration: 30,
-          durationUnit: 'minutes'
+      calendar: {
+        type: Calendar,
+        default() {
+          return Calendar.months();
         }
       },
-      {
-        data: {
-          title: 'First Weekend',
-          color: '#4CAF50'
-        },
-        schedule: {
-          weekspanOfMonth: [0],
-          dayOfWeek: [Weekday.FRIDAY],
-          duration: 3,
-          durationUnit: 'days'
+      readOnly: {
+        type: Boolean,
+        default: false
+      },
+      types: {
+        type: Array,
+        default() {
+          return this.$dsDefaults().types;
         }
       },
-      {
-        data: {
-          title: 'End of Month',
-          color: '#000000'
-        },
-        schedule: {
-          lastDayOfMonth: [1],
-          duration: 1,
-          durationUnit: 'hours'
+      allowsAddToday: {
+        type: Boolean,
+        default() {
+          return this.$dsDefaults().allowsAddToday;
         }
       },
-      {
-        data: {
-          title: 'Mother\'s Day',
-          color: '#2196F3',
-          calendar: 'US Holidays'
+      formats: {
+        validate(x) {
+          return this.$dsValidate(x, "formats");
         },
-        schedule: {
-          month: [Month.MAY],
-          dayOfWeek: [Weekday.SUNDAY],
-          weekspanOfMonth: [1]
+        default() {
+          return this.$dsDefaults().formats;
         }
       },
-      {
-        data: {
-          title: 'New Year\'s Day',
-          color: '#2196F3',
-          calendar: 'US Holidays'
+      labels: {
+        validate(x) {
+          return this.$dsValidate(x, "labels");
         },
-        schedule: {
-          month: [Month.JANUARY],
-          dayOfMonth: [1]
+        default() {
+          return this.$dsDefaults().labels;
         }
       },
-      {
-        data: {
-          title: 'Inauguration Day',
-          color: '#2196F3',
-          calendar: 'US Holidays'
+      styles: {
+        validate(x) {
+          return this.$dsValidate(x, "styles");
         },
-        schedule: {
-          month: [Month.JANUARY],
-          dayOfMonth: [20]
+        default() {
+          return this.$dsDefaults().styles;
         }
       },
-      {
-        data: {
-          title: 'Martin Luther King, Jr. Day',
-          color: '#2196F3',
-          calendar: 'US Holidays'
+      optionsDialog: {
+        validate(x) {
+          return this.$dsValidate(x, "optionsDialog");
         },
-        schedule: {
-          month: [Month.JANUARY],
-          dayOfWeek: [Weekday.MONDAY],
-          weekspanOfMonth: [2]
+        default() {
+          return this.$dsDefaults().optionsDialog;
         }
       },
-      {
-        data: {
-          title: 'George Washington\'s Birthday',
-          color: '#2196F3',
-          calendar: 'US Holidays'
+      promptDialog: {
+        validate(x) {
+          return this.$dsValidate(x, "promptDialog");
         },
-        schedule: {
-          month: [Month.FEBRUARY],
-          dayOfWeek: [Weekday.MONDAY],
-          weekspanOfMonth: [2]
-        }
-      },
-      {
-        data: {
-          title: 'Memorial Day',
-          color: '#2196F3',
-          calendar: 'US Holidays'
-        },
-        schedule: {
-          month: [Month.MAY],
-          dayOfWeek: [Weekday.MONDAY],
-          lastWeekspanOfMonth: [0]
-        }
-      },
-      {
-        data: {
-          title: 'Independence Day',
-          color: '#2196F3',
-          calendar: 'US Holidays'
-        },
-        schedule: {
-          month: [Month.JULY],
-          dayOfMonth: [4]
-        }
-      },
-      {
-        data: {
-          title: 'Labor Day',
-          color: '#2196F3',
-          calendar: 'US Holidays'
-        },
-        schedule: {
-          month: [Month.SEPTEMBER],
-          dayOfWeek: [Weekday.MONDAY],
-          lastWeekspanOfMonth: [0]
-        }
-      },
-      {
-        data: {
-          title: 'Columbus Day',
-          color: '#2196F3',
-          calendar: 'US Holidays'
-        },
-        schedule: {
-          month: [Month.OCTOBER],
-          dayOfWeek: [Weekday.MONDAY],
-          weekspanOfMonth: [1]
-        }
-      },
-      {
-        data: {
-          title: 'Veterans Day',
-          color: '#2196F3',
-          calendar: 'US Holidays'
-        },
-        schedule: {
-          month: [Month.NOVEMBER],
-          dayOfMonth: [11]
-        }
-      },
-      {
-        data: {
-          title: 'Thanksgiving Day',
-          color: '#2196F3',
-          calendar: 'US Holidays'
-        },
-        schedule: {
-          month: [Month.NOVEMBER],
-          dayOfWeek: [Weekday.THURSDAY],
-          weekspanOfMonth: [3]
-        }
-      },
-      {
-        data: {
-          title: 'Christmas Day',
-          color: '#2196F3',
-          calendar: 'US Holidays'
-        },
-        schedule: {
-          month: [Month.DECEMBER],
-          dayOfMonth: [25]
+        default() {
+          return this.$dsDefaults().promptDialog;
         }
       }
-    ],
-  }),
+    },
+  // eslint-disable-next-line no-unused-vars
+    data: vm => ({
+      drawer: false,
+      optionsVisible: false,
+      storeKey: 'dayspanState',
+      options: [],
+      promptVisible: false,
+      promptQuestion: "",
+      promptCallback: null,
+      defaultEvents: [
+        {
+          data: {
+            title: 'Weekly Meeting',
+            color: '#3F51B5'
+          },
+          schedule: {
+            dayOfWeek: [Weekday.MONDAY],
+            times: [9],
+            duration: 30,
+            durationUnit: 'minutes'
+          }
+        },
+        {
+          data: {
+            title: 'First Weekend',
+            color: '#4CAF50'
+          },
+          schedule: {
+            weekspanOfMonth: [0],
+            dayOfWeek: [Weekday.FRIDAY],
+            duration: 3,
+            durationUnit: 'days'
+          }
+        },
+        {
+          data: {
+            title: 'End of Month',
+            color: '#000000'
+          },
+          schedule: {
+            lastDayOfMonth: [1],
+            duration: 1,
+            durationUnit: 'hours'
+          }
+        },
+        {
+          data: {
+            title: 'Mother\'s Day',
+            color: '#2196F3',
+            calendar: 'US Holidays'
+          },
+          schedule: {
+            month: [Month.MAY],
+            dayOfWeek: [Weekday.SUNDAY],
+            weekspanOfMonth: [1]
+          }
+        },
+        {
+          data: {
+            title: 'New Year\'s Day',
+            color: '#2196F3',
+            calendar: 'US Holidays'
+          },
+          schedule: {
+            month: [Month.JANUARY],
+            dayOfMonth: [1]
+          }
+        },
+        {
+          data: {
+            title: 'Inauguration Day',
+            color: '#2196F3',
+            calendar: 'US Holidays'
+          },
+          schedule: {
+            month: [Month.JANUARY],
+            dayOfMonth: [20]
+          }
+        },
+        {
+          data: {
+            title: 'Martin Luther King, Jr. Day',
+            color: '#2196F3',
+            calendar: 'US Holidays'
+          },
+          schedule: {
+            month: [Month.JANUARY],
+            dayOfWeek: [Weekday.MONDAY],
+            weekspanOfMonth: [2]
+          }
+        },
+        {
+          data: {
+            title: 'George Washington\'s Birthday',
+            color: '#2196F3',
+            calendar: 'US Holidays'
+          },
+          schedule: {
+            month: [Month.FEBRUARY],
+            dayOfWeek: [Weekday.MONDAY],
+            weekspanOfMonth: [2]
+          }
+        },
+        {
+          data: {
+            title: 'Memorial Day',
+            color: '#2196F3',
+            calendar: 'US Holidays'
+          },
+          schedule: {
+            month: [Month.MAY],
+            dayOfWeek: [Weekday.MONDAY],
+            lastWeekspanOfMonth: [0]
+          }
+        },
+        {
+          data: {
+            title: 'Independence Day',
+            color: '#2196F3',
+            calendar: 'US Holidays'
+          },
+          schedule: {
+            month: [Month.JULY],
+            dayOfMonth: [4]
+          }
+        },
+        {
+          data: {
+            title: 'Labor Day',
+            color: '#2196F3',
+            calendar: 'US Holidays'
+          },
+          schedule: {
+            month: [Month.SEPTEMBER],
+            dayOfWeek: [Weekday.MONDAY],
+            lastWeekspanOfMonth: [0]
+          }
+        },
+        {
+          data: {
+            title: 'Columbus Day',
+            color: '#2196F3',
+            calendar: 'US Holidays'
+          },
+          schedule: {
+            month: [Month.OCTOBER],
+            dayOfWeek: [Weekday.MONDAY],
+            weekspanOfMonth: [1]
+          }
+        },
+        {
+          data: {
+            title: 'Veterans Day',
+            color: '#2196F3',
+            calendar: 'US Holidays'
+          },
+          schedule: {
+            month: [Month.NOVEMBER],
+            dayOfMonth: [11]
+          }
+        },
+        {
+          data: {
+            title: 'Thanksgiving Day',
+            color: '#2196F3',
+            calendar: 'US Holidays'
+          },
+          schedule: {
+            month: [Month.NOVEMBER],
+            dayOfWeek: [Weekday.THURSDAY],
+            weekspanOfMonth: [3]
+          }
+        },
+        {
+          data: {
+            title: 'Christmas Day',
+            color: '#2196F3',
+            calendar: 'US Holidays'
+          },
+          schedule: {
+            month: [Month.DECEMBER],
+            dayOfMonth: [25]
+          }
+        }
+      ],
+    }),
 
-  watch: {
-    navDrawer: function(val) {
-      this.drawer = val;
+    watch: {
+      navDrawer: function(val) {
+        this.drawer = val;
+      },
+      events: "applyEvents",
+      calendar: "applyEvents"
     },
-    events: "applyEvents",
-    calendar: "applyEvents"
-  },
 
-  computed: {
-    currentType: {
-      get() {
+    computed: {
+      currentType: {
+        get() {
+          return (
+            this.types.find(
+              type =>
+                type.type === this.calendar.type &&
+                type.size === this.calendar.size
+            ) || this.types[0]
+          );
+        },
+        set(type) {
+          this.rebuild(undefined, true, type);
+        }
+      },
+
+      summary() {
+        let small = this.$vuetify.breakpoint.xs;
+
+        if (small) {
+          return this.calendar.start.format(this.formats.xs);
+        }
+
+        let large = this.$vuetify.breakpoint.mdAndUp;
+
+        return this.calendar.summary(false, !large, false, !large);
+      },
+
+      todayDate() {
+        return this.$dayspan.today.format(this.formats.today);
+      },
+
+      nextLabel() {
+        return this.labels.next(this.currentType);
+      },
+
+      prevLabel() {
+        return this.labels.prev(this.currentType);
+      },
+
+      toolbarStyle() {
+        let large = this.$vuetify.breakpoint.lgAndUp;
+
+        return large ? this.styles.toolbar.large : this.styles.toolbar.small;
+      },
+
+      hasCreatePopover() {
+        return !!this.$scopedSlots.eventCreatePopover;
+      },
+
+      canAddDay() {
         return (
-          this.types.find(
-            type =>
-              type.type === this.calendar.type &&
-              type.size === this.calendar.size
-          ) || this.types[0]
+          this.$dayspan.features.addDay &&
+          !this.readOnly &&
+          !this.$dayspan.readOnly
         );
       },
-      set(type) {
-        this.rebuild(undefined, true, type);
+
+      canAddTime() {
+        return (
+          this.$dayspan.features.addTime &&
+          !this.readOnly &&
+          !this.$dayspan.readOnly
+        );
       }
     },
 
-    summary() {
-      let small = this.$vuetify.breakpoint.xs;
-
-      if (small) {
-        return this.calendar.start.format(this.formats.xs);
+    mounted() {
+      if (!this.$dayspan.promptOpen) {
+        this.$dayspan.promptOpen = (question, callback) => {
+          this.promptVisible = false;
+          this.promptQuestion = question;
+          this.promptCallback = callback;
+          this.promptVisible = true;
+        };
       }
 
-      let large = this.$vuetify.breakpoint.mdAndUp;
-
-      return this.calendar.summary(false, !large, false, !large);
+      this.loadState();
     },
 
-    todayDate() {
-      return this.$dayspan.today.format(this.formats.today);
-    },
+    methods: {
+      setState(state) {
+        state.eventSorter = state.listTimes
+          ? Sorts.List([Sorts.FullDay, Sorts.Start])
+          : Sorts.Start;
 
-    nextLabel() {
-      return this.labels.next(this.currentType);
-    },
+        this.calendar.set(state);
 
-    prevLabel() {
-      return this.labels.prev(this.currentType);
-    },
+        this.triggerChange();
+      },
 
-    toolbarStyle() {
-      let large = this.$vuetify.breakpoint.lgAndUp;
+      applyEvents() {
+        if (this.events) {
+          this.calendar.removeEvents();
+          this.calendar.addEvents(this.events);
+        }
+      },
 
-      return large ? this.styles.toolbar.large : this.styles.toolbar.small;
-    },
+      isType(type, aroundDay) {
+        let cal = this.calendar;
 
-    hasCreatePopover() {
-      return !!this.$scopedSlots.eventCreatePopover;
-    },
+        return (
+          cal.type === type.type &&
+          cal.size === type.size &&
+          (!aroundDay || cal.span.matchesDay(aroundDay))
+        );
+      },
 
-    canAddDay() {
-      return (
-        this.$dayspan.features.addDay &&
-        !this.readOnly &&
-        !this.$dayspan.readOnly
-      );
-    },
+      rebuild(aroundDay, force, forceType) {
 
-    canAddTime() {
-      return (
-        this.$dayspan.features.addTime &&
-        !this.readOnly &&
-        !this.$dayspan.readOnly
-      );
-    }
-  },
+        let type = forceType || this.currentType || this.types[2];
 
-  mounted() {
-    if (!this.$dayspan.promptOpen) {
-      this.$dayspan.promptOpen = (question, callback) => {
-        this.promptVisible = false;
-        this.promptQuestion = question;
-        this.promptCallback = callback;
-        this.promptVisible = true;
-      };
-    }
+        if (this.isType(type, aroundDay) && !force) {
+          return;
+        }
 
-    this.loadState();
-  },
+        let input = {
+          type: type.type,
+          size: type.size,
+          around: aroundDay,
+          eventsOutside: true,
+          preferToday: false,
+          listTimes: type.listTimes,
+          updateRows: type.updateRows,
+          updateColumns: type.listTimes,
+          fill: !type.listTimes,
+          otherwiseFocus: type.focus,
+          repeatCovers: type.repeat
+        };
 
-  methods: {
-    setState(state) {
-      state.eventSorter = state.listTimes
-        ? Sorts.List([Sorts.FullDay, Sorts.Start])
-        : Sorts.Start;
+        this.setState(input);
+      },
 
-      this.calendar.set(state);
+      next() {
+        this.calendar.unselect().next();
 
-      this.triggerChange();
-    },
+        this.triggerChange();
+      },
 
-    applyEvents() {
-      if (this.events) {
-        this.calendar.removeEvents();
-        this.calendar.addEvents(this.events);
-      }
-    },
+      prev() {
+        this.calendar.unselect().prev();
 
-    isType(type, aroundDay) {
-      let cal = this.calendar;
+        this.triggerChange();
+      },
 
-      return (
-        cal.type === type.type &&
-        cal.size === type.size &&
-        (!aroundDay || cal.span.matchesDay(aroundDay))
-      );
-    },
+      setToday() {
+        this.rebuild(this.$dayspan.today, true, this.types[1]);
+      },
 
-    rebuild(aroundDay, force, forceType) {
+      viewDay(day) {
+        this.rebuild(day, false, this.types[0]);
+      },
 
-      let type = forceType || this.currentType || this.types[2];
+      edit(calendarEvent) {
+        let eventDialog = this.$refs.eventDialog;
 
-      if (this.isType(type, aroundDay) && !force) {
-        return;
-      }
+        eventDialog.edit(calendarEvent);
+      },
 
-      let input = {
-        type: type.type,
-        size: type.size,
-        around: aroundDay,
-        eventsOutside: true,
-        preferToday: false,
-        listTimes: type.listTimes,
-        updateRows: type.updateRows,
-        updateColumns: type.listTimes,
-        fill: !type.listTimes,
-        otherwiseFocus: type.focus,
-        repeatCovers: type.repeat
-      };
+      editPlaceholder(createEdit) {
+        let placeholder = createEdit.calendarEvent;
+        let details = createEdit.details;
+        let eventDialog = this.$refs.eventDialog;
+        let calendar = this.$refs.calendar;
 
-      this.setState(input);
-    },
-
-    next() {
-      this.calendar.unselect().next();
-
-      this.triggerChange();
-    },
-
-    prev() {
-      this.calendar.unselect().prev();
-
-      this.triggerChange();
-    },
-
-    setToday() {
-      this.rebuild(this.$dayspan.today, true, this.types[1]);
-    },
-
-    viewDay(day) {
-      this.rebuild(day, false, this.types[0]);
-    },
-
-    edit(calendarEvent) {
-      let eventDialog = this.$refs.eventDialog;
-
-      eventDialog.edit(calendarEvent);
-    },
-
-    editPlaceholder(createEdit) {
-      let placeholder = createEdit.calendarEvent;
-      let details = createEdit.details;
-      let eventDialog = this.$refs.eventDialog;
-      let calendar = this.$refs.calendar;
-
-      eventDialog.addPlaceholder(placeholder, details);
-      eventDialog.$once("close", calendar.clearPlaceholder);
-    },
-
-    add(day) {
-      if( this.currentType == this.types[0] ){
-        this.rebuild(day, true, this.types[1]);
-        return;
-      }
-      if (!this.canAddDay) {
-        return;
-      }
-
-      let eventDialog = this.$refs.eventDialog;
-      let calendar = this.$refs.calendar;
-      let useDialog = !this.hasCreatePopover;
-
-      calendar.addPlaceholder(day, true, useDialog);
-
-      if (useDialog) {
-        eventDialog.add(day);
+        eventDialog.addPlaceholder(placeholder, details);
         eventDialog.$once("close", calendar.clearPlaceholder);
-      }
-    },
+      },
 
-    addAt(dayHour) {
-      if (!this.canAddTime) {
-        return;
-      }
+      add(day) {
+        if( this.currentType == this.types[0] ){
+          this.rebuild(day, true, this.types[1]);
+          return;
+        }
+        if (!this.canAddDay) {
+          return;
+        }
 
-      let eventDialog = this.$refs.eventDialog;
-      let calendar = this.$refs.calendar;
-      let useDialog = !this.hasCreatePopover;
-      let at = dayHour.day.withHour(dayHour.hour);
+        let eventDialog = this.$refs.eventDialog;
+        let calendar = this.$refs.calendar;
+        let useDialog = !this.hasCreatePopover;
 
-      calendar.addPlaceholder(at, false, useDialog);
+        calendar.addPlaceholder(day, true, useDialog);
 
-      if (useDialog) {
-        eventDialog.addAt(dayHour.day, dayHour.hour);
-        eventDialog.$once("close", calendar.clearPlaceholder);
-      }
-    },
+        if (useDialog) {
+          eventDialog.add(day);
+          eventDialog.$once("close", calendar.clearPlaceholder);
+        }
+      },
 
-    addToday() {
-      if (!this.canAddDay) {
-        return;
-      }
+      addAt(dayHour) {
+        if( this.currentType == this.types[0] ){
+          this.rebuild(dayHour, true, this.types[1]);
+          return;
+        }
+        if (!this.canAddTime) {
+          return;
+        }
 
-      let eventDialog = this.$refs.eventDialog;
-      let calendar = this.$refs.calendar;
-      let useDialog = !this.hasCreatePopover || !calendar;
+        let eventDialog = this.$refs.eventDialog;
+        let calendar = this.$refs.calendar;
+        let useDialog = !this.hasCreatePopover;
+        let at = dayHour.day.withHour(dayHour.hour);
 
-      let day = this.$dayspan.today;
+        calendar.addPlaceholder(at, false, useDialog);
 
-      if (!this.calendar.filled.matchesDay(day)) {
-        let first = this.calendar.days[0];
-        let last = this.calendar.days[this.calendar.days.length - 1];
-        let firstDistance = Math.abs(first.currentOffset);
-        let lastDistance = Math.abs(last.currentOffset);
+        if (useDialog) {
+          eventDialog.addAt(dayHour.day, dayHour.hour);
+          eventDialog.$once("close", calendar.clearPlaceholder);
+        }
+      },
 
-        day = firstDistance < lastDistance ? first : last;
-      }
+      addToday() {
+        if (!this.canAddDay) {
+          return;
+        }
 
-      calendar && calendar.addPlaceholder(day, true, useDialog);
+        let eventDialog = this.$refs.eventDialog;
+        let calendar = this.$refs.calendar;
+        let useDialog = !this.hasCreatePopover || !calendar;
 
-      if (useDialog) {
-        eventDialog.add(day);
+        let day = this.$dayspan.today;
 
-        calendar && eventDialog.$once("close", calendar.clearPlaceholder);
-      }
-    },
+        if (!this.calendar.filled.matchesDay(day)) {
+          let first = this.calendar.days[0];
+          let last = this.calendar.days[this.calendar.days.length - 1];
+          let firstDistance = Math.abs(first.currentOffset);
+          let lastDistance = Math.abs(last.currentOffset);
 
-    handleAdd(addEvent) {
-      let eventDialog = this.$refs.eventDialog;
-      let calendar = this.$refs.calendar;
+          day = firstDistance < lastDistance ? first : last;
+        }
 
-      addEvent.handled = true;
+        calendar && calendar.addPlaceholder(day, true, useDialog);
 
-      if (!this.hasCreatePopover) {
-        if (addEvent.placeholder.fullDay) {
-          eventDialog.add(addEvent.span.start, addEvent.span.days(Op.UP));
+        if (useDialog) {
+          eventDialog.add(day);
+
+          calendar && eventDialog.$once("close", calendar.clearPlaceholder);
+        }
+      },
+
+      handleAdd(addEvent) {
+        if( this.currentType == this.types[0] ){
+          return;
+        }
+        let eventDialog = this.$refs.eventDialog;
+        let calendar = this.$refs.calendar;
+
+        addEvent.handled = true;
+
+        if (!this.hasCreatePopover) {
+          if (addEvent.placeholder.fullDay) {
+            eventDialog.add(addEvent.span.start, addEvent.span.days(Op.UP));
+          } else {
+            eventDialog.addSpan(addEvent.span);
+          }
+
+          eventDialog.$once("close", addEvent.clearPlaceholder);
         } else {
-          eventDialog.addSpan(addEvent.span);
+          calendar.placeholderForCreate = true;
         }
+      },
 
-        eventDialog.$once("close", addEvent.clearPlaceholder);
-      } else {
-        calendar.placeholderForCreate = true;
-      }
-    },
+      handleMove(moveEvent) {
+        let calendarEvent = moveEvent.calendarEvent;
+        let target = moveEvent.target;
+        let targetStart = target.start;
+        let sourceStart = calendarEvent.time.start;
+        let schedule = calendarEvent.schedule;
+        let options = [];
 
-    handleMove(moveEvent) {
-      let calendarEvent = moveEvent.calendarEvent;
-      let target = moveEvent.target;
-      let targetStart = target.start;
-      let sourceStart = calendarEvent.time.start;
-      let schedule = calendarEvent.schedule;
-      let options = [];
+        moveEvent.handled = true;
 
-      moveEvent.handled = true;
+        let callbacks = {
+          cancel: () => {
+            moveEvent.clearPlaceholder();
+          },
+          single: () => {
+            calendarEvent.move(targetStart);
+            this.eventsRefresh();
+            moveEvent.clearPlaceholder();
 
-      let callbacks = {
-        cancel: () => {
-          moveEvent.clearPlaceholder();
-        },
-        single: () => {
-          calendarEvent.move(targetStart);
-          this.eventsRefresh();
-          moveEvent.clearPlaceholder();
+            this.$emit("event-update", calendarEvent.event);
+          },
+          instance: () => {
+            calendarEvent.move(targetStart);
+            this.eventsRefresh();
+            moveEvent.clearPlaceholder();
 
-          this.$emit("event-update", calendarEvent.event);
-        },
-        instance: () => {
-          calendarEvent.move(targetStart);
-          this.eventsRefresh();
-          moveEvent.clearPlaceholder();
+            this.$emit("event-update", calendarEvent.event);
+          },
+          duplicate: () => {
+            schedule.setExcluded(targetStart, false);
+            this.eventsRefresh();
+            moveEvent.clearPlaceholder();
 
-          this.$emit("event-update", calendarEvent.event);
-        },
-        duplicate: () => {
-          schedule.setExcluded(targetStart, false);
-          this.eventsRefresh();
-          moveEvent.clearPlaceholder();
+            this.$emit("event-update", calendarEvent.event);
+          },
+          all: () => {
+            schedule.moveTime(sourceStart.asTime(), targetStart.asTime());
+            this.eventsRefresh();
+            moveEvent.clearPlaceholder();
 
-          this.$emit("event-update", calendarEvent.event);
-        },
-        all: () => {
-          schedule.moveTime(sourceStart.asTime(), targetStart.asTime());
-          this.eventsRefresh();
-          moveEvent.clearPlaceholder();
+            this.$emit("event-update", calendarEvent.event);
+          }
+        };
 
-          this.$emit("event-update", calendarEvent.event);
-        }
-      };
-
-      options.push({
-        text: this.labels.moveCancel,
-        callback: callbacks.cancel
-      });
-
-      if (schedule.isSingleEvent()) {
         options.push({
-          text: this.labels.moveSingleEvent,
-          callback: callbacks.single
+          text: this.labels.moveCancel,
+          callback: callbacks.cancel
         });
 
-        if (this.$dayspan.features.moveDuplicate) {
+        if (schedule.isSingleEvent()) {
           options.push({
-            text: this.labels.moveDuplicate,
-            callback: callbacks.duplicate
+            text: this.labels.moveSingleEvent,
+            callback: callbacks.single
           });
+
+          if (this.$dayspan.features.moveDuplicate) {
+            options.push({
+              text: this.labels.moveDuplicate,
+              callback: callbacks.duplicate
+            });
+          }
+        } else {
+          if (this.$dayspan.features.moveInstance) {
+            options.push({
+              text: this.labels.moveOccurrence,
+              callback: callbacks.instance
+            });
+          }
+
+          if (this.$dayspan.features.moveDuplicate) {
+            options.push({
+              text: this.labels.moveDuplicate,
+              callback: callbacks.duplicate
+            });
+          }
+
+          if (
+            this.$dayspan.features.moveAll &&
+            !schedule.isFullDay() &&
+            targetStart.sameDay(sourceStart)
+          ) {
+            options.push({
+              text: this.labels.moveAll,
+              callback: callbacks.all
+            });
+          }
         }
-      } else {
-        if (this.$dayspan.features.moveInstance) {
-          options.push({
-            text: this.labels.moveOccurrence,
-            callback: callbacks.instance
-          });
+
+        this.options = options;
+        this.optionsVisible = true;
+      },
+
+      chooseOption(option) {
+        if (option) {
+          option.callback();
         }
 
-        if (this.$dayspan.features.moveDuplicate) {
-          options.push({
-            text: this.labels.moveDuplicate,
-            callback: callbacks.duplicate
-          });
-        }
+        this.optionsVisible = false;
+      },
 
-        if (
-          this.$dayspan.features.moveAll &&
-          !schedule.isFullDay() &&
-          targetStart.sameDay(sourceStart)
-        ) {
-          options.push({
-            text: this.labels.moveAll,
-            callback: callbacks.all
-          });
-        }
-      }
+      choosePrompt(yes) {
+        this.promptCallback(yes);
+        this.promptVisible = false;
+      },
+  // eslint-disable-next-line no-unused-vars
+      eventFinish(ev) {
+        this.triggerChange();
+      },
 
-      this.options = options;
-      this.optionsVisible = true;
-    },
+      eventsRefresh() {
+        this.calendar.refreshEvents();
 
-    chooseOption(option) {
-      if (option) {
-        option.callback();
-      }
+        this.triggerChange();
+      },
 
-      this.optionsVisible = false;
-    },
+      triggerChange() {
+        this.saveState();
+        this.$emit("change", {
+          calendar: this.calendar
+        });
+      },
 
-    choosePrompt(yes) {
-      this.promptCallback(yes);
-      this.promptVisible = false;
-    },
-// eslint-disable-next-line no-unused-vars
-    eventFinish(ev) {
-      this.triggerChange();
-    },
-
-    eventsRefresh() {
-      this.calendar.refreshEvents();
-
-      this.triggerChange();
-    },
-
-    triggerChange() {
-      this.saveState();
-      this.$emit("change", {
-        calendar: this.calendar
-      });
-    },
-
-    saveState()
-    {
-      let state = this.calendar.toInput(true);
-      let json = JSON.stringify(state);
-
-      localStorage.setItem(this.storeKey, json);
-    },
-
-    loadState()
-    {
-      let state = {};
-
-      try
+      saveState()
       {
-        let savedState = JSON.parse(localStorage.getItem(this.storeKey));
+        let state = this.calendar.toInput(true);
+        let json = JSON.stringify(state);
 
-        if (savedState)
+        localStorage.setItem(this.storeKey, json);
+      },
+
+      loadState()
+      {
+        let state = {};
+
+        try
         {
-          state = savedState;
-          state.preferToday = false;
+          let savedState = JSON.parse(localStorage.getItem(this.storeKey));
+
+          if (savedState)
+          {
+            state = savedState;
+            state.preferToday = false;
+          }
         }
+        catch (e)
+        {
+          // eslint-disable-next-line
+          console.log( e );
+        }
+
+        if (!state.events || !state.events.length)
+        {
+          state.events = this.defaultEvents;
+        }
+
+        state.events.forEach(ev =>
+        {
+          let defaults = this.$dayspan.getDefaultEventDetails();
+
+          ev.data = Vue.util.extend( defaults, ev.data );
+        });
+
+        this.setState( state );
       }
-      catch (e)
-      {
-        // eslint-disable-next-line
-        console.log( e );
-      }
-
-      if (!state.events || !state.events.length)
-      {
-        state.events = this.defaultEvents;
-      }
-
-      state.events.forEach(ev =>
-      {
-        let defaults = this.$dayspan.getDefaultEventDetails();
-
-        ev.data = Vue.util.extend( defaults, ev.data );
-      });
-
-      this.setState( state );
     }
-  }
-};
+  };
 </script>
 
 <style lang="scss">
@@ -934,4 +924,11 @@ export default {
     height: 24px;
   }
 }
+
+.v-btn--flat,
+.v-text-field--solo .v-input__slot {
+  background-color: #f5f5f5 !important;
+  margin-bottom: 8px !important;
+}
+
 </style>

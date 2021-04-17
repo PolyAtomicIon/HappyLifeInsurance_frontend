@@ -10,17 +10,30 @@ import store from './store';
 Vue.config.productionTip = false
 
 Vue.use(DaySpanVuetify, {
-    // options is vue definition, the resulting reactive component is stored in components as this.$dayspan or Vue.$dayspan
+
     data: {
-        // data or computed to override
-    },
-    computed: {
-        // data or computed to override
+        features: {
+            exclude: true,
+            include: true,
+            cancel: true,
+            move: true,
+            moveDuplicate: true,
+            moveInstance: true,
+            moveAll: true,
+            drag: true,
+            forecast: true,
+            addDay: true,
+            addTime: true,
+            hideOnMove: true,
+        },
     },
     methods: {
-        // methods to override
-    }
+        getDefaultEventColor: () => '#00d9ff'
+    },
+    computed: {},
 });
+
+Vue.use(vuetify);
 
 new Vue({
     vuetify,

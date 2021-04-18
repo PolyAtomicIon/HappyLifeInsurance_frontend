@@ -85,6 +85,7 @@
         </v-menu>
       </slot>
     </v-app-bar>
+
     <v-main class="ds-expand my-0 py-0">
       <v-container fluid fill-height class="ds-calendar-container">
         <ds-gestures @swipeleft="next" @swiperight="prev">
@@ -128,7 +129,7 @@
           </div>
         </ds-gestures>
 
-        <slot
+        <!-- <slot
           name="calendarAppEventDialog"
           v-bind="{$scopedSlots, $listeners, calendar, eventFinish}"
         >
@@ -141,6 +142,21 @@
             @saved="eventFinish"
             @actioned="eventFinish"
           ></ds-event-dialog>
+        </slot> -->
+
+        <slot
+          name="calendarAppEventDialog"
+          v-bind="{$scopedSlots, $listeners, calendar, eventFinish}"
+        >
+          <custom-event-dialog
+            ref="eventDialog"
+            v-bind="{$scopedSlots}"
+            v-on="$listeners"
+            :calendar="calendar"
+            :read-only="readOnly"
+            @saved="eventFinish"
+            @actioned="eventFinish"
+          ></custom-event-dialog>
         </slot>
 
         <slot
@@ -191,10 +207,13 @@
   // eslint-disable-next-line no-unused-vars
   import { Constants, Sorts, Calendar, Day, Units, Weekday, Month, DaySpan, PatternMap, Time, Op } from "dayspan";
   import Vue from 'vue';
+  import CustomEventDialog from '../components/CustomEventDialog.vue'
 
   export default {
     name: "dsCalendarApp",
-
+    components: {
+      CustomEventDialog
+    },
     props: {
       events: {
         type: Array

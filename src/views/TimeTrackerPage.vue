@@ -30,7 +30,7 @@
       </v-col>
 
       <v-col>
-        <v-sheet height="70vh" rounded="lg" class="mb-10">
+        <v-sheet height="79vh" rounded="lg" class="mb-10">
           <!-- <router-view class="child-view"></router-view> -->
 
           <div class="calendar-container">

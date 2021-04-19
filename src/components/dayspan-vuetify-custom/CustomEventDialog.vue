@@ -34,7 +34,7 @@
 
 <script>
 import { Calendar, Schedule, Functions as fn } from 'dayspan'
-import CustomEvent from '../components/CustomEvent.vue'
+import CustomEvent from '../dayspan-vuetify-custom/CustomEvent'
 
 export default {
 

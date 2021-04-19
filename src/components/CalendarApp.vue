@@ -207,7 +207,7 @@
   // eslint-disable-next-line no-unused-vars
   import { Constants, Sorts, Calendar, Day, Units, Weekday, Month, DaySpan, PatternMap, Time, Op } from "dayspan";
   import Vue from 'vue';
-  import CustomEventDialog from '../components/CustomEventDialog.vue'
+  import CustomEventDialog from '../components/dayspan-vuetify-custom/CustomEventDialog.vue'
 
   export default {
     name: "dsCalendarApp",

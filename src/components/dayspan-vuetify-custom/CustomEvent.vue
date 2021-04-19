@@ -78,11 +78,11 @@
 
             <slot name="schedule" v-bind="slotData">
 
-                <ds-schedule
+                <custom-schedule
                         :schedule="schedule"
                         :day="day"
                         :read-only="readOnly"
-                ></ds-schedule>
+                ></custom-schedule>
 
             </slot>
 
@@ -285,7 +285,8 @@
 
 <script>
 import { Day, Calendar, CalendarEvent, Schedule, Functions as fn } from 'dayspan'
-import CustomScheduleActions from '../components/CustomScheduleActions.vue'
+import CustomSchedule from '../dayspan-vuetify-custom/CustomSchedule.vue'
+import CustomScheduleActions from '../dayspan-vuetify-custom/CustomScheduleActions.vue'
 
 export default {
 
@@ -424,7 +425,8 @@ export default {
     }),
 
     components: {
-        CustomScheduleActions
+        CustomScheduleActions,
+        CustomSchedule
     },
 
     watch:

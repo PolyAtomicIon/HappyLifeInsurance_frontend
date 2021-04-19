@@ -1,6 +1,28 @@
 <template>
     <div class="ds-schedule-times my-4 mx-2">
 
+        <div v-if="!allDay">
+
+            <div class="ds-time-row" v-for="(time, index) in schedule.times" :key="time">
+
+                <!-- <div class="ds-time-cell"></div> -->
+
+                <custom-schedule-time
+                        class="ds-time-cell double"
+                        :index="index"
+                        :show-remove="hasTimes"
+                        :value="schedule.times[ index ]"
+                        :key="index"
+                        :read-only="readOnly"
+                        @add="addTime"
+                        @remove="removeTime"
+                        @change="changeTime"
+                ></custom-schedule-time>
+
+            </div>
+
+        </div>
+
         <div class="ds-time-row">
 
             <!-- <div class="ds-time-cell">
@@ -43,28 +65,7 @@
 
         </div>
 
-        <!-- <div v-if="!allDay">
-
-            <div class="ds-time-row" v-for="(time, index) in schedule.times">
-
-                <div class="ds-time-cell"></div>
-
-                <ds-schedule-time
-                        class="ds-time-cell double"
-                        :index="index"
-                        :show-add="isLastTime( index )"
-                        :show-remove="hasTimes"
-                        :value="schedule.times[ index ]"
-                        :key="index"
-                        :read-only="readOnly"
-                        @add="addTime"
-                        @remove="removeTime"
-                        @change="changeTime"
-                ></ds-schedule-time>
-
-            </div>
-
-        </div> -->
+        
 
     </div>
 
@@ -72,10 +73,15 @@
 
 <script>
 import { Time, Schedule, Functions as fn } from 'dayspan'
+import CustomScheduleTime from '../dayspan-vuetify-custom/CustomScheduleTime.vue'
 
 export default {
 
     name: 'dsScheduleTimes',
+
+    components: {
+        CustomScheduleTime
+    },
 
     props:
         {

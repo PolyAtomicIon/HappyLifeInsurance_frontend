@@ -1,6 +1,14 @@
 <template>
     <div class="ds-schedule-times my-4 mx-2">
 
+        <div class="ds-time-row ds-time-row-margin">
+            <div class="ds-time-cell">
+                <v-text class="cell-name cell-name-lg">
+                    Date: {{this.scheduleDate}}
+                </v-text>
+            </div>
+        </div>
+
         <div v-if="!allDay">
 
             <div class="ds-time-row" v-for="(time, index) in schedule.times" :key="time">
@@ -140,6 +148,13 @@ export default {
 
             isReadOnly () {
                 return this.readOnly || this.$dayspan.readOnly
+            },
+
+            scheduleDate(){
+                let dayOfMonth = this.schedule.dayOfMonth.input[0];
+                let month = this.schedule.month.input[0] + 1;
+                let year = this.schedule.year.input[0];
+                return dayOfMonth + '.' + month + '.' + year;
             }
         },
 
@@ -156,6 +171,10 @@ export default {
             },
             allDay: 'updateScheduleAllDay'
         },
+
+    mounted(){
+        console.log(this.schedule)
+    },
 
     methods:
         {
@@ -250,6 +269,11 @@ export default {
     .ds-schedule-times {
         max-width: 436px;
 
+        .ds-time-row-margin {
+            margin-top: 24px;
+            margin-bottom: 12px;
+        }
+
         .ds-time-row {
             display: flex;
 
@@ -261,6 +285,17 @@ export default {
                     padding-right: 16px;
                     flex: 2 0 0px;
                 }
+            }
+            .cell-name {
+                font-size: 18px;
+                // background: red;
+                color: rgb(93, 90, 90);
+                width: 128px;
+                padding: 24px 0;
+            }
+            
+            .cell-name-lg {
+                width: 208px;
             }
         }
     }

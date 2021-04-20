@@ -30,11 +30,12 @@
                 <slot name="scheduleSave" v-bind="{hasSave, save, labels, readOnly}">
 
                     <v-btn
-                            v-if="!isReadOnly"
-                            class="ds-button-tall ml-3 mt-1 mb-2" depressed
-                            color="primary"
-                            :disabled="!canSave"
-                            @click.stop="save">
+                        v-if="!isReadOnly"
+                        class="ds-button-tall ml-3 mt-1 mb-2" depressed
+                        color="primary"
+                        :disabled="!canSave"
+                        @click.stop="save"
+                    >
 
                         <span v-html="labels.save"></span>
 
@@ -51,6 +52,7 @@
                             :schedule="schedule"
                             :calendar-event="calendarEvent"
                             :calendar="calendar"
+                            :allowRemove="canSave"
                             @finish="actioned">
                         
                     </custom-schedule-actions>
@@ -552,12 +554,14 @@ export default {
                     }
 
                     ev.handled = true
+                    ev.id = 456
 
                     if (ev.created) {
                         this.$emit('event-create', ev.created)
                     }
                 }
-
+                // console.log("Added / Updated")
+                // console.log(ev)
                 this.$emit('saved', ev)
             },
 

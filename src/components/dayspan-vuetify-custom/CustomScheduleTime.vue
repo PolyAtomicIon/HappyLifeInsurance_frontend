@@ -230,8 +230,12 @@ export default {
             .cell-name {
                 font-size: 18px;
                 // background: red;
-                color: #000;
+                color: rgb(93, 90, 90);
                 width: 128px;
+            }
+            
+            .cell-name-lg {
+                width: 208px;
             }
 
         }

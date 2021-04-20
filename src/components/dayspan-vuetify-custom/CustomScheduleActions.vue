@@ -7,6 +7,7 @@
                 class="ds-button-tall error ml-1 mt-1 mb-2" 
                 depressed
                 @click="remove"
+                :disabled="!canRemove"
             >
                 Delete
             </v-btn>
@@ -279,13 +280,14 @@ export default {
                     }
 
                     this.$emit('finish', ev)
-
+                    // console.log("Delete event")
+                    // console.log(ev.event)
                     this.$emit('event-remove', ev.event)
                 })
             },
 
             exclude () {
-                this.$dayspan.getPermission('actionExclude', () => {
+                this.$dayspan.getPermission('actionExcluderemove', () => {
                     var ev = this.getEvent('exclude')
 
                     this.$emit('exclude', ev)

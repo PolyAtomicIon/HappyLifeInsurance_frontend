@@ -197,7 +197,27 @@
           </v-dialog>
         </slot>
 
-        <slot name="containerInside" v-bind="{events, calendar}"></slot>
+        <template slot="eventPopover" slot-scope="slotData">
+            <ds-calendar-event-popover
+              v-bind="slotData"
+              :read-only="readOnly"
+              @finish="saveState"
+            ></ds-calendar-event-popover>
+        </template>
+
+        <template slot="eventCreatePopover" slot-scope="{placeholder, calendar}">
+            <ds-calendar-event-create-popover
+                    :calendar-event="placeholder"
+                    :calendar="calendar"
+                    :close="$refs.app.$refs.calendar.clearPlaceholder"
+                    @create-edit="$refs.app.editPlaceholder"
+                    @create-popover-closed="saveState"
+            ></ds-calendar-event-create-popover>
+        </template>
+
+          <slot name="containerInside" v-bind="{events, calendar}">
+            
+          </slot>
       </v-container>
     </v-main>
   </div>
@@ -294,182 +314,182 @@
       promptVisible: false,
       promptQuestion: "",
       promptCallback: null,
-      defaultEvents: [
-        {
-          data: {
-            title: 'Weekly Meeting',
-            color: '#3F51B5'
-          },
-          schedule: {
-            dayOfWeek: [Weekday.MONDAY],
-            times: [9],
-            duration: 30,
-            durationUnit: 'minutes'
-          }
-        },
-        {
-          data: {
-            title: 'First Weekend',
-            color: '#4CAF50'
-          },
-          schedule: {
-            weekspanOfMonth: [0],
-            dayOfWeek: [Weekday.FRIDAY],
-            duration: 3,
-            durationUnit: 'days'
-          }
-        },
-        {
-          data: {
-            title: 'End of Month',
-            color: '#000000'
-          },
-          schedule: {
-            lastDayOfMonth: [1],
-            duration: 1,
-            durationUnit: 'hours'
-          }
-        },
-        {
-          data: {
-            title: 'Mother\'s Day',
-            color: '#2196F3',
-            calendar: 'US Holidays'
-          },
-          schedule: {
-            month: [Month.MAY],
-            dayOfWeek: [Weekday.SUNDAY],
-            weekspanOfMonth: [1]
-          }
-        },
-        {
-          data: {
-            title: 'New Year\'s Day',
-            color: '#2196F3',
-            calendar: 'US Holidays'
-          },
-          schedule: {
-            month: [Month.JANUARY],
-            dayOfMonth: [1]
-          }
-        },
-        {
-          data: {
-            title: 'Inauguration Day',
-            color: '#2196F3',
-            calendar: 'US Holidays'
-          },
-          schedule: {
-            month: [Month.JANUARY],
-            dayOfMonth: [20]
-          }
-        },
-        {
-          data: {
-            title: 'Martin Luther King, Jr. Day',
-            color: '#2196F3',
-            calendar: 'US Holidays'
-          },
-          schedule: {
-            month: [Month.JANUARY],
-            dayOfWeek: [Weekday.MONDAY],
-            weekspanOfMonth: [2]
-          }
-        },
-        {
-          data: {
-            title: 'George Washington\'s Birthday',
-            color: '#2196F3',
-            calendar: 'US Holidays'
-          },
-          schedule: {
-            month: [Month.FEBRUARY],
-            dayOfWeek: [Weekday.MONDAY],
-            weekspanOfMonth: [2]
-          }
-        },
-        {
-          data: {
-            title: 'Memorial Day',
-            color: '#2196F3',
-            calendar: 'US Holidays'
-          },
-          schedule: {
-            month: [Month.MAY],
-            dayOfWeek: [Weekday.MONDAY],
-            lastWeekspanOfMonth: [0]
-          }
-        },
-        {
-          data: {
-            title: 'Independence Day',
-            color: '#2196F3',
-            calendar: 'US Holidays'
-          },
-          schedule: {
-            month: [Month.JULY],
-            dayOfMonth: [4]
-          }
-        },
-        {
-          data: {
-            title: 'Labor Day',
-            color: '#2196F3',
-            calendar: 'US Holidays'
-          },
-          schedule: {
-            month: [Month.SEPTEMBER],
-            dayOfWeek: [Weekday.MONDAY],
-            lastWeekspanOfMonth: [0]
-          }
-        },
-        {
-          data: {
-            title: 'Columbus Day',
-            color: '#2196F3',
-            calendar: 'US Holidays'
-          },
-          schedule: {
-            month: [Month.OCTOBER],
-            dayOfWeek: [Weekday.MONDAY],
-            weekspanOfMonth: [1]
-          }
-        },
-        {
-          data: {
-            title: 'Veterans Day',
-            color: '#2196F3',
-            calendar: 'US Holidays'
-          },
-          schedule: {
-            month: [Month.NOVEMBER],
-            dayOfMonth: [11]
-          }
-        },
-        {
-          data: {
-            title: 'Thanksgiving Day',
-            color: '#2196F3',
-            calendar: 'US Holidays'
-          },
-          schedule: {
-            month: [Month.NOVEMBER],
-            dayOfWeek: [Weekday.THURSDAY],
-            weekspanOfMonth: [3]
-          }
-        },
-        {
-          data: {
-            title: 'Christmas Day',
-            color: '#2196F3',
-            calendar: 'US Holidays'
-          },
-          schedule: {
-            month: [Month.DECEMBER],
-            dayOfMonth: [25]
-          }
-        }
-      ],
+      // defaultEvents: [
+      //   {
+      //     data: {
+      //       title: 'Weekly Meeting',
+      //       color: '#3F51B5'
+      //     },
+      //     schedule: {
+      //       dayOfWeek: [Weekday.MONDAY],
+      //       times: [9],
+      //       duration: 30,
+      //       durationUnit: 'minutes'
+      //     }
+      //   },
+      //   {
+      //     data: {
+      //       title: 'First Weekend',
+      //       color: '#4CAF50'
+      //     },
+      //     schedule: {
+      //       weekspanOfMonth: [0],
+      //       dayOfWeek: [Weekday.FRIDAY],
+      //       duration: 3,
+      //       durationUnit: 'days'
+      //     }
+      //   },
+      //   {
+      //     data: {
+      //       title: 'End of Month',
+      //       color: '#000000'
+      //     },
+      //     schedule: {
+      //       lastDayOfMonth: [1],
+      //       duration: 1,
+      //       durationUnit: 'hours'
+      //     }
+      //   },
+      //   {
+      //     data: {
+      //       title: 'Mother\'s Day',
+      //       color: '#2196F3',
+      //       calendar: 'US Holidays'
+      //     },
+      //     schedule: {
+      //       month: [Month.MAY],
+      //       dayOfWeek: [Weekday.SUNDAY],
+      //       weekspanOfMonth: [1]
+      //     }
+      //   },
+      //   {
+      //     data: {
+      //       title: 'New Year\'s Day',
+      //       color: '#2196F3',
+      //       calendar: 'US Holidays'
+      //     },
+      //     schedule: {
+      //       month: [Month.JANUARY],
+      //       dayOfMonth: [1]
+      //     }
+      //   },
+      //   {
+      //     data: {
+      //       title: 'Inauguration Day',
+      //       color: '#2196F3',
+      //       calendar: 'US Holidays'
+      //     },
+      //     schedule: {
+      //       month: [Month.JANUARY],
+      //       dayOfMonth: [20]
+      //     }
+      //   },
+      //   {
+      //     data: {
+      //       title: 'Martin Luther King, Jr. Day',
+      //       color: '#2196F3',
+      //       calendar: 'US Holidays'
+      //     },
+      //     schedule: {
+      //       month: [Month.JANUARY],
+      //       dayOfWeek: [Weekday.MONDAY],
+      //       weekspanOfMonth: [2]
+      //     }
+      //   },
+      //   {
+      //     data: {
+      //       title: 'George Washington\'s Birthday',
+      //       color: '#2196F3',
+      //       calendar: 'US Holidays'
+      //     },
+      //     schedule: {
+      //       month: [Month.FEBRUARY],
+      //       dayOfWeek: [Weekday.MONDAY],
+      //       weekspanOfMonth: [2]
+      //     }
+      //   },
+      //   {
+      //     data: {
+      //       title: 'Memorial Day',
+      //       color: '#2196F3',
+      //       calendar: 'US Holidays'
+      //     },
+      //     schedule: {
+      //       month: [Month.MAY],
+      //       dayOfWeek: [Weekday.MONDAY],
+      //       lastWeekspanOfMonth: [0]
+      //     }
+      //   },
+      //   {
+      //     data: {
+      //       title: 'Independence Day',
+      //       color: '#2196F3',
+      //       calendar: 'US Holidays'
+      //     },
+      //     schedule: {
+      //       month: [Month.JULY],
+      //       dayOfMonth: [4]
+      //     }
+      //   },
+      //   {
+      //     data: {
+      //       title: 'Labor Day',
+      //       color: '#2196F3',
+      //       calendar: 'US Holidays'
+      //     },
+      //     schedule: {
+      //       month: [Month.SEPTEMBER],
+      //       dayOfWeek: [Weekday.MONDAY],
+      //       lastWeekspanOfMonth: [0]
+      //     }
+      //   },
+      //   {
+      //     data: {
+      //       title: 'Columbus Day',
+      //       color: '#2196F3',
+      //       calendar: 'US Holidays'
+      //     },
+      //     schedule: {
+      //       month: [Month.OCTOBER],
+      //       dayOfWeek: [Weekday.MONDAY],
+      //       weekspanOfMonth: [1]
+      //     }
+      //   },
+      //   {
+      //     data: {
+      //       title: 'Veterans Day',
+      //       color: '#2196F3',
+      //       calendar: 'US Holidays'
+      //     },
+      //     schedule: {
+      //       month: [Month.NOVEMBER],
+      //       dayOfMonth: [11]
+      //     }
+      //   },
+      //   {
+      //     data: {
+      //       title: 'Thanksgiving Day',
+      //       color: '#2196F3',
+      //       calendar: 'US Holidays'
+      //     },
+      //     schedule: {
+      //       month: [Month.NOVEMBER],
+      //       dayOfWeek: [Weekday.THURSDAY],
+      //       weekspanOfMonth: [3]
+      //     }
+      //   },
+      //   {
+      //     data: {
+      //       title: 'Christmas Day',
+      //       color: '#2196F3',
+      //       calendar: 'US Holidays'
+      //     },
+      //     schedule: {
+      //       month: [Month.DECEMBER],
+      //       dayOfMonth: [25]
+      //     }
+      //   }
+      // ],
     }),
 
     watch: {
@@ -556,6 +576,7 @@
           this.promptVisible = true;
         };
       }
+
 
       this.loadState();
     },
@@ -650,11 +671,13 @@
       },
 
       add(day) {
+
         if( this.currentType == this.types[0] ){
           this.rebuild(day, true, this.types[1]);
           return;
         }
         if (!this.canAddDay) {
+          console.log("decline")
           return;
         }
 
@@ -849,6 +872,12 @@
       },
   // eslint-disable-next-line no-unused-vars
       eventFinish(ev) {
+        console.log(ev.id);
+
+        if( ev.id === undefined )
+          ev.id = 165;
+
+        console.log(ev);
         this.triggerChange();
       },
 
@@ -868,6 +897,7 @@
       saveState()
       {
         let state = this.calendar.toInput(true);
+        console.log(this.calendar);
         let json = JSON.stringify(state);
 
         localStorage.setItem(this.storeKey, json);

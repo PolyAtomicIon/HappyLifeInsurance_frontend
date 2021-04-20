@@ -1,8 +1,9 @@
 <template>
     <v-card
-        max-height="400px"
+        class="rounded-0"
+        height="400px" 
     >
-        <v-card-title class="white--text orange darken-4">
+        <v-card-title class="white--text indigo darken-1">
             Editors List
         </v-card-title>
         
@@ -91,7 +92,7 @@
 
 
     export default {
-
+        name: "Editors",
         data: () => ({
             colors: ['#2196F3', '#90CAF9'],
             items: [

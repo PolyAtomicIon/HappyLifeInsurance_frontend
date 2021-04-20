@@ -1,9 +1,9 @@
 <template>
     <v-card
-        max-height="265px"
-        class="my-4"
+        class="rounded-0"
+        height="400px"
     >
-        <v-card-title class="white--text indigo darken-4">
+        <v-card-title class="white--text indigo darken-1">
             Shared with me
     
             <v-spacer></v-spacer>
@@ -11,7 +11,7 @@
         </v-card-title>
     
         <v-card-text class="pt-4">
-            You are allowed to give acces to edit your entriesatmost for 2 employees 
+            You can edit entries of the following users, they gave you access to edit their entries.
         </v-card-text>
     
         <v-divider></v-divider>
@@ -62,7 +62,7 @@
 
 
     export default {
-
+        name: "Shared",
         data: () => ({
             colors: ['#2196F3', '#90CAF9'],
             items: [

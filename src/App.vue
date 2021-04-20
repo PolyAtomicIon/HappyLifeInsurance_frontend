@@ -46,12 +46,12 @@
         if( path === "" ){
           return [{
             text: 'Time-tracker',
-            disabled: false,
+            disabled: true,
             href: '/time-tracker'
           },
           {
             text: '',
-            disabled: false,
+            disabled: true,
             href: '/'
           }]
         }
@@ -68,12 +68,12 @@
           link = link + '/' + chunk;
           items.push({
             text: chunk.charAt(0).toUpperCase() + chunk.slice(1),
-            disabled: false,
+            disabled: true,
             href: link
           });
         });
 
-        items.slice(-1)[0].disabled = true;
+        // items.slice(-1)[0].disabled = true;
 
         return items
       }

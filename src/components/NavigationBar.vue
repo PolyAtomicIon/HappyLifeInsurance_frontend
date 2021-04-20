@@ -17,6 +17,13 @@
       <v-container class="py-0 fill-height hidden-sm-and-down">
 
         <v-btn v-for="(value, itemName) in links" :key="itemName" text @click="goToPage(value.path)">
+          
+          <v-icon
+            class="mr-1"
+          >
+            {{value.icon}}
+          </v-icon>
+          
           {{ itemName }}
         </v-btn>
 
@@ -68,7 +75,7 @@
         },
         'Profile' : {
           icon: 'mdi-account',
-          path: 'profile',
+          path: 'profile/flex-status',
         },
         'Time Tracker' : {
           icon: 'mdi-clock',

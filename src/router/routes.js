@@ -2,7 +2,7 @@
 import ProfilePage from '../views/ProfilePage';
 import TimeTrackerPage from '../views/TimeTrackerPage';
 import FlexStatusPage from '../views/FlexStatusPage';
-import EditorsList from '../views/EditorsList';
+import UserPermissions from '../views/UserPermissions';
 
 export default [{
         path: '*',
@@ -22,9 +22,9 @@ export default [{
                 component: FlexStatusPage,
             },
             {
-                path: 'editors',
-                name: 'editors',
-                component: EditorsList
+                path: 'permisssions',
+                name: 'permisssions',
+                component: UserPermissions
             },
         ],
     },

@@ -49,14 +49,14 @@
                     <v-btn
                         depressed
                         small
+                        color="error"
                     >
-                        View User
-        
+                        Delete
                         <v-icon
-                        color="orange darken-4"
-                        right
+                            color="white "
+                            right
                         >
-                        mdi-open-in-new
+                            mdi-delete
                         </v-icon>
                     </v-btn>
                     </v-list-item-action>
@@ -108,13 +108,13 @@
                         depressed
                         small
                     >
-                        View User
+                        Edit user's entries
         
                         <v-icon
-                        color="orange darken-4"
-                        right
+                            color="orange darken-4"
+                            right
                         >
-                        mdi-open-in-new
+                            mdi-open-in-new
                         </v-icon>
                     </v-btn>
                     </v-list-item-action>

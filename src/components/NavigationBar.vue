@@ -11,9 +11,7 @@
       <v-app-bar-nav-icon @click="drawer = true" class="hidden-md-and-up" ></v-app-bar-nav-icon>
 
       <v-toolbar-title>
-        <v-btn flat @click="goToPage('')">
           {{title}}
-        </v-btn>
       </v-toolbar-title>
 
       <v-container class="py-0 fill-height hidden-sm-and-down">

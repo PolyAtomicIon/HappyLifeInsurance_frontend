@@ -4,10 +4,10 @@
       <v-col cols="12" sm="12" md="3">
         <v-sheet rounded="lg">
           <v-list color="transparent">
-            <v-list-item v-for="(key, value) in ProfileData" :key="key">
+            <v-list-item v-for="(value, key) in profileData" :key="key">
               <v-list-item-content>
                 <v-list-item-title>
-                  <b>{{ key }}:</b> {{ Profile[value] }}
+                  <b>{{ key }}:</b> {{ printData(Profile[value]) }}
                 </v-list-item-title>
               </v-list-item-content>
             </v-list-item>
@@ -40,18 +40,17 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from "vuex";
+import axios from 'axios'
 
 export default {
   name: "App",
   data: () => ({
-    ProfileData: {
-      title: "Username",
-      city: "City",
-      phone: "Phone",
-      email: "Email",
-      numberOfCars: "Cars in wishlist #",
+    profileData: {
+      'Name': 'name',
+      'Email': 'email',
+      'Job position': 'job_position'
     },
+    Profile: null,
   }),
 
   mounted() {
@@ -61,14 +60,28 @@ export default {
   },
 
   computed: {
-    ...mapGetters(["Profile"]),
   },
 
   components: {
     // nav_bar,
   },
   methods: {
-    ...mapActions(["fetchProfile"]),
+
+    fetchProfile(){
+      axios.get("https://next.json-generator.com/api/json/get/411DaOJLc")
+          .then(
+              response => {
+                  console.log(response.data);
+                  this.Profile = response.data;
+              })
+    },
+
+    printData(obj){
+      if( typeof obj !== 'object' )
+        return obj
+
+      return obj.first + ' ' + obj.last;
+    },
 
     goBack: function () {
       this.$router.go(-1);

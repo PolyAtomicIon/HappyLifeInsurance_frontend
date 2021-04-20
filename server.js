@@ -26,7 +26,8 @@ app.use(history({
 }))
 
 // Serve static assets from the build files (images, etc)
-app.use(serveStatic(path.join(__dirname, '/dist')))
+// app.use(serveStatic(path.join(__dirname, '/dist')))
+app.use("/", express.static(path.join(__dirname, "/dist")))
 
 var port = process.env.PORT || 8000
 

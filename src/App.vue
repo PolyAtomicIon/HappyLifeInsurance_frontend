@@ -35,42 +35,31 @@
   export default {
     name: 'App',
     data: () => ({
-      items: [
-        {
-          text: 'Dashboard',
-          disabled: false,
-          href: '/profile',
-        },
-        {
-          text: 'Link 1',
-          disabled: false,
-          href: '/profile/permissions',
-        },
-        {
-          text: 'Link 2',
-          disabled: true,
-          href: 'breadcrumbs_link_2',
-        },
-      ],
     }),
 
     computed: {
       breadCrumbsItems(){
         console.log("bread crumbs items");
         let path = this.$route.path.slice(1);
-        console.log(path);
+        // console.log(path);
 
-        if( path === "/" ){
+        if( path === "" ){
           return [{
             text: 'Time-tracker',
             disabled: false,
             href: '/time-tracker'
+          },
+          {
+            text: '',
+            disabled: false,
+            href: '/'
           }]
         }
 
-
         let pathsChunks = path.split('/')
-        console.log(pathsChunks);
+        // console.log(pathsChunks);
+
+        pathsChunks.push("");
 
         let items = [];
         let link = ''
@@ -84,7 +73,7 @@
           });
         });
 
-        // items.slice(-1)[0].disabled = false;
+        items.slice(-1)[0].disabled = true;
 
         return items
       }

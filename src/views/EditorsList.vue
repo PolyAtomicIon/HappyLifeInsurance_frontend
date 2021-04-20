@@ -70,18 +70,10 @@
             class="my-4"
         >
             <v-card-title class="white--text indigo darken-4">
-                Shared with
+                Shared with me
         
                 <v-spacer></v-spacer>
         
-                <v-btn
-                color="white"
-                class="text--primary"
-                fab
-                small
-                >
-                <v-icon>mdi-plus</v-icon>
-                </v-btn>
             </v-card-title>
         
             <v-card-text class="pt-4">

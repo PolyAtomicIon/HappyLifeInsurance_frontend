@@ -1,35 +1,57 @@
 <template>
     <v-card
-        max-height="265px"
+        max-height="400px"
     >
         <v-card-title class="white--text orange darken-4">
             Editors List
-    
-            <v-spacer></v-spacer>
-    
-            <v-btn
-            color="white"
-            class="text--primary"
-            fab
-            small
-            >
-            <v-icon>mdi-plus</v-icon>
-            </v-btn>
         </v-card-title>
-    
+        
         <v-card-text class="pt-4">
             You are allowed to give acces to edit your entriesatmost for 2 employees 
         </v-card-text>
     
         <v-divider></v-divider>
+
+        <v-list>
+            <v-list-item>
     
+                <v-list-item-content>
+                    <v-list-item-title class="pl-2"> Enter email of the editor </v-list-item-title>
+                    <v-text-field     
+                        v-model="message1"
+                        clearable
+
+                        label="Email address"
+                        value="example"
+                        suffix="@gmail.com"
+
+                        class="mt-0 pt-6 px-2"
+                    >
+                    </v-text-field>
+                </v-list-item-content>
+    
+                <v-list-item-action>
+                    <v-btn
+                        color="white"
+                        class="text--primary "
+                        fab
+                        small
+                    >   
+                        <v-icon center>mdi-plus</v-icon>
+                    </v-btn>
+                </v-list-item-action>
+            </v-list-item>
+        </v-list>
+
+        <v-divider></v-divider>
+
         <v-virtual-scroll
             :items="items"
             :item-height="50"
             height="125"
         >
             <template v-slot:default="{ item }">
-            <v-list-item>
+            <v-list-item class=mt-2>
                 <v-list-item-avatar>
                 <v-avatar
                     :color="item.color"

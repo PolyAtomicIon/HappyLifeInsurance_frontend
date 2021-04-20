@@ -6,7 +6,7 @@
     <v-main class="grey lighten-4 mt-2">
 
       <v-container 
-        class="pt-3 pb-2"
+        class="pt-2 pb-1"
       >
 
         <v-breadcrumbs

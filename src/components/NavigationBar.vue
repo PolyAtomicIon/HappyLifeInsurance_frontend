@@ -10,7 +10,11 @@
     >
       <v-app-bar-nav-icon @click="drawer = true" class="hidden-md-and-up" ></v-app-bar-nav-icon>
 
-      <v-toolbar-title>Happy Life insurance</v-toolbar-title>
+      <v-toolbar-title>
+        <v-btn flat @click="goToPage('')">
+          {{title}}
+        </v-btn>
+      </v-toolbar-title>
 
       <v-container class="py-0 fill-height hidden-sm-and-down">
 
@@ -38,10 +42,6 @@
             active-class="deep-purple--text text--accent-4"
           >
 
-            <v-list-item class="py-1">  
-              <v-list-item-title>Happy Life insurance </v-list-item-title>
-            </v-list-item>
-
             <v-list-item v-for="(value, itemName) in links" :key="value.icon" text @click="goToPage(value.path)">  
               <v-list-item-icon>
                 <v-icon>{{ value.icon }} </v-icon>
@@ -62,9 +62,14 @@
   export default {
     name: 'App',
     data: () => ({
+      title: 'Happy Life ',
       links: {
-        'Profile' : {
+        'Home' : {
           icon: 'mdi-home',
+          path: '',
+        },
+        'Profile' : {
+          icon: 'mdi-account',
           path: 'profile',
         },
         'Time Tracker' : {

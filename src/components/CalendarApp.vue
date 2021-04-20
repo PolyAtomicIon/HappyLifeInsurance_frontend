@@ -512,7 +512,7 @@
           );
         },
         set(type) {
-          this.rebuild(undefined, true, type);
+          this.rebuild(this.$dayspan.today, true, type);
         }
       },
 
@@ -577,11 +577,26 @@
         };
       }
 
-
       this.loadState();
+
+      this.setTypeToFullDay();
+
     },
 
     methods: {
+      setTypeToFullDay(day){
+
+        if( day === undefined )
+          day = this.$dayspan.today;
+
+        if( this.currentType == this.types[0] ){
+          this.rebuild(day, true, this.types[1]);
+          return false;
+        }
+
+        return true;
+      },
+
       setState(state) {
         state.eventSorter = state.listTimes
           ? Sorts.List([Sorts.FullDay, Sorts.Start])
@@ -672,10 +687,9 @@
 
       add(day) {
 
-        if( this.currentType == this.types[0] ){
-          this.rebuild(day, true, this.types[1]);
+        if( !this.setTypeToFullDay(day) )
           return;
-        }
+
         if (!this.canAddDay) {
           console.log("decline")
           return;

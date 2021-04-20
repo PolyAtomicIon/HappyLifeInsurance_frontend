@@ -22,7 +22,7 @@
 
             <v-list-item >
               <v-list-item-content>
-                  <v-btn  @click="$router.push('/profile/permisssions')" depressed class="secondary">Editors list</v-btn>
+                  <v-btn  @click="$router.push('/profile/permissions')" depressed class="secondary">User permissions</v-btn>
               </v-list-item-content>
             </v-list-item>
 

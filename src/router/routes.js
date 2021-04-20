@@ -22,8 +22,8 @@ export default [{
                 component: FlexStatusPage,
             },
             {
-                path: 'permisssions',
-                name: 'permisssions',
+                path: 'permissions',
+                name: 'permissions',
                 component: UserPermissions
             },
         ],

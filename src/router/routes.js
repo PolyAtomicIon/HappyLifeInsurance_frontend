@@ -2,6 +2,7 @@
 import ProfilePage from '../views/ProfilePage';
 import TimeTrackerPage from '../views/TimeTrackerPage';
 import FlexStatusPage from '../views/FlexStatusPage';
+import EditorsList from '../views/EditorsList';
 
 export default [{
         path: '*',
@@ -15,11 +16,17 @@ export default [{
         path: '/profile',
         name: 'profile',
         component: ProfilePage,
-    },
-    {
-        path: '/flex-status',
-        name: 'flex-status',
-        component: FlexStatusPage,
+        children: [{
+                path: 'flex-status',
+                name: 'flex-status',
+                component: FlexStatusPage,
+            },
+            {
+                path: 'editors',
+                name: 'editors',
+                component: EditorsList
+            },
+        ],
     },
     {
         path: '/time-tracker',

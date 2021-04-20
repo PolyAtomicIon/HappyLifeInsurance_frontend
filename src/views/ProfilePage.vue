@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <v-row>
-      <v-col cols="3">
+      <v-col cols="12" sm="12" md="3">
         <v-sheet rounded="lg">
           <v-list color="transparent">
             <v-list-item v-for="(key, value) in ProfileData" :key="key">
@@ -13,6 +13,18 @@
             </v-list-item>
 
             <v-divider class="my-2"></v-divider>
+
+            <v-list-item >
+              <v-list-item-content>
+                  <v-btn @click="$router.push('/profile/flex-status')" depressed class="primary">Flex-status</v-btn>
+              </v-list-item-content>
+            </v-list-item>
+
+            <v-list-item >
+              <v-list-item-content>
+                  <v-btn  @click="$router.push('/profile/editors')" depressed class="secondary">Editors list</v-btn>
+              </v-list-item-content>
+            </v-list-item>
 
           </v-list>
         </v-sheet>

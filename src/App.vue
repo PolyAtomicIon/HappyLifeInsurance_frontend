@@ -3,7 +3,7 @@
       
     <navigation-bar />
     
-    <v-main class="grey lighten-4 ">
+    <v-main class="grey lighten-4 mt-5">
       <transition name="fade" mode="out-in">
         <router-view class="child-view"></router-view>
       </transition>

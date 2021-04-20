@@ -1,18 +1,60 @@
 <template>
-  <v-app-bar app color="white" flat>
-    <v-container class="py-0 fill-height">
 
-      <v-btn v-for="(url, link) in links" :key="link" text @click="goToPage(url)">
-        {{ link }}
-      </v-btn>
+  <div>
+  
+    <v-app-bar
+      color="deep-purple"
+      app
+      dark
+      flat
+    >
+      <v-app-bar-nav-icon @click="drawer = true" class="hidden-md-and-up" ></v-app-bar-nav-icon>
 
-      <v-spacer></v-spacer>
+      <v-toolbar-title>Happy Life insurance</v-toolbar-title>
 
-      <!-- <v-responsive max-width="260">
-        <v-text-field dense flat hide-details rounded solo-inverted></v-text-field>
-      </v-responsive> -->
-    </v-container>
-  </v-app-bar>
+      <v-container class="py-0 fill-height hidden-sm-and-down">
+
+        <v-btn v-for="(value, itemName) in links" :key="itemName" text @click="goToPage(value.path)">
+          {{ itemName }}
+        </v-btn>
+
+        <v-spacer></v-spacer>
+
+      </v-container>      
+
+    </v-app-bar>
+
+    <v-navigation-drawer
+        v-model="drawer"
+        absolute
+        temporary
+      >
+        <v-list
+          nav
+          dense
+        >
+          <v-list-item-group
+            v-model="group"
+            active-class="deep-purple--text text--accent-4"
+          >
+
+            <v-list-item class="py-1">  
+              <v-list-item-title>Happy Life insurance </v-list-item-title>
+            </v-list-item>
+
+            <v-list-item v-for="(value, itemName) in links" :key="value.icon" text @click="goToPage(value.path)">  
+              <v-list-item-icon>
+                <v-icon>{{ value.icon }} </v-icon>
+              </v-list-item-icon>
+              <v-list-item-title> {{itemName}} </v-list-item-title>
+            </v-list-item>
+
+          </v-list-item-group>
+        </v-list>
+    </v-navigation-drawer>
+
+  </div>
+
 </template>
 
 <script>
@@ -21,15 +63,27 @@
     name: 'App',
     data: () => ({
       links: {
-        'Profile' : 'profile',
-        'Time Tracker' : 'time-tracker',
-        'Flex Status' : 'flex-status',
+        'Profile' : {
+          icon: 'mdi-home',
+          path: 'profile',
+        },
+        'Time Tracker' : {
+          icon: 'mdi-clock',
+          path: 'time-tracker',
+        },
+        'Flex-status' : {
+          icon: 'mdi-timeline',
+          path: 'profile/flex-status',
+        }
       },
+      drawer: false,
+      
     }),
+    
+    computed: {
+    },
 
     mounted() {},
-
-    computed: {},
 
     components: {},
     methods: {

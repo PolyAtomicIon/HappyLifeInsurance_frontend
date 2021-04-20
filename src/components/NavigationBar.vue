@@ -1,6 +1,6 @@
 <template>
 
-  <div>
+  <div ref="navBar">
   
     <v-app-bar
       color="deep-purple"
@@ -8,7 +8,7 @@
       dark
       flat
     >
-      <v-app-bar-nav-icon @click="drawer = true" class="hidden-md-and-up" ></v-app-bar-nav-icon>
+      <v-app-bar-nav-icon @click="drawer = true, scrollTo()" class="hidden-md-and-up" ></v-app-bar-nav-icon>
 
       <v-toolbar-title>
           {{title}}
@@ -80,7 +80,7 @@
         }
       },
       drawer: false,
-      
+      group: null,
     }),
     
     computed: {
@@ -90,7 +90,13 @@
 
     components: {},
     methods: {
-
+      
+      scrollTo() {
+        var element = this.$refs['navBar'];
+        var top = element.offsetTop;
+        window.scrollTo(0, top);
+      },
+  
       goToPage: function (url) {
         this.$router.push('/'+url);
       },

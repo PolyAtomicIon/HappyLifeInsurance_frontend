@@ -28,7 +28,7 @@ Vue.use(DaySpanVuetify, {
         },
     },
     methods: {
-        getDefaultEventColor: () => '#00d9ff'
+        getDefaultEventColor: () => '#6b52b7'
     },
     computed: {},
 });

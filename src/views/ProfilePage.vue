@@ -31,7 +31,7 @@
       </v-col>
 
       <v-col cols="12" sm="12" md="9">
-          <router-view class="child-view"></router-view>
+        <router-view class="child-view"></router-view>
       </v-col>
     </v-row>
   </v-container>

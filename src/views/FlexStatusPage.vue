@@ -1,10 +1,4 @@
 <template>
-    <div>
-<!-- 
-        <v-sheet rounded="lg" elevation="2">
-            <v-container>
-            </v-container>
-        </v-sheet> -->
 
         <v-sheet rounded="lg" class="mt-0 mb-8" elevation="2">
             <v-container>
@@ -55,7 +49,6 @@
             </v-container>
         </v-sheet>
 
-    </div>
 </template>
 
 <script>

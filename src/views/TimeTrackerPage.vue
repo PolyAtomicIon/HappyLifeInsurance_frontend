@@ -4,21 +4,33 @@
     <v-row>
       <v-col cols="12" sm="12" md="3" >
         <v-sheet rounded="lg" class="calendar-control-buttons"  elevation="2">
+          
           <v-list color="transparent">
-            <v-list-item v-for="(key, value) in ProfileData" :key="key">
+            
+            <!-- <v-list-item v-for="(key, value) in CurrentStatus" :key="key">
               <v-list-item-content>
                 <v-list-item-title>
-                  <b>{{ key }}:</b> {{ Profile[value] }}
+                  <b>{{ key }}:</b> {{ value }}
+                </v-list-item-title>
+              </v-list-item-content>
+            </v-list-item> -->
+
+            <v-list-item>
+              <v-list-item-content>
+                <v-list-item-title>
+                  <v-text class="indigo--text font-weight-bold">
+                    Time: {{ currentTime }}
+                  </v-text>
                 </v-list-item-title>
               </v-list-item-content>
             </v-list-item>
 
             <v-divider class="my-2"></v-divider>
 
-            <v-list-item>
+            <v-list-item v-if="currentStatus.inBuilding">
               <v-list-item-content>
                 <v-list-item-title>
-                  <v-text class="error--text">
+                  <v-text class="indigo--text font-weight-bold">
                     Working
                   </v-text>
                 </v-list-item-title>
@@ -26,6 +38,7 @@
             </v-list-item>
 
           </v-list>
+
         </v-sheet>
       </v-col>
 
@@ -47,7 +60,6 @@
 // import InterestingCard from '../components/InterestingCard.vue'
 import CalendarApp from "../components/CalendarApp.vue";
 import { Units } from "dayspan";
-import { mapGetters } from "vuex";
 
 export default {
   data: () => ({
@@ -79,18 +91,34 @@ export default {
       },
     ],
 
-    ProfileData: {
-      title: "Username",
-      city: "City",
-      phone: "Phone",
-      email: "Email",
-      numberOfCars: "Cars in wishlist #",
+    currentStatus: {
+      inBuilding: true,
     },
+    currentTime: null,
   }),
 
-  computed: {
-    ...mapGetters(["Profile"]),
+  mounted(){
+    this.updateTime();
   },
+
+  methods: {
+    timeFormate(timeStamp) {
+      // let year = new Date(timeStamp).getFullYear();
+      // let month =new Date(timeStamp).getMonth() + 1 < 10? "0" + (new Date(timeStamp).getMonth() + 1): new Date(timeStamp).getMonth() + 1;
+      // let date =new Date(timeStamp).getDate() < 10? "0" + new Date(timeStamp).getDate(): new Date(timeStamp).getDate();
+      let hh =new Date(timeStamp).getHours() < 10? "0" + new Date(timeStamp).getHours(): new Date(timeStamp).getHours();
+      let mm =new Date(timeStamp).getMinutes() < 10? "0" + new Date(timeStamp).getMinutes(): new Date(timeStamp).getMinutes();
+      let ss =new Date(timeStamp).getSeconds() < 10? "0" + new Date(timeStamp).getSeconds(): new Date(timeStamp).getSeconds();
+
+      this.currentTime = hh + ":" + mm + ":" + ss;
+    },
+
+    updateTime() {      	
+      this.timeFormate(new Date());
+      setInterval(this.updateTime, 1000);
+    }
+  },
+
   components: {
     CalendarApp,
     // InterestingCard

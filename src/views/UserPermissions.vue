@@ -1,10 +1,5 @@
 <template>
-    <!-- <div>
-        <editors-list></editors-list>
-        <shared-with-me></shared-with-me>
-    </div> -->
-
-    <v-sheet rounded="lg" elevation="2">
+    <v-sheet rounded="lg" elevation="2" >
 
         <v-toolbar
             color="indigo lighten-1"

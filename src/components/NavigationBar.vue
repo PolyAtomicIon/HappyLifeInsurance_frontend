@@ -94,7 +94,7 @@
         },
         'Profile' : {
           icon: 'mdi-account',
-          path: 'profile/flex-status',
+          path: 'profile/permissions',
         },
         'Time Tracker' : {
           icon: 'mdi-clock',
@@ -102,18 +102,16 @@
         },
         'Flex-status' : {
           icon: 'mdi-timeline',
-          path: 'profile/flex-status',
+          path: 'flex-status',
         }
       },
       AuthLinks: {
         Login : {
-          hideable: true,
           title: 'Login',
           icon: 'mdi-login',
           path: 'login',
         },
         Logout : {
-          hideable: true,
           title: 'Logout',
           icon: 'mdi-logout',
           path: '/',

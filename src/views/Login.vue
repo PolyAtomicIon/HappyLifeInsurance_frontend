@@ -81,8 +81,8 @@
 
                         <v-card-actions>
                             <v-spacer></v-spacer>
-                            <v-btn class="white deep-purple--text" @click="$router.push('register')">Register</v-btn>
-                            <v-btn class="deep-purple white--text" to="/" @click="submit">Login</v-btn>
+                            <v-btn class="white deep-purple--text" @click="$router.push('register')">Register instead</v-btn>
+                            <v-btn class="deep-purple white--text" @click="submit">Login</v-btn>
                         </v-card-actions>
                     </v-card>
                 </v-flex>

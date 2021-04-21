@@ -24,7 +24,7 @@
                 <v-list-item-content>
                     <v-list-item-title class="pl-2"> Enter email of the editor </v-list-item-title>
                     <v-text-field     
-                        v-model="message1"
+                        v-model="newUserEmail"
                         clearable
 
                         label="Email address"
@@ -42,6 +42,7 @@
                         class="text--primary "
                         fab
                         small
+                        @click="addUserToList()"
                     >   
                         <v-icon center>mdi-plus</v-icon>
                     </v-btn>
@@ -56,24 +57,22 @@
 
             <v-card max-width="384px" class="pb-6 white">
                 <v-card-title class="black--text text-center">Are you sure to delete this user from list of editors?</v-card-title>
-                <v-card-content >
                     <div
                         class="d-flex flex-row justify-space-around" 
                     >
                         <v-btn
                             color="primary"
-                            @click="overlay = false"
+                            @click="overlay = false, removeUserFromList()"
                         >
-                            yeas
+                            yes
                         </v-btn>
                         <v-btn
                             color="error"
-                            @click="overlay = false"
+                            @click="overlay = false, cancelRemoval()"
                         >
                             Cancel
                         </v-btn>
                     </div>
-                </v-card-content>
             </v-card>
         </v-overlay>
 
@@ -105,7 +104,7 @@
                     depressed
                     small
                     color="error"
-                    @click="overlay = !overlay"
+                    @click="overlay = !overlay, startRemovalOfUserFromList(item.id)"
                 >
                     Delete
                     <v-icon
@@ -130,17 +129,70 @@
         data: () => ({
             colors: ['#2196F3', '#90CAF9'],
             limit: 2,
-            items: [
+            exampleItem: 
                 {
                     color: '#2196F3',
                     fullName: `BRO BRO`,
                     initials: `B R`,
+                    email: 'bro_bro@gmail.com',
+                    id: 1,
+                },
+            items: [
+                {
+                    color: '#2196F3',
+                    fullName: "BRO BRO",
+                    initials: "B R",
+                    email: 'bro_bro@gmail.com',
+                    id: 1,
                 },
                 
             ],
             overlay: false,
             zIndex: 2,
-            }),
+            userToBeRemoved: null,
+            newUserEmail: null,
+        }), 
+        methods: {
 
+            startRemovalOfUserFromList(userId){
+                console.log(userId)
+                this.userToBeRemoved = userId;
+            },
+
+            cancelRemoval(){
+                this.userToBeRemoved = null
+            },
+
+            removeUserFromList(){
+
+                if( !this.userToBeRemoved )
+                    return
+
+                let pos = null;
+
+                for(let i = 0; i < this.items.length; i++){
+                    if( this.items[i].id === this.userToBeRemoved ){
+                        pos = i;
+                        break;
+                    }
+                }
+
+                if( pos === null )
+                    return
+                console.log(pos)
+                this.items.splice(pos, 1);
+            },
+
+            addUserToList(){
+                let a = Object.assign({}, this.exampleItem.constructor);
+                a.email = this.newUserEmail;
+                a.id = 2;
+                a.fullName = "GF FE";
+                a.initials = "G F";
+                a.color = '#2196F3';
+                this.items.push(a);
+            }
+
+        },
     }
 </script>

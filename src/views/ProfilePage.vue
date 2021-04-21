@@ -12,19 +12,13 @@
               </v-list-item-content>
             </v-list-item>
 
-            <v-divider class="my-2"></v-divider>
+            <!-- <v-divider class="my-2"></v-divider> -->
 
-            <v-list-item >
-              <v-list-item-content>
-                  <v-btn @click="$router.push('/profile/flex-status')" depressed class="primary">Flex-status</v-btn>
-              </v-list-item-content>
-            </v-list-item>
-
-            <v-list-item >
+            <!-- <v-list-item >
               <v-list-item-content>
                   <v-btn  @click="$router.push('/profile/permissions')" depressed class="secondary">User permissions</v-btn>
               </v-list-item-content>
-            </v-list-item>
+            </v-list-item> -->
 
           </v-list>
         </v-sheet>
@@ -53,8 +47,6 @@ export default {
 
   mounted() {
     this.fetchProfile();
-    var title = "title";
-    console.log(this.Profile[title]);
   },
 
   computed: {

@@ -5,7 +5,7 @@
             <v-flex xs12 sm8 md4>
                 <v-card class="elevation-12">
                     <v-toolbar dark color="deep-purple">
-                        <v-toolbar-title>Login form</v-toolbar-title>
+                        <v-toolbar-title>Register form</v-toolbar-title>
                     </v-toolbar>
                     <v-card-text>
                         <v-form>
@@ -44,8 +44,8 @@
 
                     <v-card-actions>
                         <v-spacer></v-spacer>
-                        <v-btn class="white deep-purple--text" @click="$router.push('login')">Login</v-btn>
-                        <v-btn class="deep-purple white--text" to="/" @click="submit">Register</v-btn>
+                        <v-btn class="white deep-purple--text" @click="$router.push('login')">Login instead</v-btn>
+                        <v-btn class="deep-purple white--text" @click="submit">Register</v-btn>
                     </v-card-actions>
                 </v-card>
             </v-flex>

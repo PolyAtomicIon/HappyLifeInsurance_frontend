@@ -886,12 +886,12 @@
       },
   // eslint-disable-next-line no-unused-vars
       eventFinish(ev) {
-        console.log(ev.id);
+        // console.log(ev.id);
 
-        if( ev.id === undefined )
-          ev.id = 165;
+        // if( ev.id === undefined )
+        //   ev.id = 165;
 
-        console.log(ev);
+        // console.log(ev);
         this.triggerChange();
       },
 

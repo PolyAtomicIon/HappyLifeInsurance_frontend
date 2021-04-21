@@ -1,15 +1,26 @@
 <template>
-    <v-container>
-        <v-sheet>
-            <h2 class="text-center my-4">Flex-status</h2>
-            <planet-chart />
+    <div>
+
+        <v-sheet rounded="lg" elevation="2">
+            <v-container>
+                <flex-status-chart />
+            </v-container>
         </v-sheet>
-    </v-container>
+
+        <v-sheet rounded="lg" class="mt-6 mb-8" elevation="2">
+            <v-container>
+                <h2 class="text-center my-4">Flex-status</h2>
+                <work-hours-chart />
+            </v-container>
+        </v-sheet>
+
+    </div>
 </template>
 
 <script>
     
-    import PlanetChart from '../components/PlanetChart.vue'
+    import WorkHoursChart from '../components/WorkHoursChart.vue'
+    import FlexStatusChart from '../components/FlexStatusChart.vue'
 
     export default {
 
@@ -17,7 +28,8 @@
         }),
 
         components: {
-            PlanetChart,
+            WorkHoursChart,
+            FlexStatusChart,
         }
 
     }

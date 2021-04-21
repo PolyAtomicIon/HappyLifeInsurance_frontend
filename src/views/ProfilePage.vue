@@ -31,9 +31,7 @@
       </v-col>
 
       <v-col cols="12" sm="12" md="9">
-        <v-sheet rounded="lg" elevation="2">
           <router-view class="child-view"></router-view>
-        </v-sheet>
       </v-col>
     </v-row>
   </v-container>

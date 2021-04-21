@@ -4,9 +4,8 @@
         <shared-with-me></shared-with-me>
     </div> -->
 
-    <div
-        class="mb-8"
-    >
+    <v-sheet rounded="lg" elevation="2">
+
         <v-toolbar
             color="indigo lighten-1"
             dark
@@ -46,7 +45,7 @@
 
             </v-tab-item>
         </v-tabs-items>
-  </div>
+    </v-sheet>
 </template>
 
 <script>

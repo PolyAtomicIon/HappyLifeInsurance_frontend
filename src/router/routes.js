@@ -3,6 +3,8 @@ import ProfilePage from '../views/ProfilePage';
 import TimeTrackerPage from '../views/TimeTrackerPage';
 import FlexStatusPage from '../views/FlexStatusPage';
 import UserPermissions from '../views/UserPermissions';
+import Login from '../views/Login';
+import Register from '../views/Register';
 
 export default [{
         path: '*',
@@ -11,6 +13,14 @@ export default [{
     {
         path: '/',
         component: TimeTrackerPage,
+    },
+    {
+        path: '/login',
+        component: Login,
+    },
+    {
+        path: '/register',
+        component: Register,
     },
     {
         path: '/profile',

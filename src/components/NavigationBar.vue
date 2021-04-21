@@ -85,6 +85,11 @@
         'Flex-status' : {
           icon: 'mdi-timeline',
           path: 'profile/flex-status',
+        },
+
+        'Login' : {
+          icon: 'mdi-login',
+          path: 'login',
         }
       },
       drawer: false,

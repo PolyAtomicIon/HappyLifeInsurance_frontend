@@ -9,7 +9,7 @@
 
         <v-sheet rounded="lg" class="mt-6 mb-8" elevation="2">
             <v-container>
-                <h2 class="text-center my-4">Flex-status</h2>
+                <h2 class="text-center my-4">Work hours</h2>
                 <work-hours-chart />
             </v-container>
         </v-sheet>

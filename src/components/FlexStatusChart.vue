@@ -48,7 +48,7 @@
                             xAxes: [{
                                 ticks: {
                                     beginAtZero: true,
-                                    suggestedMax: 40,
+                                    suggestedMax: 20,
                                 }
                             }]
                         },
@@ -67,6 +67,6 @@
 
 <style scoped>
     .chart-container{
-        height: 96px;
+        height: 112px;
     }
 </style>

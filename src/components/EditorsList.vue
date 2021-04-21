@@ -14,7 +14,7 @@
         <v-divider></v-divider>
 
         <v-list>
-            <v-list-item v-if="items.length <= limit">    
+            <v-list-item v-if="items.length >= limit">    
                 <v-list-item-content>
                     <v-list-item-title class="pl-2 red--text"> You've reached maximum number of editors. Limit is {{limit}} </v-list-item-title>
                 </v-list-item-content>
@@ -136,11 +136,7 @@
                     fullName: `BRO BRO`,
                     initials: `B R`,
                 },
-                {
-                    color: '#90CAF9',
-                    fullName: `BsdfsRO sdfs`,
-                    initials: `S E`,
-                },
+                
             ],
             overlay: false,
             zIndex: 0,

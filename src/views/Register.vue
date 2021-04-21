@@ -1,57 +1,55 @@
 <template>
-    <v-content>
-        <v-container fluid fill-height>
-            <v-layout align-center justify-center>
-            <v-flex xs12 sm8 md4>
-                <v-card class="elevation-12">
-                    <v-toolbar dark color="deep-purple">
-                        <v-toolbar-title>Register form</v-toolbar-title>
-                    </v-toolbar>
-                    <v-card-text>
-                        <v-form>
-                            <v-text-field
-                                label="E-mail"
-                                prepend-icon="person"
-                                v-model="email"
-                                :error-messages="emailErrors"
-                                required
-                                @input="$v.email.$touch()"
-                                @blur="$v.email.$touch()"
-                            ></v-text-field>
+  <v-container fluid>
+      <v-layout align-center justify-center>
+        <v-flex xs12 sm8 md4>
+            <v-card class="elevation-2">
+                <v-toolbar dark color="deep-purple">
+                    <v-toolbar-title>Register form</v-toolbar-title>
+                </v-toolbar>
+                <v-card-text>
+                    <v-form>
+                        <v-text-field
+                            label="E-mail"
+                            prepend-icon="person"
+                            v-model="email"
+                            :error-messages="emailErrors"
+                            required
+                            @input="$v.email.$touch()"
+                            @blur="$v.email.$touch()"
+                        ></v-text-field>
 
-                            <v-text-field
-                                label="Password"
-                                prepend-icon="lock"
-                                v-model="password"
-                                :error-messages="passwordErrors"
-                                required
-                                @input="$v.password.$touch()"
-                                @blur="$v.password.$touch()"
-                            ></v-text-field>
+                        <v-text-field
+                            label="Password"
+                            prepend-icon="lock"
+                            v-model="password"
+                            :error-messages="passwordErrors"
+                            required
+                            @input="$v.password.$touch()"
+                            @blur="$v.password.$touch()"
+                        ></v-text-field>
 
-                            <v-text-field
-                                label="Password"
-                                prepend-icon="lock"
-                                v-model="password2"
-                                :error-messages="passwordErrors"
-                                required
-                                @input="$v.password.$touch()"
-                                @blur="$v.password.$touch()"
-                            ></v-text-field>
+                        <v-text-field
+                            label="Password"
+                            prepend-icon="lock"
+                            v-model="password2"
+                            :error-messages="passwordErrors"
+                            required
+                            @input="$v.password.$touch()"
+                            @blur="$v.password.$touch()"
+                        ></v-text-field>
 
-                        </v-form>
-                    </v-card-text>
+                    </v-form>
+                </v-card-text>
 
-                    <v-card-actions>
-                        <v-spacer></v-spacer>
-                        <v-btn class="white deep-purple--text" @click="$router.push('login')">Login instead</v-btn>
-                        <v-btn class="deep-purple white--text" @click="submit">Register</v-btn>
-                    </v-card-actions>
-                </v-card>
-            </v-flex>
-            </v-layout>
-        </v-container>
-    </v-content>
+                <v-card-actions>
+                    <v-spacer></v-spacer>
+                    <v-btn class="white deep-purple--text" text @click="$router.push('login')">Login instead</v-btn>
+                    <v-btn class="deep-purple white--text" @click="submit">Register</v-btn>
+                </v-card-actions>
+            </v-card>
+        </v-flex>
+      </v-layout>
+  </v-container>
 </template>
 
 <script>

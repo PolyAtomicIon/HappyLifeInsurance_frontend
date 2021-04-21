@@ -19,6 +19,7 @@
       </v-toolbar-title>
 
       <v-container class="py-0 fill-height hidden-sm-and-down">
+        <v-spacer></v-spacer>
 
         <v-btn v-for="(value, itemName) in links" :key="itemName" text @click="goToPage(value.path)">
           

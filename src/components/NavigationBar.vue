@@ -30,6 +30,17 @@
 
         <v-spacer></v-spacer>
 
+        <v-btn v-for="(value, itemName) in AuthLinks" :key="itemName" text @click="goToPage(value.path)">
+          
+          <v-icon
+            class="mr-1"
+          >
+            {{value.icon}}
+          </v-icon>
+          
+          {{ itemName }}
+        </v-btn>
+
       </v-container>      
 
     </v-app-bar>
@@ -53,6 +64,13 @@
                 <v-icon>{{ value.icon }} </v-icon>
               </v-list-item-icon>
               <v-list-item-title> {{itemName}} </v-list-item-title>
+            </v-list-item>
+
+            <v-list-item @click="goToPage(AuthLinks.Login.path)">  
+              <v-list-item-icon>
+                <v-icon>{{ AuthLinks.Login.icon }} </v-icon>
+              </v-list-item-icon>
+              <v-list-item-title> {{AuthLinks.Login.title}} </v-list-item-title>
             </v-list-item>
 
           </v-list-item-group>
@@ -85,11 +103,20 @@
         'Flex-status' : {
           icon: 'mdi-timeline',
           path: 'profile/flex-status',
-        },
-
-        'Login' : {
+        }
+      },
+      AuthLinks: {
+        Login : {
+          hideable: true,
+          title: 'Login',
           icon: 'mdi-login',
           path: 'login',
+        },
+        Logout : {
+          hideable: true,
+          title: 'Logout',
+          icon: 'mdi-logout',
+          path: '/',
         }
       },
       drawer: false,

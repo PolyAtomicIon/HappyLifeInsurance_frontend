@@ -2,7 +2,7 @@
   <v-container>
     <v-row>
       <v-col cols="12" sm="12" md="3">
-        <v-sheet rounded="lg">
+        <v-sheet rounded="lg" elevation="2">
           <v-list color="transparent">
             <v-list-item v-for="(value, key) in profileData" :key="key">
               <v-list-item-content>
@@ -30,8 +30,8 @@
         </v-sheet>
       </v-col>
 
-      <v-col>
-        <v-sheet rounded="lg">
+      <v-col cols="12" sm="12" md="9">
+        <v-sheet rounded="lg" elevation="2">
           <router-view class="child-view"></router-view>
         </v-sheet>
       </v-col>

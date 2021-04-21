@@ -2,8 +2,8 @@
 <template>
   <v-container>
     <v-row>
-      <v-col cols="12" sm="12" md="3">
-        <v-sheet rounded="lg" class="calendar-control-buttons">
+      <v-col cols="12" sm="12" md="3" >
+        <v-sheet rounded="lg" class="calendar-control-buttons"  elevation="2">
           <v-list color="transparent">
             <v-list-item v-for="(key, value) in ProfileData" :key="key">
               <v-list-item-content>
@@ -30,7 +30,7 @@
       </v-col>
 
       <v-col>
-        <v-sheet height="80vh" rounded="lg" class="mb-10">
+        <v-sheet height="80vh" rounded="lg" class="mb-10"  elevation="2">
           <!-- <router-view class="child-view"></router-view> -->
 
           <div class="calendar-container">

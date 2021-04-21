@@ -7,6 +7,7 @@
       app
       dark
       flat
+      dense
     >
       <v-app-bar-nav-icon @click="drawer = true, scrollTo()" class="hidden-md-and-up" ></v-app-bar-nav-icon>
 

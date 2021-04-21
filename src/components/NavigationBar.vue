@@ -33,15 +33,15 @@
 
         <v-spacer></v-spacer>
 
-        <v-btn v-for="(value, itemName) in AuthLinks" :key="itemName" text @click="goToPage(value.path)">
+        <v-btn text @click="goToPage(AuthLinks.Login.path)">
           
           <v-icon
             class="mr-1"
           >
-            {{value.icon}}
+            {{AuthLinks.Login.icon}}
           </v-icon>
           
-          {{ itemName }}
+          {{ AuthLinks.Login.title }}
         </v-btn>
 
       </v-container>      

@@ -155,7 +155,7 @@ export default {
                 {
                     type: Boolean,
                     default () {
-                        return this.$dsDefaults().allowRemove
+                        return true
                     }
                 },
 

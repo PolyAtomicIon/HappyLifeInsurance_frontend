@@ -3,26 +3,7 @@
     <v-row>
       <v-col cols="12" sm="12" md="4">
         <v-sheet rounded="lg" elevation="2">
-          <!-- <v-list color="transparent">
-            <v-list-item v-for="(value, key) in profileData" :key="key">
-              <v-list-item-content>
-                <v-list-item-title>
-                  <b>{{ key }}:</b> {{ printData(Profile[value]) }}
-                </v-list-item-title>
-              </v-list-item-content>
-            </v-list-item>
-
-            <v-divider class="my-2"></v-divider>
-
-            <v-list-item >
-              <v-list-item-content>
-                  <v-btn  @click="$router.push('/profile/permissions')" depressed class="secondary">User permissions</v-btn>
-              </v-list-item-content>
-            </v-list-item>
-
-          </v-list> -->
-
-          <shared-with-me />
+          <shared-with-me :isInEditor="true"/>
         </v-sheet>
       </v-col>
 

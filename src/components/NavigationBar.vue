@@ -12,7 +12,10 @@
       <v-app-bar-nav-icon @click="drawer = true, scrollTo()" class="hidden-md-and-up" ></v-app-bar-nav-icon>
 
       <v-toolbar-title>
+        <v-btn depressed color="transparent" @click="$router.push('/')">
+          <v-icon class="mr-1"> mdi-home </v-icon>  
           {{title}}
+        </v-btn>
       </v-toolbar-title>
 
       <v-container class="py-0 fill-height hidden-sm-and-down">
@@ -88,10 +91,10 @@
     data: () => ({
       title: 'Happy Life ',
       links: {
-        'Home' : {
-          icon: 'mdi-home',
-          path: '',
-        },
+        // 'Home' : {
+        //   icon: 'mdi-home',
+        //   path: '',
+        // },
         'Profile' : {
           icon: 'mdi-account',
           path: 'profile/permissions',

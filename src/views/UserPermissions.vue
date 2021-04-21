@@ -35,7 +35,7 @@
             >
             
                 <keep-alive>
-                    <component v-bind:is="items[tab]"></component>
+                    <component v-bind:is="items[tab]" height="400px"></component>
                 </keep-alive>
 
             </v-tab-item>

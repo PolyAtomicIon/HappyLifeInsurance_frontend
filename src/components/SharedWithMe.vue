@@ -1,7 +1,7 @@
 <template>
     <v-card
         class="rounded-0 rounded-bl rounded-br"
-        height="400px"
+        :height="height"
     >
         <v-card-title class="white--text indigo darken-1">
             Shared with me
@@ -13,8 +13,13 @@
         <v-card-text class="pt-4">
             You can edit entries of the following users, they gave you access to edit their entries.
         </v-card-text>
-    
         <v-divider></v-divider>
+
+        <v-card-text v-if="isInEditor" class="indigo--text darken-1">
+            <b>Currently being edited: </b>
+            {{userToEdit}}
+        </v-card-text>
+        <v-divider v-if="isInEditor"></v-divider>
     
         <v-virtual-scroll
             :items="items"
@@ -56,11 +61,12 @@
                 </v-list-item>
             </template>
         </v-virtual-scroll>
+
     </v-card>
 </template>
 
 <script>
-    import {mapMutations} from 'vuex';
+    import {mapMutations, mapGetters} from 'vuex';
 
     export default {
         name: "Shared",
@@ -84,5 +90,16 @@
         methods: {
             ...mapMutations(['setUserToEdit']),
         },
+        computed: {
+            ...mapGetters(['userToEdit']),
+        },
+        props: {
+            height: {
+                default: '325px'
+            },
+            isInEditor: {
+                dafault: false
+            }
+        }
     }
 </script>

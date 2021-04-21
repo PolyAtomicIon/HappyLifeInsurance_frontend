@@ -22,44 +22,45 @@
             min-height="125"
         >
             <template v-slot:default="{ item }">
-            <v-list-item>
-                <v-list-item-avatar>
-                <v-avatar
-                    :color="item.color"
-                    size="56"
-                    class="white--text"
-                >
-                    {{ item.initials }}
-                </v-avatar>
-                </v-list-item-avatar>
-    
-                <v-list-item-content>
-                <v-list-item-title>{{ item.fullName }}</v-list-item-title>
-                </v-list-item-content>
-    
-                <v-list-item-action>
-                <v-btn
-                    depressed
-                    small
-                >
-                    Edit user's entries
-    
-                    <v-icon
-                        color="orange darken-4"
-                        right
-                    >
-                        mdi-open-in-new
-                    </v-icon>
-                </v-btn>
-                </v-list-item-action>
-            </v-list-item>
+                <v-list-item>
+                    <v-list-item-avatar>
+                        <v-avatar
+                            :color="item.color"
+                            size="56"
+                            class="white--text"
+                        >
+                            {{ item.initials }}
+                        </v-avatar>
+                    </v-list-item-avatar>
+        
+                    <v-list-item-content>
+                    <v-list-item-title>{{ item.fullName }}</v-list-item-title>
+                    </v-list-item-content>
+        
+                    <v-list-item-action>
+                        <v-btn
+                            depressed
+                            small
+                            @click="setUserToEdit(item.id), $router.push({ name: 'shared-with' })"
+                        >
+                            Edit user's entries
+            
+                            <v-icon
+                                color="orange darken-4"
+                                right
+                            >
+                                mdi-open-in-new
+                            </v-icon>
+                        </v-btn>
+                    </v-list-item-action>
+                </v-list-item>
             </template>
         </v-virtual-scroll>
     </v-card>
 </template>
 
 <script>
-
+    import {mapMutations} from 'vuex';
 
     export default {
         name: "Shared",
@@ -70,14 +71,18 @@
                     color: '#2196F3',
                     fullName: `BRO BRO`,
                     initials: `B R`,
+                    id: 1
                 },
                 {
                     color: '#90CAF9',
                     fullName: `BsdfsRO sdfs`,
                     initials: `S E`,
+                    id: 2,
                 },
             ]
             }),
-
+        methods: {
+            ...mapMutations(['setUserToEdit']),
+        },
     }
 </script>

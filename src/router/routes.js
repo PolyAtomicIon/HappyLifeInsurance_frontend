@@ -5,6 +5,7 @@ import FlexStatusPage from '../views/FlexStatusPage';
 import UserPermissions from '../views/UserPermissions';
 import Login from '../views/Login';
 import Register from '../views/Register';
+import SharedWith from '../views/SharedWith';
 
 export default [{
         path: '*',
@@ -42,4 +43,10 @@ export default [{
         name: 'time-tracker',
         component: TimeTrackerPage,
     },
+    {
+        path: '/shared-with',
+        name: 'shared-with',
+        component: SharedWith,
+    },
+
 ]

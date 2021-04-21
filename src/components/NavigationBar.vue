@@ -103,6 +103,10 @@
         'Flex-status' : {
           icon: 'mdi-timeline',
           path: 'flex-status',
+        },
+        'Shared with me' : {
+          icon: 'mdi-share',
+          path: 'shared-with',
         }
       },
       AuthLinks: {

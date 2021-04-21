@@ -7,7 +7,7 @@
                 class="ds-button-tall error ml-1 mt-1 mb-2" 
                 depressed
                 @click="remove"
-                :disabled="!canRemove"
+                v-if="canRemove"
             >
                 Delete
             </v-btn>

@@ -8,13 +8,18 @@
         </v-card-title>
         
         <v-card-text class="pt-4">
-            You are allowed to give acces to edit your entriesatmost for 2 employees 
+            You are allowed to give acces to edit your entries atmost for 2 employees 
         </v-card-text>
     
         <v-divider></v-divider>
 
         <v-list>
-            <v-list-item>
+            <v-list-item v-if="items.length <= limit">    
+                <v-list-item-content>
+                    <v-list-item-title class="pl-2 red--text"> You've reached maximum number of editors. Limit is {{limit}} </v-list-item-title>
+                </v-list-item-content>
+            </v-list-item>
+            <v-list-item v-else>
     
                 <v-list-item-content>
                     <v-list-item-title class="pl-2"> Enter email of the editor </v-list-item-title>
@@ -44,6 +49,34 @@
             </v-list-item>
         </v-list>
 
+        <v-overlay
+            :z-index="zIndex"
+            :value="overlay"
+        >
+
+            <v-card max-width="384px" class="pb-6 white">
+                <v-card-title class="black--text text-center">Are you sure to delete this user from list of editors?</v-card-title>
+                <v-card-content >
+                    <div
+                        class="d-flex flex-row justify-space-around" 
+                    >
+                        <v-btn
+                            color="primary"
+                            @click="overlay = false"
+                        >
+                            yeas
+                        </v-btn>
+                        <v-btn
+                            color="error"
+                            @click="overlay = false"
+                        >
+                            Cancel
+                        </v-btn>
+                    </div>
+                </v-card-content>
+            </v-card>
+        </v-overlay>
+
         <v-divider></v-divider>
 
         <v-virtual-scroll
@@ -72,6 +105,7 @@
                     depressed
                     small
                     color="error"
+                    @click="overlay = !overlay"
                 >
                     Delete
                     <v-icon
@@ -95,6 +129,7 @@
         name: "Editors",
         data: () => ({
             colors: ['#2196F3', '#90CAF9'],
+            limit: 2,
             items: [
                 {
                     color: '#2196F3',
@@ -106,7 +141,9 @@
                     fullName: `BsdfsRO sdfs`,
                     initials: `S E`,
                 },
-            ]
+            ],
+            overlay: false,
+            zIndex: 0,
             }),
 
     }

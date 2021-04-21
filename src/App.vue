@@ -3,10 +3,10 @@
       
     <navigation-bar />
 
-    <v-main class="grey lighten-4 mt-2">
+    <v-main class="grey lighten-4 ">
 
       <v-container 
-        class="pt-2 pb-1"
+        class=" pb-1"
       >
 
         <v-breadcrumbs

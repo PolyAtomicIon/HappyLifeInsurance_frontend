@@ -10,7 +10,7 @@
         <v-toolbar
             color="indigo lighten-1"
             dark
-            class="rounded-tr-lg rounded-tl-lg"
+            class="rounded-tr rounded-tl"
             flat
         >
             <v-toolbar-title>Permissions</v-toolbar-title>

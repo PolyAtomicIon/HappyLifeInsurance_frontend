@@ -43,7 +43,7 @@
                         },
                         title: {
                             display: true,
-                            text: 'Flex-status Bar Chart'
+                            text: 'Work-Hours Bar Chart'
                         },
 
                         scales: {

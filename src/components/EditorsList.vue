@@ -139,7 +139,7 @@
                 
             ],
             overlay: false,
-            zIndex: 0,
+            zIndex: 2,
             }),
 
     }

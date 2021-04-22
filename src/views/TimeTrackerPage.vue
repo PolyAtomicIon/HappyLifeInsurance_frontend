@@ -17,10 +17,11 @@
 
             <v-list-item>
               <v-list-item-content>
-                <v-list-item-title>
-                  <v-text class="indigo--text font-weight-bold">
-                    Time: {{ currentTime }}
-                  </v-text>
+                <v-list-item-title >
+                    <v-icon class="indigo--text font-weight-bold mb-1 mr-1"> mdi-clock </v-icon>
+                    <v-text class="--text font-weight-bold">
+                     Time {{ currentTime }}
+                    </v-text>
                 </v-list-item-title>
               </v-list-item-content>
             </v-list-item>
@@ -30,7 +31,8 @@
             <v-list-item v-if="currentStatus.inBuilding">
               <v-list-item-content>
                 <v-list-item-title>
-                  <v-text class="indigo--text font-weight-bold">
+                  <v-icon class="indigo--text font-weight-bold mb-1 mr-1"> mdi-checkbox-blank-circle </v-icon>
+                  <v-text class="--text font-weight-bold">
                     Working
                   </v-text>
                 </v-list-item-title>

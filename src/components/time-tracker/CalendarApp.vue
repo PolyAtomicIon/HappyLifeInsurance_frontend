@@ -103,7 +103,7 @@
                 :color="selectedEvent.color"
                 dark
               >
-                <v-btn icon>
+                <v-btn icon @click='editEvent(selectedEvent)' >
                   <v-icon>mdi-pencil</v-icon>
                 </v-btn>
                 <v-toolbar-title v-html="selectedEvent.name"></v-toolbar-title>
@@ -174,6 +174,7 @@
       },
       showEvent ({ nativeEvent, event }) {
         const open = () => {
+          console.log(event)
           this.selectedEvent = event
           this.selectedElement = nativeEvent.target
           setTimeout(() => {
@@ -189,6 +190,10 @@
         }
 
         nativeEvent.stopPropagation()
+      },
+      editEvent(event){
+        console.log(event.id)
+        event.name = 'lo'
       },
       updateRange ({ start, end }) {
         const events = []
@@ -211,6 +216,7 @@
             end: second,
             color: this.colors[this.rnd(0, this.colors.length - 1)],
             timed: !allDay,
+            id: events.length,
           })
         }
 

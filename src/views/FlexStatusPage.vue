@@ -7,7 +7,7 @@
                     <v-container>
                         <v-row>
 
-                            <v-col cols="12" md="5" sm="12">
+                            <v-col cols="12" md="3" sm="12">
                                 <v-card elevation="1" class="mt-5" color="grey lighten-5">
 
                                     <v-card-title>
@@ -35,7 +35,7 @@
 
                             </v-col>
 
-                            <v-col cols="12" md="7" sm="12">
+                            <v-col cols="12" md="9" sm="12">
                                 <!-- <v-sheet elevation="2" rounded=""> -->
                                 <flex-status-chart />
                                 <!-- </v-sheet> -->

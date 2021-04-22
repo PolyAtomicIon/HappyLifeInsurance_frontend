@@ -43,7 +43,7 @@
       </v-col>
 
       <v-col>
-        <v-sheet height="80vh" rounded="lg" class="mb-10"  elevation="2">
+        <v-sheet rounded="lg" class="mb-10"  elevation="2">
           <!-- <router-view class="child-view"></router-view> -->
 
           <div class="calendar-container">
@@ -58,7 +58,8 @@
 
 <script>
 // import InterestingCard from '../components/InterestingCard.vue'
-import CalendarApp from "../components/CalendarApp.vue";
+// import CalendarApp from "../components/CalendarApp.vue";
+import CalendarApp from "../components/time-tracker/CalendarApp.vue";
 import { Units } from "dayspan";
 
 export default {
@@ -130,7 +131,7 @@ export default {
 .calendar-container {
   /* height: calc(83% + 56px); */
   padding: 5px 0px;
-  height: 88%;
+  /* height: 88%; */
   margin: auto;
   /* width: 50vw; */
 }

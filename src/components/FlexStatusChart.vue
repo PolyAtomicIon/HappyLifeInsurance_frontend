@@ -17,7 +17,7 @@
                         labels: ["Hours"],
                         datasets: [
                             {
-                                label: "Reserved",
+                                label: "Reserved Hours",
                                 type: "horizontalBar",
                                 data: [2],
                                 backgroundColor: "rgba(71, 183,132,.5)",
@@ -25,7 +25,7 @@
                                 borderWidth: 1
                             },
                             {
-                                label: "Debts",
+                                label: "Debt Hours",
                                 type: "horizontalBar",
                                 data: [-2],
                                 backgroundColor: "rgba(173, 24, 121, .5)",
@@ -42,7 +42,7 @@
                         },
                         title: {
                             display: true,
-                            text: 'Flex-status Bar Chart'
+                            text: 'Flex-status'
                         },
                         scales: {
                             xAxes: [{

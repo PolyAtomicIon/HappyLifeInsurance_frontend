@@ -5,17 +5,44 @@ import Vuex from 'vuex'
 const ProfileModule = {
     state: () => ({
         userToEdit: null,
+        events: [],
     }),
     mutations: {
         setUserToEdit(state, data) {
             state.userToEdit = data;
         },
+        addNewEvent(state, entry) {
+            state.events.push(entry);
+        },
+        updateEvent(state, entry) {
+            for (let i = 0; i < state.events.length; i++) {
+                if (entry.id === state.events[i].id) {
+                    state.events[i] = entry;
+                    break
+                }
+            }
+        },
+        deleteEvent(state, entry) {
+
+            let index = null;
+
+            for (let i = 0; i < state.events.length; i++) {
+                if (entry.id === state.events[i].id) {
+                    index = i;
+                }
+            }
+
+            state.events.splice(index, 1);
+        }
     },
     actions: {},
     getters: {
         userToEdit(state) {
             return state.userToEdit;
         },
+        events(state) {
+            return state.events;
+        }
     },
 }
 

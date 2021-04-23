@@ -85,7 +85,6 @@
             @click:event="showEvent"
             @click:more="viewDay"
             @click:date="viewDay"
-            @change="updateRange"
           ></v-calendar>
           <v-menu
             v-model="selectedOpen"
@@ -107,7 +106,7 @@
                 </v-btn>
                 <v-toolbar-title v-html="selectedEvent.name"></v-toolbar-title>
                 <v-spacer></v-spacer>
-                <v-btn icon @click='deleteEvent(selectedEvent)' >
+                <v-btn icon @click='removeEvent(selectedEvent)' >
                   <v-icon>mdi-delete</v-icon>
                 </v-btn>
               </v-toolbar>
@@ -127,11 +126,10 @@
           </v-menu>
         </v-sheet>
 
-        <div 
+        <overlay-black 
           v-if="isEventDialog"
-          class="overlay-bg" 
-        >
-        </div>
+        />
+
         <add-event-dialog
           class="event-dialog" 
           :overlay="isEventDialog"
@@ -145,6 +143,8 @@
 <script>
 
   import AddEventDialog from '../time-tracker/AddEventDialog.vue';
+  import OverlayBlack from '../OverlayBlack.vue';
+  import { mapGetters, mapMutations } from 'vuex';
 
   export default {
 
@@ -160,15 +160,13 @@
       selectedEvent: {},
       selectedElement: null,
       selectedOpen: false,
-      events: [],
-      colors: ['blue', 'indigo', 'deep-purple', 'cyan', 'green', 'orange', 'grey darken-1'],
-      names: ['Meeting', 'Holiday', 'PTO', 'Travel', 'Event', 'Birthday', 'Conference', 'Party'],
       isEventDialog: false,
     }),
     mounted () {
-      this.$refs.calendar.checkChange()
+      this.$refs.calendar.checkChange();
     },
     methods: {
+      ...mapMutations(['deleteEvent']),
       viewDay ({ date }) {
         this.focus = date
         this.type = 'day'
@@ -214,66 +212,21 @@
         this.isEventDialog = true;
         this.openEventDialog();
       },
-      deleteEvent(event){
-        console.log(event.id)
+      removeEvent(event){
         this.selectedOpen = false;
-        event.name = 'Deleted';
+        this.deleteEvent(event);
       },
-      updateRange ({ start, end }) {
-        const events = []
-
-        const min = new Date(`${start.date}T00:00:00`)
-        const max = new Date(`${end.date}T23:59:59`)
-        const days = (max.getTime() - min.getTime()) / 86400000
-        const eventCount = this.rnd(days, days + 20)
-
-        for (let i = 0; i < eventCount; i++) {
-          const allDay = this.rnd(0, 3) === 0
-          const firstTimestamp = this.rnd(min.getTime(), max.getTime())
-          const first = new Date(firstTimestamp - (firstTimestamp % 900000))
-          const secondTimestamp = this.rnd(2, allDay ? 288 : 8) * 900000
-          const second = new Date(first.getTime() + secondTimestamp)
-
-          events.push({
-            name: this.names[this.rnd(0, this.names.length - 1)],
-            start: first,
-            end: second,
-            color: this.colors[this.rnd(0, this.colors.length - 1)],
-            timed: !allDay,
-            id: events.length,
-          })
-        }
-
-        this.events = events
-      },
+      
       rnd (a, b) {
         return Math.floor((b - a + 1) * Math.random()) + a
       },
     },
+    computed: {
+      ...mapGetters(['events']),
+    },
     components: {
       AddEventDialog,
+      OverlayBlack,
     },
   }
 </script>
-
-<style scoped>
-  .event-dialog {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    z-index: 2;
-  }
-
-  .overlay-bg {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 100%;
-    height: 100%;
-    background: #000;
-    opacity: 0.5;
-    z-index: 1;
-  }
-</style>

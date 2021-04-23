@@ -62,7 +62,7 @@
 
                         <v-btn 
                             text 
-                            @click="e1 = 1, overlay = false, $emit('closed')"
+                            @click="e1 = 1, close()"
                             class="ml-2"
                         >
                             <v-icon class="mr-1">
@@ -101,7 +101,7 @@
 
                         <v-btn 
                             text 
-                            @click="overlay = false, $emit('closed')"
+                            @click="close()"
                             class="ml-2"
                         >
                             <v-icon class="mr-1">
@@ -215,7 +215,7 @@
 
                         <v-btn 
                             text 
-                            @click="overlay = false, $emit('closed')"
+                            @click="close()"
                             class="ml-2"
                         >
                             <v-icon class="mr-1">
@@ -235,28 +235,29 @@
                         >
     
                             <v-card-title>
-                                Write reasen or description of the entry
+                                Write reason or description
                             </v-card-title>
 
                             <v-textarea
-                            outlined
-                            clearable
-                            clear-icon="mdi-close-circle"
-                            name="input-7-4"
-                            label="Reason or Description"
+                                v-model="description"
+                                outlined
+                                clearable
+                                clear-icon="mdi-close-circle"
+                                name="input-7-4"
+                                label="Reason or Description"
                             ></v-textarea>
                         </v-card>
 
                         <v-btn
                             color="primary"
-                            @click="nextStep(4)"
+                            @click="submit()"
                         >
                             Save
                         </v-btn>
 
                         <v-btn 
                             text 
-                            @click="e1 = 1, overlay = false, $emit('closed')"
+                            @click="e1 = 1, close()"
                             class="ml-2"
                         >
                             <v-icon class="mr-1">
@@ -273,6 +274,7 @@
 </template>
 
 <script>
+  import { mapMutations } from 'vuex'
   export default {
     data () {
       return {
@@ -286,10 +288,12 @@
         time2: null,
         modal: null,
         modal2: false,
+        description: '',
         type: 'Work Hour',
         types: [
           'Work hour', 'Not Work hour',
         ],
+        colors: ['green', 'red'],
       }
     },
 
@@ -302,19 +306,69 @@
     },
 
     methods: {
-      nextStep (n) {
-        if (n === this.steps) {
-          this.e1 = 1
-        } else {
-          this.e1 = n + 1
+        ...mapMutations(['addNewEvent', 'updateEvent']),
+
+        nextStep (n) {
+            if (n === this.steps) {
+            this.e1 = 1
+            } else {
+            this.e1 = n + 1
+            }
+        },
+
+        submit(){
+
+            let start = new Date(`${this.date}T${this.time}:00`)
+            let end = new Date(`${this.date}T${this.time2}:00`)
+
+            // console.log(start)
+            // console.log(end)
+
+            let event = {
+                timed: true,
+                name: this.type,
+                start: start,
+                end: end,
+                color: this.typeColor,
+                description: this.description,
+                id: 45,
+            }
+            console.log(event)
+            if( this.isAdding ){
+                this.addNewEvent(event)
+            }
+            else{
+                this.updateEvent(event)
+            }
+
+            this.close();
+        },
+        close(){
+            this.overlay = false;
+            this.$emit('closed');
         }
-      },
     },
 
     props: {
       overlay: {
         default: false
+      },
+      isAdding: {
+        default: false
       }
     }
   }
 </script>
+
+<style scoped>
+
+  .event-dialog {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 2;
+  }
+
+
+</style>

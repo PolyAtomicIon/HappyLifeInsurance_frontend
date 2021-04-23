@@ -6,14 +6,6 @@
         <v-sheet rounded="lg" class="calendar-control-buttons"  elevation="2">
           
           <v-list color="transparent">
-            
-            <!-- <v-list-item v-for="(key, value) in CurrentStatus" :key="key">
-              <v-list-item-content>
-                <v-list-item-title>
-                  <b>{{ key }}:</b> {{ value }}
-                </v-list-item-title>
-              </v-list-item-content>
-            </v-list-item> -->
 
             <v-list-item>
               <v-list-item-content>
@@ -26,8 +18,6 @@
               </v-list-item-content>
             </v-list-item>
 
-            <v-divider class="my-2"></v-divider>
-
             <v-list-item v-if="currentStatus.inBuilding">
               <v-list-item-content>
                 <v-list-item-title>
@@ -39,6 +29,22 @@
               </v-list-item-content>
             </v-list-item>
 
+            <v-divider class="my-2"></v-divider>
+
+            <v-list-item v-if="currentStatus.inBuilding">
+              <v-list-item-content>
+                <v-btn 
+                  color="green white--text  " 
+                  @click="isAddingEntry = true"
+                >
+                  <v-icon class="mr-2">
+                    mdi-plus
+                  </v-icon>
+                  Register Entry
+                </v-btn>
+              </v-list-item-content>
+            </v-list-item>
+
           </v-list>
 
         </v-sheet>
@@ -46,12 +52,23 @@
 
       <v-col>
         <v-sheet rounded="lg" class="mb-10"  elevation="2">
-          <!-- <router-view class="child-view"></router-view> -->
-
           <div class="calendar-container">
-            <calendar-app :types="types" />
+            <calendar-app 
+              :types="types" 
+            />
           </div>
         </v-sheet>
+
+        <overlay-black 
+          v-if="isAddingEntry"
+        />
+        <add-event-dialog
+          class="event-dialog" 
+          :isAdding="true"
+          :overlay="isAddingEntry"
+          @closed="isAddingEntry = false"
+        />
+
       </v-col>
     </v-row>
   </v-container>
@@ -61,6 +78,8 @@
 <script>
 // import InterestingCard from '../components/InterestingCard.vue'
 // import CalendarApp from "../components/CalendarApp.vue";
+import AddEventDialog from '../components/time-tracker/AddEventDialog.vue';
+import OverlayBlack from '../components/OverlayBlack.vue';
 import CalendarApp from "../components/time-tracker/CalendarApp.vue";
 import { Units } from "dayspan";
 
@@ -93,11 +112,11 @@ export default {
         schedule: false,
       },
     ],
-
     currentStatus: {
       inBuilding: true,
     },
     currentTime: null,
+    isAddingEntry: false,
   }),
 
   mounted(){
@@ -115,7 +134,6 @@ export default {
 
       this.currentTime = hh + ":" + mm + ":" + ss;
     },
-
     updateTime() {      	
       this.timeFormate(new Date());
       setInterval(this.updateTime, 1000);
@@ -124,6 +142,8 @@ export default {
 
   components: {
     CalendarApp,
+    AddEventDialog,
+    OverlayBlack
     // InterestingCard
   },
 };

@@ -3,7 +3,7 @@
     <v-row>
       <v-col cols="12" sm="12" md="4">
         <v-sheet rounded="lg" elevation="2">
-          <shared-with-me :isInEditor="true"/>
+          <shared-with-me :isInEditor="true" @addEntry="isAddingEntry=true"/>
         </v-sheet>
       </v-col>
 
@@ -13,6 +13,17 @@
             <calendar-app v-if="userToEdit" :types="types" />
           </div>
         </v-sheet>
+
+        <overlay-black 
+          v-if="isAddingEntry"
+        />
+        <add-event-dialog
+          class="event-dialog" 
+          :isAdding="true"
+          :overlay="isAddingEntry"
+          :date="toDateString()"
+          @closed="isAddingEntry = false"
+        />
       </v-col>
     </v-row>
   </v-container>
@@ -20,8 +31,10 @@
 
 <script>
 // import axios from 'axios'
-import CalendarApp from "../components/CalendarApp.vue";
+import CalendarApp from "../components/time-tracker/CalendarApp.vue";
 import SharedWithMe from "../components/SharedWithMe.vue";
+import AddEventDialog from "../components/time-tracker/AddEventDialog";
+import OverlayBlack from "../components/OverlayBlack";
 import { Units } from "dayspan";
 import {mapGetters} from 'vuex';
 
@@ -60,6 +73,7 @@ export default {
         schedule: false,
       },
     ],
+    isAddingEntry: false,
   }),
 
   mounted() {
@@ -73,13 +87,30 @@ export default {
 
   components: {
     CalendarApp,
-    SharedWithMe
+    SharedWithMe,
+    AddEventDialog,
+    OverlayBlack
   },
 
   methods: {
 
     goBack: function () {
       this.$router.go(-1);
+    },
+    toDateString(){
+        let date = new Date();
+
+        let day = date.getDate();
+        if( day < 10 )
+            day = '0' + day
+        let month = date.getMonth() + 1;
+        if( month < 10 )
+            month = '0' + month
+        let year = date.getFullYear();
+        // .substr(0, 10)
+        console.log(day + ' ' + month + ' ' + year) 
+        return year + '-' + month + '-' + day;
+        // return day + '-' + month + '-' + year
     },
   },
 };

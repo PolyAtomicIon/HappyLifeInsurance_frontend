@@ -20,6 +20,22 @@
             {{userToEdit}}
         </v-card-text>
         <v-divider v-if="isInEditor"></v-divider>
+
+        <v-list-item v-if="isInEditor">
+            <v-list-item-content>
+            <v-btn 
+                color="green white--text  " 
+                @click="$emit('addEntry')"
+            >
+                <v-icon class="mr-2">
+                mdi-plus
+                </v-icon>
+                Register Entry
+            </v-btn>
+            </v-list-item-content>
+        </v-list-item>
+
+        <v-divider class="my-2" v-if="isInEditor"></v-divider>
     
         <v-virtual-scroll
             :items="items"
@@ -85,8 +101,8 @@
                     initials: `S E`,
                     id: 2,
                 },
-            ]
-            }),
+            ],
+        }),
         methods: {
             ...mapMutations(['setUserToEdit']),
         },
@@ -95,7 +111,7 @@
         },
         props: {
             height: {
-                default: '325px'
+                default: '410px'
             },
             isInEditor: {
                 dafault: false

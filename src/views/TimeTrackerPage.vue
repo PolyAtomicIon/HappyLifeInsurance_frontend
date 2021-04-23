@@ -31,7 +31,7 @@
 
             <v-divider class="my-2"></v-divider>
 
-            <v-list-item v-if="currentStatus.inBuilding">
+            <v-list-item >
               <v-list-item-content>
                 <v-btn 
                   color="green white--text  " 

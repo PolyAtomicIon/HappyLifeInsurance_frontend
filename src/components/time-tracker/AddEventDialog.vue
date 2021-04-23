@@ -144,6 +144,8 @@
                                 <v-time-picker
                                     v-if="modal"
                                     v-model="time"
+                                    format="24hr"
+                                    min="04:00"
                                     colo="primary-color"
                                 >
                                 <v-spacer></v-spacer>
@@ -184,7 +186,9 @@
                                 <v-time-picker
                                     v-if="modal2"
                                     v-model="time2"
-                                    full-width
+                                    :min="time"
+                                    max="23:59"
+                                    format="24hr"
                                 >
                                 <v-spacer></v-spacer>
                                 <v-btn
@@ -299,7 +303,14 @@
         default: false
       },
       time: {
-        default: null
+        default() {            
+            let date = new Date();
+
+            let hh = date.getHours() < 10? "0" + date.getHours(): date.getHours();
+            let mm = date.getMinutes() < 10? "0" + date.getMinutes(): date.getMinutes();
+
+            return hh + ':' + mm;
+        }
       },
       time2: {
         default: null
@@ -380,13 +391,20 @@
         },
         reset(){
             this.nextStep(4);
-            this.time = null;
+            this.time = this.currentTimeString();
             this.time2 = null;
             this.type = this.types[0];
             this.date_local = this.date;
             this.description = '';
         },
+        currentTimeString(){
+            let date = new Date();
 
+            let hh = date.getHours() < 10? "0" + date.getHours(): date.getHours();
+            let mm = date.getMinutes() < 10? "0" + date.getMinutes(): date.getMinutes();
+
+            return hh + ':' + mm;
+        }
     },
   }
 </script>

@@ -7,7 +7,7 @@
         <v-sheet 
             v-if="overlay"
             min-width="350px"
-            max-width="700px"
+            max-width="800px"
         >
             <v-stepper v-model="e1">
                 <v-stepper-header>
@@ -18,7 +18,7 @@
                             :step="n"
                             editable
                         >
-                            Step {{ n }}
+                            {{ n }}
                         </v-stepper-step>
 
                         <v-divider
@@ -33,6 +33,49 @@
                         :step="1"
                     >
                         <v-card
+                            width="300px"
+                            class="mb-12 white black--text"
+                            elevation="0"
+                        >
+                            <v-card-title>
+                                Pick label
+                            </v-card-title>
+
+                            <v-select
+                                v-model="type"
+                                :items="types"
+                                menu-props="auto"
+                                label="Select"
+                                hide-details
+                                :color="typeColor"
+                                prepend-icon="mdi-checkbox-blank-circle"
+                                single-line
+                            ></v-select>
+                        </v-card>
+
+                        <v-btn
+                            color="primary"
+                            @click="nextStep(1)"
+                        >
+                            Save
+                        </v-btn>
+
+                        <v-btn 
+                            text 
+                            @click="e1 = 1, overlay = false, $emit('closed')"
+                            class="ml-2"
+                        >
+                            <v-icon class="mr-1">
+                                mdi-close
+                            </v-icon>
+                            Cancel
+                        </v-btn>
+                    </v-stepper-content>
+                    
+                    <v-stepper-content
+                        :step="2"
+                    >
+                        <v-card
                             class="mb-2"
                             elevation="0"
                             width="300px"
@@ -44,7 +87,6 @@
                         
                             <v-date-picker
                                 v-model="date"
-                                full-width
                                 color=""
                             ></v-date-picker>
 
@@ -52,7 +94,7 @@
 
                         <v-btn
                             color="primary"
-                            @click="nextStep(1)"
+                            @click="nextStep(2)"
                         >
                             Continue
                         </v-btn>
@@ -70,7 +112,7 @@
                     </v-stepper-content>
                     
                     <v-stepper-content
-                        :step="2"
+                        :step="3"
                     >
                         <v-card
                             width="300px"
@@ -166,7 +208,7 @@
 
                         <v-btn
                             color="primary"
-                            @click="nextStep(2)"
+                            @click="nextStep(3)"
                         >
                             Continue
                         </v-btn>
@@ -184,12 +226,18 @@
                     </v-stepper-content>
                     
                     <v-stepper-content
-                        :step="3"
+                        :step="4"
                     >
                         <v-card
-                            class="mt-4 white black--text"
+                            width="300px"
+                            class="white black--text"
                             elevation="0"
                         >
+    
+                            <v-card-title>
+                                Write reasen or description of the entry
+                            </v-card-title>
+
                             <v-textarea
                             outlined
                             clearable
@@ -201,7 +249,7 @@
 
                         <v-btn
                             color="primary"
-                            @click="nextStep(3)"
+                            @click="nextStep(4)"
                         >
                             Save
                         </v-btn>
@@ -229,7 +277,7 @@
     data () {
       return {
         e1: 1,
-        steps: 3,
+        steps: 4,
         zIndex: 2,
         date: new Date().toISOString().substr(0, 10),
         done: [false, false, false],
@@ -238,7 +286,19 @@
         time2: null,
         modal: null,
         modal2: false,
+        type: 'Work Hour',
+        types: [
+          'Work hour', 'Not Work hour',
+        ],
       }
+    },
+
+    computed: {
+        typeColor(){
+            if( this.type == this.types[0] )
+                return 'green'
+            return "red"
+        }
     },
 
     methods: {

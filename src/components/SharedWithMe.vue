@@ -24,7 +24,7 @@
         <v-list-item v-if="isInEditor">
             <v-list-item-content>
             <v-btn 
-                color="green white--text  " 
+                color="primary-color" 
                 @click="$emit('addEntry')"
             >
                 <v-icon class="mr-2">

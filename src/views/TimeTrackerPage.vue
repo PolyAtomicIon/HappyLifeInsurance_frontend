@@ -34,7 +34,7 @@
             <v-list-item >
               <v-list-item-content>
                 <v-btn 
-                  color="green white--text  " 
+                  color="primary-color" 
                   @click="isAddingEntry = true"
                 >
                   <v-icon class="mr-2">

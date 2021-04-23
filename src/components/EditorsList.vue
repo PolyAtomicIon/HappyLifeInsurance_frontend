@@ -61,7 +61,7 @@
                         class="d-flex flex-row justify-space-around" 
                     >
                         <v-btn
-                            color="primary"
+                            color="primary-color"
                             @click="overlay = false, removeUserFromList()"
                         >
                             yes

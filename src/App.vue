@@ -104,4 +104,8 @@
     color: #769fcd !important;
   }
 
+  .least-important-color {
+    background: #b9d7ea !important;
+  }
+
 </style>

@@ -8,7 +8,7 @@
       </v-col>
 
       <v-col cols="12" sm="12" md="8">
-        <v-sheet height="80vh" rounded="lg" class="mb-10"  elevation="2">
+        <v-sheet rounded="lg" class="mb-10"  elevation="2">
           <div class="calendar-container">
             <calendar-app v-if="userToEdit" :types="types" />
           </div>

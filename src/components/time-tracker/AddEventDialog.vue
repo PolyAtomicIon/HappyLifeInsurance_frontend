@@ -33,13 +33,15 @@
                         :step="1"
                     >
                         <v-card
-                            class="mb-12"
+                            class="mb-2"
+                            elevation="0"
+                            width="300px"
                         >
     
                             <v-card-title>
                                 Pick a date of entry
                             </v-card-title>
-
+                        
                             <v-date-picker
                                 v-model="date"
                                 full-width
@@ -71,7 +73,9 @@
                         :step="2"
                     >
                         <v-card
-                            class="mb-12 "
+                            width="300px"
+                            class="mb-4 "
+                            elevation="0"
                         >
     
                             <v-card-title>
@@ -80,7 +84,7 @@
 
                              <v-dialog
                                 ref="dialog"
-                                v-model="modal2"
+                                v-model="modal"
                                 :return-value.sync="time"
                                 persistent
                                 width="290px"
@@ -88,7 +92,47 @@
                                 <template v-slot:activator="{ on, attrs }">
                                 <v-text-field
                                     v-model="time"
-                                    label="Picker in dialog"
+                                    label="Start Time"
+                                    prepend-icon="mdi-clock-time-four-outline"
+                                    readonly
+                                    v-bind="attrs"
+                                    v-on="on"
+                                ></v-text-field>
+                                </template>
+                                <v-time-picker
+                                    v-if="modal"
+                                    v-model="time"
+                                    full-width
+                                >
+                                <v-spacer></v-spacer>
+                                <v-btn
+                                    text
+                                    color="primary"
+                                    @click="modal = false"
+                                >
+                                    Cancel
+                                </v-btn>
+                                <v-btn
+                                    text
+                                    color="primary"
+                                    @click="$refs.dialog.save(time), modal = false"
+                                >
+                                    OK
+                                </v-btn>
+                                </v-time-picker>
+                            </v-dialog>
+                        
+                             <v-dialog
+                                ref="dialog1"
+                                v-model="modal2"
+                                :return-value.sync="time2"
+                                persistent
+                                width="290px"
+                            >
+                                <template v-slot:activator="{ on, attrs }">
+                                <v-text-field
+                                    v-model="time2"
+                                    label="End Time"
                                     prepend-icon="mdi-clock-time-four-outline"
                                     readonly
                                     v-bind="attrs"
@@ -97,7 +141,7 @@
                                 </template>
                                 <v-time-picker
                                     v-if="modal2"
-                                    v-model="time"
+                                    v-model="time2"
                                     full-width
                                 >
                                 <v-spacer></v-spacer>
@@ -111,13 +155,13 @@
                                 <v-btn
                                     text
                                     color="primary"
-                                    @click="$refs.dialog.save(time), modal2 = false"
+                                    @click="$refs.dialog1.save(time2), modal2 = false"
                                 >
                                     OK
                                 </v-btn>
                                 </v-time-picker>
                             </v-dialog>
-                        
+
                         </v-card>
 
                         <v-btn
@@ -143,19 +187,28 @@
                         :step="3"
                     >
                         <v-card
-                            class="mb-12 white black--text"
-                        ></v-card>
+                            class="mt-4 white black--text"
+                            elevation="0"
+                        >
+                            <v-textarea
+                            outlined
+                            clearable
+                            clear-icon="mdi-close-circle"
+                            name="input-7-4"
+                            label="Reason or Description"
+                            ></v-textarea>
+                        </v-card>
 
                         <v-btn
                             color="primary"
                             @click="nextStep(3)"
                         >
-                            Continue
+                            Save
                         </v-btn>
 
                         <v-btn 
                             text 
-                            @click="overlay = false, $emit('closed')"
+                            @click="e1 = 1, overlay = false, $emit('closed')"
                             class="ml-2"
                         >
                             <v-icon class="mr-1">
@@ -182,6 +235,8 @@
         done: [false, false, false],
         mouseMonth: null,
         time: null,
+        time2: null,
+        modal: null,
         modal2: false,
       }
     },

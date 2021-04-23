@@ -129,10 +129,18 @@
             </v-card>
           </v-menu>
         </v-sheet>
-        <add-event-dialog 
+
+        <div 
+          v-if="isEventDialog"
+          class="overlay-bg" 
+        >
+        </div>
+        <add-event-dialog
+          class="event-dialog" 
           :overlay="isEventDialog"
           @closed="isEventDialog = false"
         />
+      
       </v-col>
     </v-row>
 </template>
@@ -245,3 +253,25 @@
     },
   }
 </script>
+
+<style scoped>
+  .event-dialog {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 2;
+  }
+
+  .overlay-bg {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    height: 100%;
+    background: #000;
+    opacity: 0.5;
+    z-index: 1;
+  }
+</style>

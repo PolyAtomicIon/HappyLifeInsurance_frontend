@@ -117,7 +117,7 @@
                 <v-btn
                   text
                   color="secondary"
-                  @click="selectedOpen = false, isEventDialog = false"
+                  @click="close()"
                 >
                   Cancel
                 </v-btn>
@@ -132,8 +132,15 @@
 
         <add-event-dialog
           class="event-dialog" 
+          v-if="selectedEvent"
+          :description="selectedEvent.description"
+          :date="toDateString(selectedEvent.start)"
+          :time="toTimeString(selectedEvent.start)"
+          :time2="toTimeString(selectedEvent.end)"
+          :id="selectedEvent.id"
+          :type="selectedEvent.name"
           :overlay="isEventDialog"
-          @closed="isEventDialog = false"
+          @closed="isEventDialog = false, close()"
         />
       
       </v-col>
@@ -207,7 +214,6 @@
       },
       editEvent(event){
         console.log(event.id)
-        event.name = 'lo';
         this.selectedOpen = false;
         this.isEventDialog = true;
         this.openEventDialog();
@@ -216,10 +222,30 @@
         this.selectedOpen = false;
         this.deleteEvent(event);
       },
-      
-      rnd (a, b) {
-        return Math.floor((b - a + 1) * Math.random()) + a
+      close(){
+        this.$refs.calendar.checkChange();
+        this.selectedOpen = false;
+        this.isEventDialog = false
       },
+  // eslint-disable-next-line no-unused-vars
+      toDateString(date){
+        // console.log(date)          
+        if( !date )
+          return
+        let dateString = date.toISOString().substr(0, 10)
+        console.log(dateString)
+        return dateString;
+      },
+  // eslint-disable-next-line no-unused-vars
+      toTimeString(date){
+        if( !date )
+          return
+
+        let hh = date.getHours() < 10? "0" + date.getHours(): date.getHours();
+        let mm = date.getMinutes() < 10? "0" + date.getMinutes(): date.getMinutes();
+        // console.log(date)        
+        return hh + ':' + mm;
+      }
     },
     computed: {
       ...mapGetters(['events']),

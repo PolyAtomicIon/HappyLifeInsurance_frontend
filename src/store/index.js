@@ -15,12 +15,17 @@ const ProfileModule = {
             state.events.push(entry);
         },
         updateEvent(state, entry) {
-            for (let i = 0; i < state.events.length; i++) {
-                if (entry.id === state.events[i].id) {
-                    state.events[i] = entry;
+            let tmp = state.events
+            for (let i = 0; i < tmp.length; i++) {
+                if (entry.id === tmp[i].id) {
+                    tmp[i] = entry;
+                    console.log("FOUND AND UPDATED")
                     break
                 }
             }
+
+            state.events = tmp;
+            console.log("NOT OFUND")
         },
         deleteEvent(state, entry) {
 

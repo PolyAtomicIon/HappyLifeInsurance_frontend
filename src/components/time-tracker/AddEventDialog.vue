@@ -274,22 +274,16 @@
 </template>
 
 <script>
-  import { mapMutations } from 'vuex'
+  import { mapGetters, mapMutations } from 'vuex'
   export default {
     data () {
       return {
         e1: 1,
         steps: 4,
         zIndex: 2,
-        date: new Date().toISOString().substr(0, 10),
-        done: [false, false, false],
         mouseMonth: null,
-        time: null,
-        time2: null,
         modal: null,
         modal2: false,
-        description: '',
-        type: 'Work Hour',
         types: [
           'Work hour', 'Not Work hour',
         ],
@@ -297,7 +291,35 @@
       }
     },
 
+    props: {
+      overlay: {
+        default: false
+      },
+      isAdding: {
+        default: false
+      },
+      time: {
+        default: null
+      },
+      time2: {
+        default: null
+      },
+      date: {
+        default: new Date().toISOString().substr(0, 10)
+      },
+      description: {
+        default: ''
+      },
+      type: {
+        default: 'Work hour'
+      },
+      id: {
+        default: null
+      }  
+    },
+
     computed: {
+        ...mapGetters(['events']),
         typeColor(){
             if( this.type == this.types[0] )
                 return 'green'
@@ -318,6 +340,9 @@
 
         submit(){
 
+            console.log(this.date)
+            console.log(this.time)
+
             let start = new Date(`${this.date}T${this.time}:00`)
             let end = new Date(`${this.date}T${this.time2}:00`)
 
@@ -331,13 +356,14 @@
                 end: end,
                 color: this.typeColor,
                 description: this.description,
-                id: 45,
+                id: this.events.length + 1,
             }
             console.log(event)
             if( this.isAdding ){
                 this.addNewEvent(event)
             }
             else{
+                event.id = this.id;
                 this.updateEvent(event)
             }
 
@@ -346,17 +372,16 @@
         close(){
             this.overlay = false;
             this.$emit('closed');
+            this.reset();
+        },
+        reset(){
+            this.time = null;
+            this.time2 = null;
+            this.type = '';
+            this.date = new Date().toISOString().substr(0, 10);
+            this.description = '';
         }
     },
-
-    props: {
-      overlay: {
-        default: false
-      },
-      isAdding: {
-        default: false
-      }
-    }
   }
 </script>
 

@@ -227,16 +227,25 @@
         this.selectedOpen = false;
         this.isEventDialog = false
       },
-  // eslint-disable-next-line no-unused-vars
+      // eslint-disable-next-line no-unused-vars
       toDateString(date){
-        // console.log(date)          
-        if( !date )
-          return
-        let dateString = date.toISOString().substr(0, 10)
-        console.log(dateString)
-        return dateString;
+
+          if( !date )
+            return
+
+          let day = date.getDate();
+          if( day < 10 )
+              day = '0' + day
+          let month = date.getMonth() + 1;
+          if( month < 10 )
+              month = '0' + month
+          let year = date.getFullYear();
+          // .substr(0, 10)
+          console.log(day + ' ' + month + ' ' + year) 
+          return year + '-' + month + '-' + day;
+          // return day + '-' + month + '-' + year
       },
-  // eslint-disable-next-line no-unused-vars
+      // eslint-disable-next-line no-unused-vars
       toTimeString(date){
         if( !date )
           return

@@ -274,7 +274,7 @@
 </template>
 
 <script>
-  import { mapGetters, mapMutations } from 'vuex'
+  import { mapGetters, mapMutations, mapActions } from 'vuex'
   export default {
     data () {
       return {
@@ -326,15 +326,18 @@
             return "red"
         }
     },
-
+    mounted() {
+        console.log(this.date)
+    },
     methods: {
-        ...mapMutations(['addNewEvent', 'updateEvent']),
+        ...mapMutations(['addNewEvent']),
+        ...mapActions(['updateEvent']),
 
         nextStep (n) {
             if (n === this.steps) {
-            this.e1 = 1
+                this.e1 = 1
             } else {
-            this.e1 = n + 1
+                this.e1 = n + 1
             }
         },
 
@@ -377,10 +380,27 @@
         reset(){
             this.time = null;
             this.time2 = null;
-            this.type = '';
-            this.date = new Date().toISOString().substr(0, 10);
+            this.type = this.types[0];
+            this.date = this.toDateString();
             this.description = '';
-        }
+            this.el = 1;
+            },
+
+        toDateString(){
+            let date = new Date();
+
+            let day = date.getDate();
+            if( day < 10 )
+                day = '0' + day
+            let month = date.getMonth() + 1;
+            if( month < 10 )
+                month = '0' + month
+            let year = date.getFullYear();
+            // .substr(0, 10)
+            console.log(day + ' ' + month + ' ' + year) 
+            return year + '-' + month + '-' + day;
+            // return day + '-' + month + '-' + year
+        },
     },
   }
 </script>

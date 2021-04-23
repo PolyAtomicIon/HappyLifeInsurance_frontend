@@ -14,19 +14,6 @@ const ProfileModule = {
         addNewEvent(state, entry) {
             state.events.push(entry);
         },
-        updateEvent(state, entry) {
-            let tmp = state.events
-            for (let i = 0; i < tmp.length; i++) {
-                if (entry.id === tmp[i].id) {
-                    tmp[i] = entry;
-                    console.log("FOUND AND UPDATED")
-                    break
-                }
-            }
-
-            state.events = tmp;
-            console.log("NOT OFUND")
-        },
         deleteEvent(state, entry) {
 
             let index = null;
@@ -40,7 +27,15 @@ const ProfileModule = {
             state.events.splice(index, 1);
         }
     },
-    actions: {},
+    actions: {
+
+        updateEvent({ commit }, entry) {
+
+            commit("deleteEvent", entry);
+            commit("addNewEvent", entry);
+
+        },
+    },
     getters: {
         userToEdit(state) {
             return state.userToEdit;

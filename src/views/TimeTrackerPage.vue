@@ -7,7 +7,7 @@
           
           <v-list color="transparent">
 
-            <v-list-item>
+            <!-- <v-list-item>
               <v-list-item-content>
                 <v-list-item-title >
                     <v-icon class="indigo--text font-weight-bold mb-1 mr-1"> mdi-clock </v-icon>
@@ -16,7 +16,7 @@
                     </span>
                 </v-list-item-title>
               </v-list-item-content>
-            </v-list-item>
+            </v-list-item> -->
 
             <v-list-item v-if="currentStatus.inBuilding">
               <v-list-item-content>
@@ -51,7 +51,7 @@
       </v-col>
 
       <v-col>
-        <v-sheet rounded="lg" class="mb-10"  elevation="2">
+        <v-sheet rounded="lg" class="mb-10" elevation="2">
           <div class="calendar-container">
             <calendar-app 
               :types="types" 
@@ -66,6 +66,7 @@
           class="event-dialog" 
           :isAdding="true"
           :overlay="isAddingEntry"
+          :date="toDateString()"
           @closed="isAddingEntry = false"
         />
 
@@ -120,7 +121,7 @@ export default {
   }),
 
   mounted(){
-    this.updateTime();
+    // this.updateTime();
   },
 
   methods: {
@@ -134,10 +135,25 @@ export default {
 
       this.currentTime = hh + ":" + mm + ":" + ss;
     },
-    updateTime() {      	
-      this.timeFormate(new Date());
-      setInterval(this.updateTime, 1000);
-    }
+    toDateString(){
+        let date = new Date();
+
+        let day = date.getDate();
+        if( day < 10 )
+            day = '0' + day
+        let month = date.getMonth() + 1;
+        if( month < 10 )
+            month = '0' + month
+        let year = date.getFullYear();
+        // .substr(0, 10)
+        console.log(day + ' ' + month + ' ' + year) 
+        return year + '-' + month + '-' + day;
+        // return day + '-' + month + '-' + year
+    },
+    // updateTime() {      	
+    //   this.timeFormate(new Date());
+    //   setInterval(this.updateTime, 1000);
+    // }
   },
 
   components: {
@@ -147,12 +163,12 @@ export default {
     // InterestingCard
   },
 };
-</script>
+</script>elevation
 
 <style scoped>
 .calendar-container {
   /* height: calc(83% + 56px); */
-  padding: 5px 0px;
+  /* padding: 5px 0px; */
   /* height: 88%; */
   margin: auto;
   /* width: 50vw; */

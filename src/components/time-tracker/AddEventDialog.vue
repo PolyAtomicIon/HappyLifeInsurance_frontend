@@ -88,6 +88,7 @@
                             <v-date-picker
                                 v-model="date_local"
                                 color="primary-color"
+                                :max="toDateString()"
                             ></v-date-picker>
 
                         </v-card>
@@ -344,7 +345,9 @@
     methods: {
         ...mapMutations(['addNewEvent']),
         ...mapActions(['updateEvent']),
-
+        
+        allowedDates: val => parseInt(val.split('-')[2], 10) % 2 === 0,
+        
         nextStep (n) {
             if (n === this.steps) {
                 this.e1 = 1
@@ -404,7 +407,22 @@
             let mm = date.getMinutes() < 10? "0" + date.getMinutes(): date.getMinutes();
 
             return hh + ':' + mm;
-        }
+        },
+        toDateString(){
+            let date = new Date();
+
+            let day = date.getDate();
+            if( day < 10 )
+                day = '0' + day
+            let month = date.getMonth() + 1;
+            if( month < 10 )
+                month = '0' + month
+            let year = date.getFullYear();
+            // .substr(0, 10)
+            console.log(day + ' ' + month + ' ' + year) 
+            return year + '-' + month + '-' + day;
+            // return day + '-' + month + '-' + year
+        },
     },
   }
 </script>

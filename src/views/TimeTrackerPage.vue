@@ -19,9 +19,9 @@
               <v-list-item-content>
                 <v-list-item-title >
                     <v-icon class="indigo--text font-weight-bold mb-1 mr-1"> mdi-clock </v-icon>
-                    <v-text class="--text font-weight-bold">
+                    <span class="--text font-weight-bold">
                      Time {{ currentTime }}
-                    </v-text>
+                    </span>
                 </v-list-item-title>
               </v-list-item-content>
             </v-list-item>
@@ -32,9 +32,9 @@
               <v-list-item-content>
                 <v-list-item-title>
                   <v-icon class="indigo--text font-weight-bold mb-1 mr-1"> mdi-checkbox-blank-circle </v-icon>
-                  <v-text class="--text font-weight-bold">
+                  <span class="--text font-weight-bold">
                     Working
-                  </v-text>
+                  </span>
                 </v-list-item-title>
               </v-list-item-content>
             </v-list-item>

@@ -6,7 +6,6 @@
             flat
           >
             <v-btn
-              v-on="on"
               class="ds-skinny-button"
               depressed
               :icon="$vuetify.breakpoint.smAndDown"
@@ -122,7 +121,7 @@
                 <v-btn
                   text
                   color="secondary"
-                  @click="selectedOpen = false"
+                  @click="selectedOpen = false, isEventDialog = false"
                 >
                   Cancel
                 </v-btn>
@@ -130,12 +129,20 @@
             </v-card>
           </v-menu>
         </v-sheet>
+        <add-event-dialog 
+          :overlay="isEventDialog"
+          @closed="isEventDialog = false"
+        />
       </v-col>
     </v-row>
 </template>
 
 <script>
+
+  import AddEventDialog from '../time-tracker/AddEventDialog.vue';
+
   export default {
+
     data: () => ({
       focus: '',
       type: 'day',
@@ -151,6 +158,7 @@
       events: [],
       colors: ['blue', 'indigo', 'deep-purple', 'cyan', 'green', 'orange', 'grey darken-1'],
       names: ['Meeting', 'Holiday', 'PTO', 'Travel', 'Event', 'Birthday', 'Conference', 'Party'],
+      isEventDialog: false,
     }),
     mounted () {
       this.$refs.calendar.checkChange()
@@ -177,9 +185,9 @@
           console.log(event)
           this.selectedEvent = event
           this.selectedElement = nativeEvent.target
-          setTimeout(() => {
+          // setTimeout(() => {
             this.selectedOpen = true
-          }, 10)
+          // }, 10)
         }
 
         if (this.selectedOpen) {
@@ -191,9 +199,15 @@
 
         nativeEvent.stopPropagation()
       },
+      openEventDialog(){
+        this.isEventDialog = true;
+      },
       editEvent(event){
         console.log(event.id)
-        event.name = 'lo'
+        event.name = 'lo';
+        this.selectedOpen = false;
+        this.isEventDialog = true;
+        this.openEventDialog();
       },
       updateRange ({ start, end }) {
         const events = []
@@ -225,6 +239,9 @@
       rnd (a, b) {
         return Math.floor((b - a + 1) * Math.random()) + a
       },
+    },
+    components: {
+      AddEventDialog,
     },
   }
 </script>

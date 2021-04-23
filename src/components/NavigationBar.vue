@@ -3,7 +3,7 @@
   <div ref="navBar">
   
     <v-app-bar
-      color="deep-purple"
+      class="primary-color"
       app
       dark
       flat
@@ -60,7 +60,7 @@
         >
           <v-list-item-group
             v-model="group"
-            active-class="deep-purple--text text--accent-4"
+            active-class="primary-color-text text--accent-4"
           >
 
             <v-list-item v-for="(value, itemName) in links" :key="value.icon" text @click="goToPage(value.path)">  

@@ -21,7 +21,7 @@
             <v-list-item v-if="currentStatus.inBuilding">
               <v-list-item-content>
                 <v-list-item-title>
-                  <v-icon class="indigo--text font-weight-bold mb-1 mr-1"> mdi-checkbox-blank-circle </v-icon>
+                  <v-icon class="primary-color-text font-weight-bold mb-1 mr-1"> mdi-checkbox-blank-circle </v-icon>
                   <span class="--text font-weight-bold">
                     Working
                   </span>

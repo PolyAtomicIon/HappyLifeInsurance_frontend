@@ -3,7 +3,7 @@
       <v-layout align-center justify-center>
       <v-flex xs12 sm8 md4>
           <v-card class="elevation-2">
-              <v-toolbar dark color="deep-purple">
+              <v-toolbar dark color="primary-color">
                   <v-toolbar-title>Login form</v-toolbar-title>
               </v-toolbar>
               <v-card-text>
@@ -32,8 +32,8 @@
 
               <v-card-actions>
                   <v-spacer></v-spacer>
-                  <v-btn class="white deep-purple--text" text @click="$router.push('register')">Register instead</v-btn>
-                  <v-btn class="deep-purple white--text" @click="submit">Login</v-btn>
+                  <v-btn class="white" text @click="$router.push('register')">Register instead</v-btn>
+                  <v-btn class="primary-color white--text" @click="submit">Login</v-btn>
               </v-card-actions>
           </v-card>
       </v-flex>

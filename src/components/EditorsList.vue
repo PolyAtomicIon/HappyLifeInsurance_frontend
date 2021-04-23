@@ -3,7 +3,7 @@
         class="rounded-0 rounded-bl rounded-br"
         height="400px" 
     >
-        <v-card-title class="white--text indigo darken-1">
+        <v-card-title class="white--text primary-color">
             Editors List
         </v-card-title>
         

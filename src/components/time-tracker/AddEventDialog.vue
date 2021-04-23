@@ -54,10 +54,10 @@
                         </v-card>
 
                         <v-btn
-                            color="primary"
+                            color="primary-color"
                             @click="nextStep(1)"
                         >
-                            Save
+                            Continue
                         </v-btn>
 
                         <v-btn 
@@ -87,13 +87,13 @@
                         
                             <v-date-picker
                                 v-model="date"
-                                color=""
+                                color="primary-color"
                             ></v-date-picker>
 
                         </v-card>
 
                         <v-btn
-                            color="primary"
+                            color="primary-color"
                             @click="nextStep(2)"
                         >
                             Continue
@@ -149,14 +149,14 @@
                                 <v-spacer></v-spacer>
                                 <v-btn
                                     text
-                                    color="primary"
+                                    color="primary-color"
                                     @click="modal = false"
                                 >
                                     Cancel
                                 </v-btn>
                                 <v-btn
                                     text
-                                    color="primary"
+                                    color="primary-color"
                                     @click="$refs.dialog.save(time), modal = false"
                                 >
                                     OK
@@ -189,14 +189,14 @@
                                 <v-spacer></v-spacer>
                                 <v-btn
                                     text
-                                    color="primary"
+                                    color="primary-color"
                                     @click="modal2 = false"
                                 >
                                     Cancel
                                 </v-btn>
                                 <v-btn
                                     text
-                                    color="primary"
+                                    color="primary-color"
                                     @click="$refs.dialog1.save(time2), modal2 = false"
                                 >
                                     OK
@@ -207,7 +207,7 @@
                         </v-card>
 
                         <v-btn
-                            color="primary"
+                            color="primary-color"
                             @click="nextStep(3)"
                         >
                             Continue
@@ -249,7 +249,7 @@
                         </v-card>
 
                         <v-btn
-                            color="primary"
+                            color="primary-color"
                             @click="submit()"
                         >
                             Save

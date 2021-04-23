@@ -2,7 +2,7 @@
     <v-sheet rounded="lg" elevation="2" >
 
         <v-toolbar
-            color="indigo lighten-1"
+            color="secondary-color "
             dark
             class="rounded-tr rounded-tl"
             flat

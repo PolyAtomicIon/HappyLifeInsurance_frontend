@@ -3,7 +3,7 @@
         class="rounded-0 rounded-bl rounded-br"
         :height="height"
     >
-        <v-card-title class="white--text indigo darken-1">
+        <v-card-title class="white--text primary-color">
             Shared with me
     
             <v-spacer></v-spacer>
@@ -15,7 +15,7 @@
         </v-card-text>
         <v-divider></v-divider>
 
-        <v-card-text v-if="isInEditor" class="indigo--text darken-1">
+        <v-card-text v-if="isInEditor" class="primary-color-text ">
             <b>Currently being edited: </b>
             {{userToEdit}}
         </v-card-text>

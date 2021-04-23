@@ -86,8 +86,22 @@
   }
 </script>
 
-<style scoped>
-  .stable {
-    padding: 56px 0px 0px !important;
+<style >
+  .primary-color {
+    color: #fff !important;
+    background: #4e80b9 !important;
   }
+
+  .primary-color-text {
+    color: #4e80b9 !important;
+  }
+
+  .secondary-color {
+    background: #769fcd !important;
+  }
+
+  .secondary-color-text {
+    color: #769fcd !important;
+  }
+
 </style>

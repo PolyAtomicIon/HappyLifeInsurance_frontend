@@ -18,7 +18,7 @@
         {{ link }}
       </v-btn> -->
       <v-col
-        class="indigo lighten-2 py-1 text-center white--text"
+        class="secondary-color py-1 text-center white--text"
         cols="12"
       >
         {{ new Date().getFullYear() }} — <strong>@HappyLife Insurance</strong>

@@ -62,7 +62,7 @@
 
                         <v-btn 
                             text 
-                            @click="e1 = 1, close()"
+                            @click="e1 = 1, closeWindow()"
                             class="ml-2"
                         >
                             <v-icon class="mr-1">
@@ -86,7 +86,7 @@
                             </v-card-title>
                         
                             <v-date-picker
-                                v-model="date"
+                                v-model="date_local"
                                 color="primary-color"
                             ></v-date-picker>
 
@@ -101,7 +101,7 @@
 
                         <v-btn 
                             text 
-                            @click="close()"
+                            @click="closeWindow()"
                             class="ml-2"
                         >
                             <v-icon class="mr-1">
@@ -144,7 +144,7 @@
                                 <v-time-picker
                                     v-if="modal"
                                     v-model="time"
-                                    full-width
+                                    colo="primary-color"
                                 >
                                 <v-spacer></v-spacer>
                                 <v-btn
@@ -215,7 +215,7 @@
 
                         <v-btn 
                             text 
-                            @click="close()"
+                            @click="closeWindow()"
                             class="ml-2"
                         >
                             <v-icon class="mr-1">
@@ -257,7 +257,7 @@
 
                         <v-btn 
                             text 
-                            @click="e1 = 1, close()"
+                            @click="closeWindow()"
                             class="ml-2"
                         >
                             <v-icon class="mr-1">
@@ -281,13 +281,13 @@
         e1: 1,
         steps: 4,
         zIndex: 2,
-        mouseMonth: null,
         modal: null,
         modal2: false,
         types: [
           'Work hour', 'Not Work hour',
         ],
         colors: ['green', 'red'],
+        date_local: null
       }
     },
 
@@ -328,6 +328,7 @@
     },
     mounted() {
         console.log(this.date)
+        this.date_local = this.date
     },
     methods: {
         ...mapMutations(['addNewEvent']),
@@ -343,11 +344,11 @@
 
         submit(){
 
-            console.log(this.date)
-            console.log(this.time)
+            // console.log(this.date_local)
+            // console.log(this.time)
 
-            let start = new Date(`${this.date}T${this.time}:00`)
-            let end = new Date(`${this.date}T${this.time2}:00`)
+            let start = new Date(`${this.date_local}T${this.time}:00`)
+            let end = new Date(`${this.date_local}T${this.time2}:00`)
 
             // console.log(start)
             // console.log(end)
@@ -370,37 +371,22 @@
                 this.updateEvent(event)
             }
 
-            this.close();
+            this.closeWindow();
         },
-        close(){
+        closeWindow(){
+            this.reset();
             this.overlay = false;
             this.$emit('closed');
-            this.reset();
         },
         reset(){
+            this.nextStep(4);
             this.time = null;
             this.time2 = null;
             this.type = this.types[0];
-            this.date = this.toDateString();
+            this.date_local = this.date;
             this.description = '';
-            this.el = 1;
-            },
-
-        toDateString(){
-            let date = new Date();
-
-            let day = date.getDate();
-            if( day < 10 )
-                day = '0' + day
-            let month = date.getMonth() + 1;
-            if( month < 10 )
-                month = '0' + month
-            let year = date.getFullYear();
-            // .substr(0, 10)
-            console.log(day + ' ' + month + ' ' + year) 
-            return year + '-' + month + '-' + day;
-            // return day + '-' + month + '-' + year
         },
+
     },
   }
 </script>

@@ -111,6 +111,7 @@
                 </v-btn>
               </v-toolbar>
               <v-card-text>
+                <p class="body-1"> {{selectedEvent.description}} </p>
                 <span v-html="selectedEvent.details"></span>
               </v-card-text>
               <v-card-actions>
@@ -130,7 +131,7 @@
           v-if="isEventDialog"
         />
 
-        <add-event-dialog
+        <update-event-dialog
           class="event-dialog" 
           v-if="selectedEvent"
           :description="selectedEvent.description"
@@ -149,7 +150,7 @@
 
 <script>
 
-  import AddEventDialog from '../time-tracker/AddEventDialog.vue';
+  import UpdateEventDialog from '../time-tracker/UpdateEventDialog.vue';
   import OverlayBlack from '../OverlayBlack.vue';
   import { mapGetters, mapMutations } from 'vuex';
 
@@ -260,7 +261,7 @@
       ...mapGetters(['events']),
     },
     components: {
-      AddEventDialog,
+      UpdateEventDialog,
       OverlayBlack,
     },
   }

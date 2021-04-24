@@ -42,7 +42,7 @@
                             </v-card-title>
 
                             <v-select
-                                v-model="type"
+                                v-model="type_local"
                                 :items="types"
                                 menu-props="auto"
                                 label="Select"
@@ -128,13 +128,13 @@
                              <v-dialog
                                 ref="dialog"
                                 v-model="modal"
-                                :return-value.sync="time"
+                                :return-value.sync="time_local"
                                 persistent
                                 width="290px"
                             >
                                 <template v-slot:activator="{ on, attrs }">
                                 <v-text-field
-                                    v-model="time"
+                                    v-model="time_local"
                                     label="Start Time"
                                     prepend-icon="mdi-clock-time-four-outline"
                                     readonly
@@ -144,7 +144,7 @@
                                 </template>
                                 <v-time-picker
                                     v-if="modal"
-                                    v-model="time"
+                                    v-model="time_local"
                                     format="24hr"
                                     min="04:00"
                                     colo="primary-color"
@@ -160,7 +160,7 @@
                                 <v-btn
                                     text
                                     color="primary-color"
-                                    @click="$refs.dialog.save(time), modal = false"
+                                    @click="$refs.dialog.save(time_local), modal = false"
                                 >
                                     OK
                                 </v-btn>
@@ -170,13 +170,13 @@
                              <v-dialog
                                 ref="dialog1"
                                 v-model="modal2"
-                                :return-value.sync="time2"
+                                :return-value.sync="time2_local"
                                 persistent
                                 width="290px"
                             >
                                 <template v-slot:activator="{ on, attrs }">
                                 <v-text-field
-                                    v-model="time2"
+                                    v-model="time2_local"
                                     label="End Time"
                                     prepend-icon="mdi-clock-time-four-outline"
                                     readonly
@@ -186,7 +186,7 @@
                                 </template>
                                 <v-time-picker
                                     v-if="modal2"
-                                    v-model="time2"
+                                    v-model="time2_local"
                                     :min="time"
                                     max="23:59"
                                     format="24hr"
@@ -202,7 +202,7 @@
                                 <v-btn
                                     text
                                     color="primary-color"
-                                    @click="$refs.dialog1.save(time2), modal2 = false"
+                                    @click="$refs.dialog1.save(time2_local), modal2 = false"
                                 >
                                     OK
                                 </v-btn>
@@ -244,7 +244,7 @@
                             </v-card-title>
 
                             <v-textarea
-                                v-model="description"
+                                v-model="description_local"
                                 outlined
                                 clearable
                                 clear-icon="mdi-close-circle"
@@ -288,10 +288,15 @@
         zIndex: 2,
         modal: null,
         modal2: false,
+        type_local: '',
         types: [
           'Work hour', 'Not Work hour',
         ],
         colors: ['green', 'red'],
+        time_local: null,
+        time2_local: null,
+        description_local: null,
+        overlay_local: null,
         date_local: null
       }
     },
@@ -333,20 +338,19 @@
     computed: {
         ...mapGetters(['events']),
         typeColor(){
-            if( this.type == this.types[0] )
+            if( this.type_local == this.types[0] )
                 return 'green'
             return "red"
         }
     },
     mounted() {
         console.log(this.date)
-        this.date_local = this.date
+        this.overlay_local = this.overlay;
+        this.reset();
     },
     methods: {
         ...mapMutations(['addNewEvent']),
         ...mapActions(['updateEvent']),
-        
-        allowedDates: val => parseInt(val.split('-')[2], 10) % 2 === 0,
         
         nextStep (n) {
             if (n === this.steps) {
@@ -361,19 +365,19 @@
             // console.log(this.date_local)
             // console.log(this.time)
 
-            let start = new Date(`${this.date_local}T${this.time}:00`)
-            let end = new Date(`${this.date_local}T${this.time2}:00`)
+            let start = new Date(`${this.date_local}T${this.time_local}:00`)
+            let end = new Date(`${this.date_local}T${this.time2_local}:00`)
 
             // console.log(start)
             // console.log(end)
 
             let event = {
                 timed: true,
-                name: this.type,
+                name: this.type_local,
                 start: start,
                 end: end,
                 color: this.typeColor,
-                description: this.description,
+                description: this.description_local,
                 id: this.events.length + 1,
             }
             console.log(event)
@@ -389,16 +393,16 @@
         },
         closeWindow(){
             this.reset();
-            this.overlay = false;
+            this.overlay_local = false;
             this.$emit('closed');
         },
         reset(){
             this.nextStep(4);
-            this.time = this.currentTimeString();
-            this.time2 = null;
-            this.type = this.types[0];
+            this.time_local = this.time;
+            this.time2_local = this.time2;
+            this.type_local = this.type;
             this.date_local = this.date;
-            this.description = '';
+            this.description_local = this.description;
         },
         currentTimeString(){
             let date = new Date();

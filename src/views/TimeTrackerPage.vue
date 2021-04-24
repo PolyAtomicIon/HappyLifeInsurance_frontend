@@ -54,7 +54,7 @@
         <v-sheet rounded="lg" class="mb-10" elevation="2">
           <div class="calendar-container">
             <calendar-app 
-              :types="types" 
+              :types="types"
             />
           </div>
         </v-sheet>

@@ -103,6 +103,9 @@
                 },
             ],
         }),
+        mounted() {
+            this.setUserToEdit(null)
+        },
         methods: {
             ...mapMutations(['setUserToEdit']),
         },

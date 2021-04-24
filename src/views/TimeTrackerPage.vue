@@ -83,6 +83,7 @@ import AddEventDialog from '../components/time-tracker/AddEventDialog.vue';
 import OverlayBlack from '../components/OverlayBlack.vue';
 import CalendarApp from "../components/time-tracker/CalendarApp.vue";
 import { Units } from "dayspan";
+import {mapMutations} from 'vuex'
 
 export default {
   data: () => ({
@@ -122,9 +123,12 @@ export default {
 
   mounted(){
     // this.updateTime();
+    this.setUserToEdit(0);
   },
 
   methods: {
+    ...mapMutations(['setUserToEdit']),
+
     timeFormate(timeStamp) {
       // let year = new Date(timeStamp).getFullYear();
       // let month =new Date(timeStamp).getMonth() + 1 < 10? "0" + (new Date(timeStamp).getMonth() + 1): new Date(timeStamp).getMonth() + 1;
@@ -163,7 +167,7 @@ export default {
     // InterestingCard
   },
 };
-</script>elevation
+</script>
 
 <style scoped>
 .calendar-container {

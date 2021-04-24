@@ -5,26 +5,41 @@ import Vuex from 'vuex'
 const ProfileModule = {
     state: () => ({
         userToEdit: null,
-        events: [],
+        events: {
+            0: [],
+        },
     }),
     mutations: {
         setUserToEdit(state, data) {
             state.userToEdit = data;
         },
         addNewEvent(state, entry) {
-            state.events.push(entry);
+            let u_id = state.userToEdit;
+            if (u_id === null) {
+                console.log("NO USER ID")
+                return
+            }
+
+            if (!state.events[u_id]) {
+                console.log("EMPTY EVENTS LIST")
+                state.events[u_id] = []
+            }
+            state.events[u_id].push(entry);
         },
         deleteEvent(state, entry) {
 
             let index = null;
+            let u_id = state.userToEdit;
+            if (u_id === null)
+                return
 
-            for (let i = 0; i < state.events.length; i++) {
-                if (entry.id === state.events[i].id) {
+            for (let i = 0; i < state.events[u_id].length; i++) {
+                if (entry.id === state.events[u_id][i].id) {
                     index = i;
                 }
             }
 
-            state.events.splice(index, 1);
+            state.events[u_id].splice(index, 1);
         }
     },
     actions: {
@@ -41,7 +56,7 @@ const ProfileModule = {
             return state.userToEdit;
         },
         events(state) {
-            return state.events;
+            return state.events[state.userToEdit];
         }
     },
 }

@@ -8,21 +8,21 @@
       </v-col>
 
       <v-col cols="12" sm="12" md="8">
-        <v-sheet rounded="lg" class="mb-10"  elevation="2">
-          <div class="calendar-container">
-            <calendar-app v-if="userToEdit" :types="types" />
+        <v-sheet rounded="lg" class="mb-10" elevation="2">
+          <div class="calendar-container" v-if="userToEdit" >
+            <calendar-app :types="types" />
           </div>
         </v-sheet>
 
         <overlay-black 
-          v-if="isAddingEntry"
+          v-if="isAddingEntry && userToEdit"
         />
         <add-event-dialog
           class="event-dialog" 
           :isAdding="true"
           :overlay="isAddingEntry"
           :date="toDateString()"
-          @closed="isAddingEntry = false"
+          @closed="close()"
         />
       </v-col>
     </v-row>
@@ -36,7 +36,7 @@ import SharedWithMe from "../components/SharedWithMe.vue";
 import AddEventDialog from "../components/time-tracker/AddEventDialog";
 import OverlayBlack from "../components/OverlayBlack";
 import { Units } from "dayspan";
-import {mapGetters} from 'vuex';
+import { mapGetters, mapMutations} from 'vuex';
 
 export default {
   name: "App",
@@ -93,7 +93,7 @@ export default {
   },
 
   methods: {
-
+    ...mapMutations(['setUserToEdit']),
     goBack: function () {
       this.$router.go(-1);
     },
@@ -112,6 +112,13 @@ export default {
         return year + '-' + month + '-' + day;
         // return day + '-' + month + '-' + year
     },
+    close(){
+      this.isAddingEntry = false;
+      // to watch the state
+      let tmp = this.userToEdit
+      this.setUserToEdit(-1)
+      this.setUserToEdit(tmp)
+    }
   },
 };
 </script>

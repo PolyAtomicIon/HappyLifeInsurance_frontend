@@ -338,7 +338,7 @@
         }
     },
     created() {
-        console.log(this.date)
+        // console.log(this.date)
         this.overlay_local = this.overlay;
         this.reset();
     },

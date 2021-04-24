@@ -9,8 +9,11 @@
 
       <v-col cols="12" sm="12" md="8">
         <v-sheet rounded="lg" class="mb-10" elevation="2">
-          <div class="calendar-container" v-if="userToEdit" >
-            <calendar-app :types="types" />
+          <div class="calendar-container"  >
+            <calendar-app 
+              :types="types" 
+              @updated="close()"
+            />
           </div>
         </v-sheet>
 
@@ -94,6 +97,15 @@ export default {
 
   methods: {
     ...mapMutations(['setUserToEdit']),
+    close(){
+      this.isAddingEntry = false;
+      console.log('CLOSED')
+      // to watch the state
+      let tmp = this.userToEdit
+      this.setUserToEdit(null)
+      // 
+      setTimeout(() => { this.setUserToEdit(tmp); }, 100);
+    },
     goBack: function () {
       this.$router.go(-1);
     },
@@ -112,13 +124,6 @@ export default {
         return year + '-' + month + '-' + day;
         // return day + '-' + month + '-' + year
     },
-    close(){
-      this.isAddingEntry = false;
-      // to watch the state
-      let tmp = this.userToEdit
-      this.setUserToEdit(-1)
-      this.setUserToEdit(tmp)
-    }
   },
 };
 </script>

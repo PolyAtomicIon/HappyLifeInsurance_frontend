@@ -26,6 +26,7 @@
             <v-btn 
                 color="primary-color" 
                 @click="$emit('addEntry')"
+                :disabled="!userToEdit"
             >
                 <v-icon class="mr-2">
                 mdi-plus

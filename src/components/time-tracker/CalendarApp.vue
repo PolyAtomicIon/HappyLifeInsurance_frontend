@@ -141,7 +141,7 @@
           :id="selectedEvent.id"
           :type="selectedEvent.name"
           :overlay="isEventDialog"
-          @closed="isEventDialog = false, close()"
+          @closed="close()"
         />
       
       </v-col>
@@ -264,11 +264,13 @@
       removeEvent(event){
         this.selectedOpen = false;
         this.deleteEvent(event);
+        this.$emit('updated')
       },
       close(){
         this.$refs.calendar.checkChange();
         this.selectedOpen = false;
         this.isEventDialog = false
+        this.$emit('updated')
       },
       // eslint-disable-next-line no-unused-vars
       toDateString(date){

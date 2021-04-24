@@ -65,6 +65,35 @@ const ProfileModule = {
                 state.events[0][i].start = new Date(state.events[0][i].start);
                 state.events[0][i].end = new Date(state.events[0][i].end);
             }
+        },
+        removeEditor(state, id) {
+
+            if (!id)
+                return
+
+            let pos = null;
+
+            for (let i = 0; i < state.editors.length; i++) {
+                if (state.editors[i].id === id) {
+                    pos = i;
+                    break;
+                }
+            }
+
+            if (pos === null)
+                return
+
+            state.editors.splice(pos, 1);
+        },
+
+        addEditor(state, email) {
+            let a = {};
+            a.email = email;
+            a.id = state.editors.length + 1;
+            a.fullName = "GF FE";
+            a.initials = "G F";
+            a.color = '#2196F3';
+            state.editors.push(a);
         }
     },
     actions: {

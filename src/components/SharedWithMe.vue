@@ -65,7 +65,7 @@
                             small
                             @click="setUserToEdit(item.id), $router.push({ name: 'shared-with' })"
                         >
-                            Edit user's entries
+                            Edit
             
                             <v-icon
                                 color="orange darken-4"

@@ -42,7 +42,7 @@
                         class="text--primary "
                         fab
                         small
-                        @click="addUserToList()"
+                        @click="addEditor(newUserEmail)"
                     >   
                         <v-icon center>mdi-plus</v-icon>
                     </v-btn>
@@ -62,7 +62,7 @@
                     >
                         <v-btn
                             color="primary-color"
-                            @click="overlay = false, removeUserFromList()"
+                            @click="overlay = false, removeEditor(userToBeRemoved)"
                         >
                             yes
                         </v-btn>
@@ -122,7 +122,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
+import { mapGetters, mapMutations } from 'vuex';
 
 
     export default {
@@ -154,6 +154,7 @@ import { mapGetters } from 'vuex';
             newUserEmail: null,
         }), 
         methods: {
+            ...mapMutations(['removeEditor', 'addEditor']),
 
             startRemovalOfUserFromList(userId){
                 console.log(userId)
@@ -163,36 +164,6 @@ import { mapGetters } from 'vuex';
             cancelRemoval(){
                 this.userToBeRemoved = null
             },
-
-            removeUserFromList(){
-
-                if( !this.userToBeRemoved )
-                    return
-
-                let pos = null;
-
-                for(let i = 0; i < this.items.length; i++){
-                    if( this.items[i].id === this.userToBeRemoved ){
-                        pos = i;
-                        break;
-                    }
-                }
-
-                if( pos === null )
-                    return
-                console.log(pos)
-                this.items.splice(pos, 1);
-            },
-
-            addUserToList(){
-                let a = Object.assign({}, this.exampleItem.constructor);
-                a.email = this.newUserEmail;
-                a.id = 2;
-                a.fullName = "GF FE";
-                a.initials = "G F";
-                a.color = '#2196F3';
-                this.items.push(a);
-            }
 
         },
         computed: {

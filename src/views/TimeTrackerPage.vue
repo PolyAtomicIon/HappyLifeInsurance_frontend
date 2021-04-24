@@ -10,9 +10,9 @@
             <!-- <v-list-item>
               <v-list-item-content>
                 <v-list-item-title >
-                    <v-icon class="indigo--text font-weight-bold mb-1 mr-1"> mdi-clock </v-icon>
+                    <v-icon class="primary-color-text font-weight-bold mb-1 mr-1"> mdi-clock </v-icon>
                     <span class="--text font-weight-bold">
-                     Time {{ currentTime }}
+                     Time 07:22 AM
                     </span>
                 </v-list-item-title>
               </v-list-item-content>

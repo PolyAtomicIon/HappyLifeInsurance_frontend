@@ -34,7 +34,7 @@
 
         <v-spacer></v-spacer>
 
-        <v-btn text @click="goToPage(AuthLinks.Login.path)">
+        <v-btn text v-if="!isLogged" @click="goToPage(AuthLinks.Login.path)">
           
           <v-icon
             class="mr-1"
@@ -43,6 +43,18 @@
           </v-icon>
           
           {{ AuthLinks.Login.title }}
+        </v-btn>
+
+        
+        <v-btn text v-else @click="goToPage(AuthLinks.Logout.path)">
+          
+          <v-icon
+            class="mr-1"
+          >
+            {{AuthLinks.Logout.icon}}
+          </v-icon>
+          
+          {{ AuthLinks.Logout.title }}
         </v-btn>
 
       </v-container>      

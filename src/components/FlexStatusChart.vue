@@ -19,7 +19,7 @@
                             {
                                 label: "Reserved Hours",
                                 type: "horizontalBar",
-                                data: [2],
+                                data: [],
                                 backgroundColor: "rgba(71, 183,132,.5)",
                                 borderColor: "#47b784",
                                 borderWidth: 1
@@ -27,7 +27,7 @@
                             {
                                 label: "Debt Hours",
                                 type: "horizontalBar",
-                                data: [-2],
+                                data: [-10],
                                 backgroundColor: "rgba(173, 24, 121, .5)",
                                 borderColor: "#851b60",
                                 borderWidth: 1
@@ -48,7 +48,7 @@
                             xAxes: [{
                                 ticks: {
                                     beginAtZero: true,
-                                    suggestedMax: 40,
+                                    suggestedMax: 20,
                                 }
                             }]
                         },

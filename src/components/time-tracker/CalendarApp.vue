@@ -173,6 +173,48 @@
     mounted () {
       this.$refs.calendar.checkChange();
     },
+    watch: {
+        type: {
+            // the callback will be called immediately after the start of the observation
+            immediate: true, 
+            handler (val, oldVal) {
+                console.log(oldVal)
+                this.type_local = val
+            }
+        },
+        time: {
+            // the callback will be called immediately after the start of the observation
+            immediate: true, 
+            handler (val, oldVal) {
+                console.log(oldVal)
+                this.time_local = val
+            }
+        },
+        time2: {
+            // the callback will be called immediately after the start of the observation
+            immediate: true, 
+            handler (val, oldVal) {
+                console.log(oldVal)
+                this.time2_local = val
+            }
+        },
+        date: {
+            // the callback will be called immediately after the start of the observation
+            immediate: true, 
+            handler (val, oldVal) {
+                console.log(oldVal)
+                this.date_local = val
+            }
+        },
+        description: {
+            // the callback will be called immediately after the start of the observation
+            immediate: true, 
+            handler (val, oldVal) {
+                console.log(oldVal)
+                this.description_local = val
+            }
+        },
+    },
     methods: {
       ...mapMutations(['deleteEvent']),
       viewDay ({ date }) {
@@ -197,16 +239,16 @@
           this.selectedEvent = event
           this.selectedElement = nativeEvent.target
           // setTimeout(() => {
-            this.selectedOpen = true
+          this.selectedOpen = true  
           // }, 10)
         }
 
-        if (this.selectedOpen) {
-          this.selectedOpen = false
-          setTimeout(open, 10)
-        } else {
+        // if (this.selectedOpen) {
+        //   this.selectedOpen = false
+        //   setTimeout(open, 10)
+        // } else {
           open()
-        }
+        // }
 
         nativeEvent.stopPropagation()
       },

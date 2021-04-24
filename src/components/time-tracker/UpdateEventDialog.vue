@@ -5,7 +5,7 @@
         min-width="350px"
         max-width="800px"
         style="overflow-y: scroll; overflow-x: hidden;"
-        height="500px"
+        max-height="500px"
     >
         <div>
             <v-row>
@@ -220,6 +220,48 @@
         console.log(this.date)
         this.overlay_local = this.overlay;
         this.reset();
+    },
+    watch: {
+        type: {
+            // the callback will be called immediately after the start of the observation
+            immediate: true, 
+            handler (val, oldVal) {
+                console.log(oldVal)
+                this.type_local = val
+            }
+        },
+        time: {
+            // the callback will be called immediately after the start of the observation
+            immediate: true, 
+            handler (val, oldVal) {
+                console.log(oldVal)
+                this.time_local = val
+            }
+        },
+        time2: {
+            // the callback will be called immediately after the start of the observation
+            immediate: true, 
+            handler (val, oldVal) {
+                console.log(oldVal)
+                this.time2_local = val
+            }
+        },
+        date: {
+            // the callback will be called immediately after the start of the observation
+            immediate: true, 
+            handler (val, oldVal) {
+                console.log(oldVal)
+                this.date_local = val
+            }
+        },
+        description: {
+            // the callback will be called immediately after the start of the observation
+            immediate: true, 
+            handler (val, oldVal) {
+                console.log(oldVal)
+                this.description_local = val
+            }
+        },
     },
     methods: {
         ...mapMutations(['addNewEvent']),

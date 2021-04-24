@@ -81,6 +81,7 @@
                         </v-card-title>
                     
                         <v-date-picker
+                            :allowed-dates="allowedDates"
                             v-model="date_local"
                             color="primary-color"
                             :max="toDateString()"
@@ -291,7 +292,7 @@
         time2_local: null,
         description_local: null,
         overlay_local: null,
-        date_local: null
+        date_local: null,
       }
     },
 
@@ -346,6 +347,8 @@
         ...mapMutations(['addNewEvent']),
         ...mapActions(['updateEvent']),
         
+          allowedDates: val => new Date(val).getDay() < 6 && new Date(val).getDay() > 0,
+
         nextStep (n) {
             if (n === this.steps) {
                 this.e1 = 1

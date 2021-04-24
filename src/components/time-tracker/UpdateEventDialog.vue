@@ -25,6 +25,7 @@
                     
                     <v-date-picker
                         v-model="date_local"
+                        :allowed-dates="allowedDates"
                         full-width
                         color="primary-color"
                         :max="toDateString()"
@@ -173,7 +174,7 @@
         time2_local: null,
         description_local: null,
         overlay_local: null,
-        date_local: null
+        date_local: null,
       }
     },
 
@@ -266,6 +267,8 @@
     methods: {
         ...mapMutations(['addNewEvent']),
         ...mapActions(['updateEvent']),
+
+        allowedDates: val => new Date(val).getDay() < 6 && new Date(val).getDay() > 0,
         
         submit(){
 

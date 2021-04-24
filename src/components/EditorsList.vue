@@ -14,7 +14,7 @@
         <v-divider></v-divider>
 
         <v-list>
-            <v-list-item v-if="items.length >= limit">    
+            <v-list-item v-if="editors.length >= limit">    
                 <v-list-item-content>
                     <v-list-item-title class="pl-2 red--text"> You've reached maximum number of editors. Limit is {{limit}} </v-list-item-title>
                 </v-list-item-content>
@@ -79,7 +79,7 @@
         <v-divider></v-divider>
 
         <v-virtual-scroll
-            :items="items"
+            :items="editors"
             :item-height="50"
             height="125"
         >
@@ -122,6 +122,7 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
 
 
     export default {
@@ -194,5 +195,8 @@
             }
 
         },
+        computed: {
+            ...mapGetters(['editors']),
+        }
     }
 </script>

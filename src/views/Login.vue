@@ -22,10 +22,8 @@
                           label="Password"
                           prepend-icon="lock"
                           v-model="password"
-                          :error-messages="passwordErrors"
                           required
-                          @input="$v.password.$touch()"
-                          @blur="$v.password.$touch()"
+                          type="password"
                       ></v-text-field>
                   </v-form>
               </v-card-text>
@@ -44,6 +42,8 @@
 <script>
   import { validationMixin } from 'vuelidate'
   import { required, maxLength, email, password } from 'vuelidate/lib/validators'
+  import { mapMutations } from 'vuex'
+  import axios from 'axios'
 
   export default {
     mixins: [validationMixin],
@@ -75,10 +75,27 @@
         return errors
       },
     },
-
+    mounted() {
+      this.setProfile({});
+    },
     methods: {
+      ...mapMutations(['setProfile']),
+
       submit () {
+
+        axios
+          .get("https://next.json-generator.com/api/json/get/411DaOJLc")
+          .then(response => {
+            this.setProfile(response.data);
+          })
+          .catch(error => {
+              console.log("ERRRR:: ", error.response.data);              
+          });
+
+        this.$router.push('profile/permissions')
+
         this.$v.$touch()
+      
       },
       clear () {
         this.$v.$reset()

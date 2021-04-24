@@ -8,6 +8,11 @@ const ProfileModule = {
         events: {
             0: [],
         },
+        token: false,
+        profile: {},
+        editors: [],
+        shared: [],
+        flexStatus: [],
     }),
     mutations: {
         setUserToEdit(state, data) {
@@ -40,6 +45,26 @@ const ProfileModule = {
             }
 
             state.events[u_id].splice(index, 1);
+        },
+        setProfile(state, data) {
+
+            state.token = true
+
+            state.profile = {
+                "user_id": data['user_id'],
+                "name": data['name']["first"] + ' ' + data["name"]["last"],
+                "job_position": data["job_position"],
+                "email": data["email"],
+            }
+
+            state.editors = data["editors"]
+            state.shared = data["shared_with_me"]
+
+            state.events[0] = data["entries"]
+            for (let i = 0; i < state.events[0].length; i++) {
+                state.events[0][i].start = new Date(state.events[0][i].start);
+                state.events[0][i].end = new Date(state.events[0][i].end);
+            }
         }
     },
     actions: {
@@ -57,6 +82,15 @@ const ProfileModule = {
         },
         events(state) {
             return state.events[state.userToEdit];
+        },
+        isLogged(state) {
+            return state.token
+        },
+        editors(state) {
+            return state.editors
+        },
+        shared(state) {
+            return state.shared
         }
     },
 }

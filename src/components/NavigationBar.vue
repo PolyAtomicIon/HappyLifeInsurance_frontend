@@ -70,11 +70,19 @@
               <v-list-item-title> {{itemName}} </v-list-item-title>
             </v-list-item>
 
-            <v-list-item @click="goToPage(AuthLinks.Login.path)">  
+            <v-list-item v-if="!isLogged" @click="goToPage(AuthLinks.Login.path)">  
               <v-list-item-icon>
                 <v-icon>{{ AuthLinks.Login.icon }} </v-icon>
               </v-list-item-icon>
               <v-list-item-title> {{AuthLinks.Login.title}} </v-list-item-title>
+            </v-list-item>
+
+
+            <v-list-item v-else @click="goToPage(AuthLinks.Logout.path)">  
+              <v-list-item-icon>
+                <v-icon>{{ AuthLinks.Logout.icon }} </v-icon>
+              </v-list-item-icon>
+              <v-list-item-title> {{AuthLinks.Logout.title}} </v-list-item-title>
             </v-list-item>
 
           </v-list-item-group>
@@ -86,6 +94,7 @@
 </template>
 
 <script>
+  import { mapGetters } from 'vuex';
 
   export default {
     name: 'App',
@@ -122,7 +131,7 @@
         Logout : {
           title: 'Logout',
           icon: 'mdi-logout',
-          path: '/',
+          path: 'login',
         }
       },
       drawer: false,
@@ -130,6 +139,7 @@
     }),
     
     computed: {
+      ...mapGetters(['isLogged']),
     },
 
     mounted() {},

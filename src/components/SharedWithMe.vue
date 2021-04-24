@@ -39,7 +39,7 @@
         <v-divider class="my-2" v-if="isInEditor"></v-divider>
     
         <v-virtual-scroll
-            :items="items"
+            :items="shared"
             :item-height="50"
             min-height="125"
         >
@@ -111,7 +111,7 @@
             ...mapMutations(['setUserToEdit']),
         },
         computed: {
-            ...mapGetters(['userToEdit']),
+            ...mapGetters(['userToEdit', 'shared']),
         },
         props: {
             height: {

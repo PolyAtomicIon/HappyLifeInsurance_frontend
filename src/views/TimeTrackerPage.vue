@@ -55,6 +55,7 @@
           <div class="calendar-container">
             <calendar-app 
               :types="types"
+              @updated="updateFrame()"
             />
           </div>
         </v-sheet>
@@ -83,7 +84,7 @@ import AddEventDialog from '../components/time-tracker/AddEventDialog.vue';
 import OverlayBlack from '../components/OverlayBlack.vue';
 import CalendarApp from "../components/time-tracker/CalendarApp.vue";
 import { Units } from "dayspan";
-import {mapMutations} from 'vuex'
+import {mapGetters, mapMutations} from 'vuex'
 
 export default {
   data: () => ({
@@ -126,6 +127,10 @@ export default {
     this.setUserToEdit(0);
   },
 
+  computed: {
+    ...mapGetters(['userToEdit']),
+  },
+
   methods: {
     ...mapMutations(['setUserToEdit']),
 
@@ -154,6 +159,14 @@ export default {
         return year + '-' + month + '-' + day;
         // return day + '-' + month + '-' + year
     },
+    updateFrame(){
+      console.log('Updated')
+      // to watch the state
+      let tmp = this.userToEdit
+      this.setUserToEdit(null)
+      // 
+      setTimeout(() => { this.setUserToEdit(tmp); }, 100);
+    }
     // updateTime() {      	
     //   this.timeFormate(new Date());
     //   setInterval(this.updateTime, 1000);

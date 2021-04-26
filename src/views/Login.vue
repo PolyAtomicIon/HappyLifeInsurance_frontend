@@ -101,8 +101,8 @@
           .then(response => {
             console.log(response);
             this.setToken(true);
-            this.$router.push('profile')
-            // this.$router.push('profile/permissions')
+            // this.$router.push('profile')
+            this.$router.push('profile/permissions')
           })
           .catch(error => {
               console.log("ERRRR:: ", error.message);

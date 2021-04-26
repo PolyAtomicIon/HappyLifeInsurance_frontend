@@ -65,12 +65,18 @@ const ProfileModule = {
             }
 
             state.editors = data["editors"]
-            state.shared = data["shared_with_me"]
+            data['editors'].forEach(element => {
+                state.events[element.id] = element.entries;
+            });
 
+            state.shared = data["shared_with_me"]
             state.events[0] = data["entries"]
-            for (let i = 0; i < state.events[0].length; i++) {
-                state.events[0][i].start = new Date(state.events[0][i].start);
-                state.events[0][i].end = new Date(state.events[0][i].end);
+
+            for (let j = 0; j < 3; j++) {
+                for (let i = 0; i < state.events[j].length; i++) {
+                    state.events[j][i].start = new Date(state.events[j][i].start);
+                    state.events[j][i].end = new Date(state.events[j][i].end);
+                }
             }
         },
         removeEditor(state, id) {
@@ -97,8 +103,8 @@ const ProfileModule = {
             let a = {};
             a.email = email;
             a.id = state.editors.length + 1;
-            a.fullName = "GF FE";
-            a.initials = "G F";
+            a.fullName = "Bekzat Yernat";
+            a.initials = "B Y";
             a.color = '#2196F3';
             state.editors.push(a);
         },

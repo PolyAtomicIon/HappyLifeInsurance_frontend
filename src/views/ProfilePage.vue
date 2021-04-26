@@ -3,19 +3,14 @@
     <v-row>
       <v-col cols="12" sm="12" md="3">
         <v-sheet rounded="lg" elevation="2">
-
-          <v-btn @click="checkLoggedIn">
-            check
-          </v-btn>
-
-          <!-- <v-list color="transparent">
+          <v-list color="transparent">
             <v-list-item v-for="(value, key) in profileData" :key="key">
               <v-list-item-content>
                 <v-list-item-title>
                   <b>{{ key }}:</b> {{ printData(Profile[value]) }}
                 </v-list-item-title>
               </v-list-item-content>
-            </v-list-item> -->
+            </v-list-item>
 
             <!-- <v-divider class="my-2"></v-divider> -->
 
@@ -25,7 +20,7 @@
               </v-list-item-content>
             </v-list-item> -->
 
-          <!-- </v-list> -->
+          </v-list>
         </v-sheet>
       </v-col>
 
@@ -38,7 +33,7 @@
 
 <script>
 import axios from 'axios'
-import { mapGetters, mapMutations } from 'vuex';
+import {mapMutations} from 'vuex'
 
 export default {
   name: "App",
@@ -52,40 +47,26 @@ export default {
   }),
 
   mounted() {
+    this.fetchProfile();
   },
 
   computed: {
-    ...mapGetters(['server_url']),
   },
 
   components: {
     // nav_bar,
   },
-  created() {
-    axios
-      .get(this.server_url + "profile",
-      )
-      .then(response => {
-        console.log(response.data);
-        this.setProfile(response.data);
-        this.Profile = response.data;
-      })
-      .catch(error => {
-          console.log("ERRRR:: ", error.message);
-      });
-  },
   methods: {
-
     ...mapMutations(['setProfile']),
 
-    checkLoggedIn(){
-
-    axios
-      .get(this.server_url + "check_logged_in",
-      )
-      .then(response => {
-        console.log(response.data);
-      })
+    fetchProfile(){
+      axios.get("https://next.json-generator.com/api/json/get/411DaOJLc")
+          .then(
+              response => {
+                  console.log(response.data);
+                  this.Profile = response.data;
+                  this.setProfile(response.data);
+              })
     },
 
     printData(obj){

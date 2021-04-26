@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-// import axios from 'axios'
+import axios from 'axios'
 
 const ProfileModule = {
     state: () => ({
@@ -10,7 +10,6 @@ const ProfileModule = {
         },
         token: false,
         profile: {},
-        editors: [],
         shared: [],
         flexStatus: {},
         server_url: 'https://happylife-backend.herokuapp.com/',
@@ -81,22 +80,18 @@ const ProfileModule = {
         },
         removeEditor(state, id) {
 
-            if (!id)
-                return
+            let start = state.events[0][i].start
+            let end = state.events[0][i].end
+            let type = state.events[0][i].name;
 
-            let pos = null;
+            state.events[0][i].start = new Date(start);
+            state.events[0][i].end = new Date(end);
 
-            for (let i = 0; i < state.editors.length; i++) {
-                if (state.editors[i].id === id) {
-                    pos = i;
-                    break;
-                }
+
+            if (start === end && type === 'Work hour (auto)') {
+                isInBuilding = true
             }
 
-            if (pos === null)
-                return
-
-            state.editors.splice(pos, 1);
         },
 
         addEditor(state, email) {
@@ -115,11 +110,29 @@ const ProfileModule = {
     },
     actions: {
 
-        updateEvent({ commit }, entry) {
+        updateEvent({ dispatch }, entry) {
 
-            commit("deleteEvent", entry);
-            commit("addNewEvent", entry);
+            dispatch("deleteEvent", entry);
+            dispatch("addNewEvent", entry);
 
+        },
+
+        addNewEvent({ state, commit }, entry) {
+            axios.post(state.server_url + "add_entry", { entry })
+                .then(
+                    response => {
+                        commit("addNewEvent", response.data)
+                    }
+                )
+        },
+
+        deleteEvent({ state, commit }, entry) {
+            axios.post(state.server_url + "delete_entry", { entry })
+                .then(
+                    response => {
+                        commit("deleteEvent", response.data)
+                    }
+                )
         },
 
         updateEventByID({ state, commit }, data) {
@@ -135,6 +148,7 @@ const ProfileModule = {
                     break
                 }
             }
+
             commit("deleteEvent", entry);
 
             // console.log(data.end_time)
@@ -154,9 +168,6 @@ const ProfileModule = {
         },
         isLogged(state) {
             return state.token
-        },
-        editors(state) {
-            return state.editors
         },
         shared(state) {
             return state.shared

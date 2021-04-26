@@ -13,7 +13,9 @@ const ProfileModule = {
         editors: [],
         shared: [],
         flexStatus: {},
-        server_url: 'https://happylife-backend.herokuapp.com/'
+        server_url: 'https://happylife-backend.herokuapp.com/',
+        inBuilding: false,
+        currentAutoRegisteredEntryID: null,
     }),
     mutations: {
         setFlexStatus(state, data) {
@@ -99,6 +101,10 @@ const ProfileModule = {
             a.initials = "G F";
             a.color = '#2196F3';
             state.editors.push(a);
+        },
+        setInBuilding(state, data) {
+            state.inBuilding = data.status
+            state.currentAutoRegisteredEntryID = data.id
         }
     },
     actions: {
@@ -106,6 +112,29 @@ const ProfileModule = {
         updateEvent({ commit }, entry) {
 
             commit("deleteEvent", entry);
+            commit("addNewEvent", entry);
+
+        },
+
+        updateEventByID({ state, commit }, data) {
+
+            let entry = null;
+            let u_id = state.userToEdit;
+            if (u_id === null)
+                return
+
+            for (let i = 0; i < state.events[u_id].length; i++) {
+                if (data.entry_id === state.events[u_id][i].id) {
+                    entry = state.events[u_id][i]
+                    break
+                }
+            }
+            commit("deleteEvent", entry);
+
+            // console.log(data.end_time)
+            entry.end = data.end_time
+            console.log(entry)
+
             commit("addNewEvent", entry);
 
         },
@@ -131,6 +160,12 @@ const ProfileModule = {
         },
         flexStatus(state) {
             return state.flexStatus
+        },
+        isInBuilding(state) {
+            return {
+                status: state.inBuilding,
+                event_id: state.currentAutoRegisteredEntryID
+            }
         }
     },
 }

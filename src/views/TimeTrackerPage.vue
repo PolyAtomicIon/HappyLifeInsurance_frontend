@@ -124,11 +124,14 @@ export default {
 
   mounted(){
     // this.updateTime();
+    if( !this.isLogged ){
+      this.$router.push('login')
+    }
     this.setUserToEdit(0);
   },
 
   computed: {
-    ...mapGetters(['userToEdit']),
+    ...mapGetters(['userToEdit', 'isLogged']),
   },
 
   methods: {

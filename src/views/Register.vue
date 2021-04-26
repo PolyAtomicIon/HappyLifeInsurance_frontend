@@ -24,6 +24,7 @@
                             v-model="password"
                             :error-messages="passwordErrors"
                             required
+                            type="password"
                             @input="$v.password.$touch()"
                             @blur="$v.password.$touch()"
                         ></v-text-field>
@@ -31,11 +32,10 @@
                         <v-text-field
                             label="Password"
                             prepend-icon="lock"
+                            type="password"
                             v-model="password2"
                             :error-messages="passwordErrors"
                             required
-                            @input="$v.password.$touch()"
-                            @blur="$v.password.$touch()"
                         ></v-text-field>
 
                     </v-form>
@@ -55,6 +55,8 @@
 <script>
   import { validationMixin } from 'vuelidate'
   import { required, maxLength, email, password } from 'vuelidate/lib/validators'
+  import axios from 'axios'
+  import { mapGetters } from 'vuex'
 
   export default {
     mixins: [validationMixin],
@@ -75,6 +77,7 @@
     }),
 
     computed: {
+      ...mapGetters(['server_url']),
       selectErrors () {
         const errors = []
         if (!this.$v.select.$dirty) return errors
@@ -97,6 +100,10 @@
       },
       passwordErrors () {
         const errors = []
+        if( this.password !== this.password2 ){
+          // errors.push('Passwords not equal')
+          return true;
+        }
         // !this.$v.password.password && errors.push('Must be valid password')
         // !this.$v.password.required && errors.push('Password is required')
         return errors
@@ -105,6 +112,29 @@
 
     methods: {
       submit () {
+
+        let creds = {
+          email: this.email,
+          password: this.password,
+          name: 'Bekzat',
+          surname: 'Yernat'
+        }
+        axios
+          .post(this.server_url + "register", creds,
+            {
+              headers: {
+                'Access-Control-Allow-Origin' : '*',
+              }
+            }
+          )
+          .then(response => {
+            console.log(response)
+            this.$router.push('login')
+          })
+          .catch(error => {
+              console.log("ERRRR:: ", error);
+          });
+
         this.$v.$touch()
       },
       clear () {

@@ -42,7 +42,7 @@
 <script>
   import { validationMixin } from 'vuelidate'
   import { required, maxLength, email, password } from 'vuelidate/lib/validators'
-  import { mapMutations } from 'vuex'
+  import { mapGetters, mapMutations } from 'vuex'
   import axios from 'axios'
 
   export default {
@@ -61,6 +61,7 @@
     }),
 
     computed: {
+      ...mapGetters(['server_url']),
       emailErrors () {
         const errors = []
         if (!this.$v.email.$dirty) return errors
@@ -76,23 +77,36 @@
       },
     },
     mounted() {
-      this.setProfile({});
+      // this.setProfile({});
     },
     methods: {
-      ...mapMutations(['setProfile']),
+      ...mapMutations(['setProfile', 'setToken']),
 
       submit () {
+        // if(this.email === '' || this.password === '')
+        //   return
 
+        let creds = {
+          email: this.email,
+          password: this.password,
+        }
         axios
-          .get("https://next.json-generator.com/api/json/get/411DaOJLc")
+          .post(this.server_url + "login", creds,
+            // {
+            //   headers: {
+            //     'Access-Control-Allow-Origin' : '*',
+            //   }
+            // }
+          )
           .then(response => {
-            this.setProfile(response.data);
+            console.log(response);
+            this.setToken(true);
+            this.$router.push('profile')
+            // this.$router.push('profile/permissions')
           })
           .catch(error => {
-              console.log("ERRRR:: ", error.response.data);              
+              console.log("ERRRR:: ", error.message);
           });
-
-        this.$router.push('profile/permissions')
 
         this.$v.$touch()
       

@@ -27,7 +27,7 @@
                             {
                                 label: "Debt Hours",
                                 type: "horizontalBar",
-                                data: [-10],
+                                data: [],
                                 backgroundColor: "rgba(173, 24, 121, .5)",
                                 borderColor: "#851b60",
                                 borderWidth: 1
@@ -58,8 +58,31 @@
             }
         },
         mounted() {
-            const ctx = document.getElementById('flex-status-chart');
-            new Chart(ctx, this.planetChartData);
+        },
+
+        props: {
+            reserved_hours: {
+                required: true,
+            },
+            debt_hours: {
+                required: true,
+            }
+        },
+        watch: {
+            reserved_hours: function(val){       
+                this.planetChartData.data.datasets[0].data = [];
+                this.planetChartData.data.datasets[0].data.push(val);
+                    
+                const ctx = document.getElementById('flex-status-chart');
+                new Chart(ctx, this.planetChartData);
+            },
+            debt_hours: function(val){       
+                this.planetChartData.data.datasets[1].data = [];
+                this.planetChartData.data.datasets[1].data.push(-val);
+                    
+                const ctx = document.getElementById('flex-status-chart');
+                new Chart(ctx, this.planetChartData);
+            }
         }
 
     } 

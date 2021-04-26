@@ -166,6 +166,10 @@
       },
   
       goToPage: function (url) {
+        if( !this.isLogged ){
+          this.$router.push('/login')
+          return
+        }
         this.$router.push('/'+url);
       },
 

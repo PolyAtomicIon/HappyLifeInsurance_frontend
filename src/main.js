@@ -35,6 +35,8 @@ Vue.use(DaySpanVuetify, {
 
 Vue.use(vuetify);
 
+// Vue.http.headers.common['Access-Control-Allow-Origin'] = true
+
 new Vue({
     vuetify,
     router,

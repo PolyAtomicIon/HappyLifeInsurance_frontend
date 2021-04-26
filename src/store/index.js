@@ -12,9 +12,13 @@ const ProfileModule = {
         profile: {},
         editors: [],
         shared: [],
-        flexStatus: [],
+        flexStatus: {},
+        server_url: 'https://happylife-backend.herokuapp.com/'
     }),
     mutations: {
+        setFlexStatus(state, data) {
+            state.flexStatus = data
+        },
         setUserToEdit(state, data) {
             state.userToEdit = data;
         },
@@ -46,13 +50,14 @@ const ProfileModule = {
 
             state.events[u_id].splice(index, 1);
         },
+        setToken(state, data) {
+            state.token = data
+        },
         setProfile(state, data) {
-
-            state.token = true
 
             state.profile = {
                 "user_id": data['user_id'],
-                "name": data['name']["first"] + ' ' + data["name"]["last"],
+                "name": data['fullName'],
                 "job_position": data["job_position"],
                 "email": data["email"],
             }
@@ -120,6 +125,12 @@ const ProfileModule = {
         },
         shared(state) {
             return state.shared
+        },
+        server_url(state) {
+            return state.server_url
+        },
+        flexStatus(state) {
+            return state.flexStatus
         }
     },
 }

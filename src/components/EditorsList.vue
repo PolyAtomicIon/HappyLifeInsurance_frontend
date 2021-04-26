@@ -42,7 +42,7 @@
                         class="text--primary "
                         fab
                         small
-                        @click="addEditor(newUserEmail)"
+                        @click="Add(newUserEmail)"
                     >   
                         <v-icon center>mdi-plus</v-icon>
                     </v-btn>
@@ -62,7 +62,7 @@
                     >
                         <v-btn
                             color="primary-color"
-                            @click="overlay = false, removeEditor(userToBeRemoved)"
+                            @click="overlay = false, Remove(userToBeRemoved)"
                         >
                             yes
                         </v-btn>
@@ -122,7 +122,9 @@
 </template>
 
 <script>
+import axios from 'axios';
 import { mapGetters, mapMutations } from 'vuex';
+import { response } from 'express';
 
 
     export default {
@@ -152,9 +154,9 @@ import { mapGetters, mapMutations } from 'vuex';
             zIndex: 2,
             userToBeRemoved: null,
             newUserEmail: null,
+            editors: []
         }), 
         methods: {
-            ...mapMutations(['removeEditor', 'addEditor']),
 
             startRemovalOfUserFromList(userId){
                 console.log(userId)
@@ -165,9 +167,39 @@ import { mapGetters, mapMutations } from 'vuex';
                 this.userToBeRemoved = null
             },
 
+            Add(email) {
+                axios.post(this.server_url + 'add_editor', {
+                    email: email
+                })
+                .then(
+                    this.fetchEditors()
+                )
+            },
+
+            Remove(email) {
+                axios.post(this.server_url + 'delete_editor', {
+                    email: email
+                })
+                .then(
+                    this.fetchEditors()
+                )
+            },
+
+            fetchEditors(){
+
+                axios.get(this.server_url + 'get_editors')
+                .then(
+                    response => {
+                        console.log(response.data)
+                        this.editors = response.data;
+                    }
+                )
+
+            }
+
         },
         computed: {
-            ...mapGetters(['editors']),
+            ...mapGetters(['editors', 'server_url']),
         }
     }
 </script>

@@ -274,7 +274,7 @@
 </template>
 
 <script>
-  import { mapGetters, mapMutations, mapActions } from 'vuex'
+  import { mapGetters, mapActions } from 'vuex'
   export default {
     data () {
       return {
@@ -344,8 +344,7 @@
         this.reset();
     },
     methods: {
-        ...mapMutations(['addNewEvent']),
-        ...mapActions(['updateEvent']),
+        ...mapActions(['updateEvent', 'addNewEvent']),
         
           allowedDates: val => new Date(val).getDay() < 6 && new Date(val).getDay() > 0,
 

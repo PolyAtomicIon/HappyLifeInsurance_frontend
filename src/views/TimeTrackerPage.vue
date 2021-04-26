@@ -175,8 +175,8 @@ export default {
   },
 
   methods: {
-    ...mapMutations(['setUserToEdit', 'setInBuilding', 'addNewEvent']),
-    ...mapActions(['updateEventByID']),
+    ...mapMutations(['setUserToEdit', 'setInBuilding']),
+    ...mapActions(['updateEventByID', 'addNewEvent']),
     enterTheBuilding(){
       let current_time = this.toTimeString(new Date());
       let start = new Date(`${this.toDateString()}T${current_time}:00`)

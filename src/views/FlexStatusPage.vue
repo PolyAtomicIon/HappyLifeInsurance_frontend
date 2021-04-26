@@ -75,7 +75,7 @@
             this.fetchFlexStatus();
         },
         computed: {
-            ...mapGetters(['flexStatus']),
+            ...mapGetters(['flexStatus', 'server_url']),
         },
 
         components: {
@@ -87,7 +87,7 @@
             ...mapMutations(['setFlexStatus']),
             
             fetchFlexStatus(){
-
+                // axios.get(this.server_url + "flex_status")
                 axios.get("https://next.json-generator.com/api/json/get/V10R1FkU9")
                 .then(
                     response => {

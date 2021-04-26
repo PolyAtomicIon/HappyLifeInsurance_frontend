@@ -152,7 +152,7 @@
 
   import UpdateEventDialog from '../time-tracker/UpdateEventDialog.vue';
   import OverlayBlack from '../OverlayBlack.vue';
-  import { mapGetters, mapMutations } from 'vuex';
+  import { mapGetters, mapActions } from 'vuex';
 
   export default {
 
@@ -216,7 +216,7 @@
         },
     },
     methods: {
-      ...mapMutations(['deleteEvent']),
+      ...mapActions(['deleteEvent']),
       viewDay ({ date }) {
         this.focus = date
         this.type = 'day'

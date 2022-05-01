@@ -75,7 +75,7 @@
             this.fetchFlexStatus();
         },
         computed: {
-            ...mapGetters(['flexStatus']),
+            ...mapGetters(['flexStatus', 'token']),
         },
 
         components: {
@@ -87,42 +87,46 @@
             ...mapMutations(['setFlexStatus']),
             
             fetchFlexStatus(){
+                // axios.post('http://127.0.0.1:8000/shared_with_me', {
+                //     token: this.token
+                // })
+                // .then(res => console.log('SHARED WITH ME', res))
 
-                axios.get("https://next.json-generator.com/api/json/get/V10R1FkU9")
-                .then(
-                    response => {
-                        let data  = response.data[0];
-                        let work_hours = [];
+                // axios.get("https://next.json-generator.com/api/json/get/V10R1FkU9")
+                // .then(
+                //     response => {
+                //         let data  = response.data[0];
+                //         let work_hours = [];
 
-                        // console.log(response.data[0])
-                        data.daily_work_hours.forEach(element => {
-                            work_hours.push(element.hours)
-                        });
+                //         // console.log(response.data[0])
+                //         data.daily_work_hours.forEach(element => {
+                //             work_hours.push(element.hours)
+                //         });
 
-                        console.log(work_hours)
+                //         console.log(work_hours)
 
-                        let flexStatus = {}
+                //         let flexStatus = {}
 
-                        let date = new Date(data.start_date);
+                //         let date = new Date(data.start_date);
 
-                        let day = date.getDate();
-                        let month = data.start_date.substr(3, 4);
-                        flexStatus.start_date = month + ' ' + day
+                //         let day = date.getDate();
+                //         let month = data.start_date.substr(3, 4);
+                //         flexStatus.start_date = month + ' ' + day
                         
-                        date = new Date(data.end_date);
+                //         date = new Date(data.end_date);
 
-                        day = date.getDate();
-                        month = data.start_date.substr(3, 4);
-                        flexStatus.end_date = month + ' ' + day
+                //         day = date.getDate();
+                //         month = data.start_date.substr(3, 4);
+                //         flexStatus.end_date = month + ' ' + day
 
-                        flexStatus.work_hours = work_hours
+                //         flexStatus.work_hours = work_hours
 
-                        flexStatus.reserved_hours = data.reserved_hours
-                        flexStatus.debt_hours = data.debt_hours
+                //         flexStatus.reserved_hours = data.reserved_hours
+                //         flexStatus.debt_hours = data.debt_hours
 
-                        this.setFlexStatus(flexStatus)
-                    }
-                )
+                //         this.setFlexStatus(flexStatus)
+                //     }
+                // )
 
             }
         },

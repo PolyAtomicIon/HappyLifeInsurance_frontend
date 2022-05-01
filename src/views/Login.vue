@@ -100,7 +100,8 @@
           )
           .then(response => {
             console.log(response);
-            this.setToken(true);
+            let token = response.data.token
+            this.setToken(token);
             // this.$router.push('profile')
             this.$router.push('profile/permissions')
           })

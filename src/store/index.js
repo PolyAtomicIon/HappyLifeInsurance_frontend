@@ -1,4 +1,5 @@
 import Vue from 'vue'
+import { axios } from 'vue/types/umd';
 import Vuex from 'vuex'
 // import axios from 'axios'
 
@@ -8,12 +9,13 @@ const ProfileModule = {
         events: {
             0: [],
         },
-        token: false,
+        token: localStorage.getItem('token') || false,
         profile: {},
         editors: [],
         shared: [],
         flexStatus: {},
-        server_url: 'https://happylife-backend.herokuapp.com/',
+        // server_url: 'https://happylife-backend.herokuapp.com/',
+        server_url: 'http://127.0.0.1:8000/',
         inBuilding: false,
         currentAutoRegisteredEntryID: null,
     }),
@@ -54,6 +56,7 @@ const ProfileModule = {
         },
         setToken(state, data) {
             state.token = data
+            localStorage.setItem('token', data)
         },
         setProfile(state, data) {
 
@@ -114,16 +117,11 @@ const ProfileModule = {
         }
     },
     actions: {
-
         updateEvent({ commit }, entry) {
-
             commit("deleteEvent", entry);
             commit("addNewEvent", entry);
-
         },
-
         updateEventByID({ state, commit }, data) {
-
             let entry = null;
             let u_id = state.userToEdit;
             if (u_id === null)
@@ -136,14 +134,15 @@ const ProfileModule = {
                 }
             }
             commit("deleteEvent", entry);
-
-            // console.log(data.end_time)
             entry.end = data.end_time
             console.log(entry)
-
             commit("addNewEvent", entry);
-
         },
+        addEvent({commit, state}, entry){
+            axios.post(state.server_url + 'add_entry', {
+                token: state.token
+            })
+        }
     },
     getters: {
         userToEdit(state) {
@@ -172,6 +171,9 @@ const ProfileModule = {
                 status: state.inBuilding,
                 event_id: state.currentAutoRegisteredEntryID
             }
+        },
+        token(state) {
+            return state.token
         }
     },
 }

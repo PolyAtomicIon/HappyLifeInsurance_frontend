@@ -1,7 +1,6 @@
 import Vue from 'vue'
-import { axios } from 'vue/types/umd';
 import Vuex from 'vuex'
-// import axios from 'axios'
+import axios from 'axios'
 
 const ProfileModule = {
     state: () => ({
